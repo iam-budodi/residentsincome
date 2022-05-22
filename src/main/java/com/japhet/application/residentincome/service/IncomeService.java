@@ -5,7 +5,7 @@ import static jakarta.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.List;
 
-import com.japhet.application.residentincome.model.Income;
+import com.japhet.application.residentincome.model.IndividualIncome;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -21,42 +21,42 @@ public class IncomeService {
 	@PersistenceContext(unitName = "residentincomePU")
 	private EntityManager entityManager;
 
-	public List<Income> listAllIncomes() {
+	public List<IndividualIncome> listAllIncomes() {
 		return entityManager.createQuery("SELECT income FROM Income income",
-					Income.class).getResultList();
+					IndividualIncome.class).getResultList();
 	}
 
-	public Income findEarnedIncome(@NotNull Long grossIncome) {
+	public IndividualIncome findEarnedIncome(@NotNull Long grossIncome) {
 		String statementString = "SELECT income FROM Income income "
 					+ "WHERE :grossIncome BETWEEN income.income AND income.classLimit "
 					+ "AND :earnedIncome != income.income";
 
-		TypedQuery<Income> query = entityManager.createQuery(statementString,
-					Income.class);
+		TypedQuery<IndividualIncome> query = entityManager.createQuery(statementString,
+					IndividualIncome.class);
 		query.setParameter("grossIncome", grossIncome);
 
 		return query.getSingleResult();
 	}
 
-	public Income findIncomeById(@NotNull Long incomeId) {
-		return entityManager.find(Income.class, incomeId);
+	public IndividualIncome findIncomeById(@NotNull Long incomeId) {
+		return entityManager.find(IndividualIncome.class, incomeId);
 	}
 
 	@Transactional(REQUIRED)
-	public Income createIncome(@NotNull Income income) {
+	public IndividualIncome createIncome(@NotNull IndividualIncome income) {
 		entityManager.persist(income);
 		return income;
 	}
 
 	@Transactional(REQUIRED)
-	public Income updateIncome(@NotNull Income income) {
+	public IndividualIncome updateIncome(@NotNull IndividualIncome income) {
 		return entityManager.merge(income);
 		// return income;
 	}
 
 	@Transactional(REQUIRED)
 	public void deleteIncome(@NotNull Long incomeId) {
-		Income incomeReference = entityManager.getReference(Income.class,
+		IndividualIncome incomeReference = entityManager.getReference(IndividualIncome.class,
 					incomeId);
 		entityManager.remove(incomeReference);
 

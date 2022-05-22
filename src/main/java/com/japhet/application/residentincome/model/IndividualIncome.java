@@ -19,52 +19,52 @@ import jakarta.validation.constraints.Size;
  */
 
 @Entity
-public class Income implements Serializable {
+public class IndividualIncome implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long Id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	@Enumerated(EnumType.ORDINAL)
 	@NotNull
+	@Enumerated(EnumType.ORDINAL)
 	private IncomeClass category;
 
-	@Column()
 	@NotNull
 	@Min(0)
-	private Long income;
+	@Column(name = "class_amount")
+	private Long classAmount;
 
-	@Column(name = "class_limit")
 	@NotNull
 	@Min(270000)
+	@Column(name = "class_limit")
 	private Long classLimit;
 
-	@Column(name = "tax_per_class")
 	@NotNull
 	@Min(0)
+	@Column(name = "tax_per_class")
 	private Long taxPerClass;
 
-	@Column(name = "tax_on_excess_income")
 	@NotNull
 	@Min(0)
+	@Column(name = "tax_on_excess_income")
 	private Long taxOnExcessIncome;
 
 	@Column(length = 1000)
 	@Size(min = 1, max = 1000)
 	private String description;
 
-	public Income() {
+	public IndividualIncome() {
 
 	}
 
-	public Income(IncomeClass category, Long income, Long classLimit,
-				Long taxPerClass, Long taxOnExcessIncome, String description) {
-
+	public IndividualIncome(IncomeClass category, Long classAmount,
+				Long classLimit, Long taxPerClass, Long taxOnExcessIncome,
+				String description) {
 		this.category = category;
-		this.income = income;
+		this.classAmount = classAmount;
 		this.classLimit = classLimit;
 		this.taxPerClass = taxPerClass;
 		this.taxOnExcessIncome = taxOnExcessIncome;
@@ -72,11 +72,11 @@ public class Income implements Serializable {
 	}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		this.Id = id;
+		this.id = id;
 	}
 
 	public IncomeClass getCategory() {
@@ -87,12 +87,12 @@ public class Income implements Serializable {
 		this.category = category;
 	}
 
-	public Long getIncome() {
-		return income;
+	public Long getClassAmount() {
+		return classAmount;
 	}
 
-	public void setIncome(Long income) {
-		this.income = income;
+	public void setClassAmount(Long classAmount) {
+		this.classAmount = classAmount;
 	}
 
 	public Long getClassLimit() {
@@ -129,10 +129,11 @@ public class Income implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Income [ Id=" + Id + ", category=" + category + ", income="
-					+ income + ", classLimit=" + classLimit
-					+ ", taxPerClass=" + taxPerClass + ", taxOnExcessIncome="
-					+ taxOnExcessIncome + ", description=" + description + "]";
+		return "IndividualIncome [ id=" + id + ", category=" + category
+					+ ", classAmount=" + classAmount + ", classLimit="
+					+ classLimit + ", taxPerClass=" + taxPerClass
+					+ ", taxOnExcessIncome=" + taxOnExcessIncome
+					+ ", description=" + description + "]";
 	}
 
 }

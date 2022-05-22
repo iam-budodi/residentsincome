@@ -1,6 +1,6 @@
 package com.japhet.application.residentincome.view.service;
 
-import com.japhet.application.residentincome.model.Income;
+import com.japhet.application.residentincome.model.IndividualIncome;
 
 public class IncomeService {
 	private static final double PERCENTAGE_DIVISOR = 0.01;
@@ -15,7 +15,7 @@ public class IncomeService {
 		return earnedIncome * FIFTEEN_PERCENT;
 	}
 	
-	public double computePaye(Income income, double taxableAmount) {
+	public double computePaye(IndividualIncome income, double taxableAmount) {
 		double percentageTaxOnExcessIncome = income.getTaxOnExcessIncome() * PERCENTAGE_DIVISOR;
 		double taxOnExcessIncome = percentageTaxOnExcessIncome * (taxableAmount - income.getIncome());
 		
