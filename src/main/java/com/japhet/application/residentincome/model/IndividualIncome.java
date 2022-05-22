@@ -14,11 +14,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 /**
- * Entity implementation class for Entity: Income
+ * Entity implementation class for Entity: IndividualIncome
  *
  */
 
-@Entity
+@Entity(name = "individual_income")
 public class IndividualIncome implements Serializable {
 
 	private static final long serialVersionUID = 1L;

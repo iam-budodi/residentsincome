@@ -17,7 +17,7 @@ public class IncomeService {
 	
 	public double computePaye(IndividualIncome income, double taxableAmount) {
 		double percentageTaxOnExcessIncome = income.getTaxOnExcessIncome() * PERCENTAGE_DIVISOR;
-		double taxOnExcessIncome = percentageTaxOnExcessIncome * (taxableAmount - income.getIncome());
+		double taxOnExcessIncome = percentageTaxOnExcessIncome * (taxableAmount - income.getClassAmount());
 		
 		return taxOnExcessIncome + income.getTaxPerClass();
 	}
