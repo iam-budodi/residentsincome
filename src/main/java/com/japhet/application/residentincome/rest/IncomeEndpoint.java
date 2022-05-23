@@ -106,7 +106,7 @@ public class IncomeEndpoint {
 	}
 
 	// ===========================================
-	// Put the method in a common package
+	// Define a single common method 
 	// ==========================================
 
 	public IndividualIncome findIncomeClass(Long incomeClassId) {
