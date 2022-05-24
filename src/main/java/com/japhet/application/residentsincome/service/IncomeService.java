@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
@@ -28,6 +29,18 @@ public class IncomeService {
 
 	public IndividualIncome findIncomeById(@NotNull Long incomeId) {
 		return entityManager.find(IndividualIncome.class, incomeId);
+	}
+
+	public IndividualIncome searchByIncome(@NotNull Long income) {
+		String statementString = "SELECT income FROM IndividualIncome income "
+					+ "WHERE :income BETWEEN income.classAmount AND income.classLimit "
+					+ "AND :income != income.classAmount";
+
+		TypedQuery<IndividualIncome> query = entityManager
+					.createQuery(statementString, IndividualIncome.class);
+		query.setParameter("income", income);
+
+		return query.getSingleResult();
 	}
 
 	@Transactional(REQUIRED)
