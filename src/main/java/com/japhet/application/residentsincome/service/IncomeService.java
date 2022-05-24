@@ -1,23 +1,22 @@
-package com.japhet.application.residentincome.service;
+package com.japhet.application.residentsincome.service;
 
-import static jakarta.transaction.Transactional.TxType.REQUIRED;
-import static jakarta.transaction.Transactional.TxType.SUPPORTS;
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.List;
 
-import com.japhet.application.residentincome.model.IndividualIncome;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotNull;
+import com.japhet.application.residentsincome.model.IndividualIncome;
 
-@Stateless
+//@Stateless
 @Transactional(SUPPORTS)
 public class IncomeService {
 
-	@PersistenceContext(unitName = "residentincomePU")
+	@PersistenceContext(unitName = "residentIncomePU")
 	private EntityManager entityManager;
 
 	public List<IndividualIncome> listAllIncomes() {
@@ -32,13 +31,15 @@ public class IncomeService {
 	}
 
 	@Transactional(REQUIRED)
-	public IndividualIncome createIncomeClass(@NotNull IndividualIncome income) {
+	public IndividualIncome createIncomeClass(
+				@NotNull IndividualIncome income) {
 		entityManager.persist(income);
 		return income;
 	}
 
 	@Transactional(REQUIRED)
-	public IndividualIncome updateIncomeClass(@NotNull IndividualIncome income) {
+	public IndividualIncome updateIncomeClass(
+				@NotNull IndividualIncome income) {
 		return entityManager.merge(income);
 	}
 

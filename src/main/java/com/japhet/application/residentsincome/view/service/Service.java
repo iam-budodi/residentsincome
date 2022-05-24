@@ -1,8 +1,8 @@
-package com.japhet.application.residentincome.view.service;
+package com.japhet.application.residentsincome.view.service;
 
-import com.japhet.application.residentincome.model.IndividualIncome;
+import com.japhet.application.residentsincome.model.IndividualIncome;
 
-public class IncomeService {
+public class Service {
 	private static final double PERCENTAGE_DIVISOR = 0.01;
 	private static final double TEN_PERCENT= 0.1;
 	private static final double FIFTEEN_PERCENT= 0.15;

@@ -1,4 +1,4 @@
-package com.japhet.application.residentincome.model;
+package com.japhet.application.residentsincome.model;
 
 public enum IncomeClass {
 

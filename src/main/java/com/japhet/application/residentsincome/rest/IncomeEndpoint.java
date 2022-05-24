@@ -1,28 +1,28 @@
-package com.japhet.application.residentincome.rest;
+package com.japhet.application.residentsincome.rest;
 
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.net.URI;
 import java.util.List;
 
-import com.japhet.application.residentincome.model.IndividualIncome;
-import com.japhet.application.residentincome.service.IncomeService;
+import com.japhet.application.residentsincome.model.IndividualIncome;
+import com.japhet.application.residentsincome.service.IncomeService;
 
-import jakarta.inject.Inject;
-import jakarta.persistence.OptimisticLockException;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/incomes")
 public class IncomeEndpoint {
@@ -46,7 +46,7 @@ public class IncomeEndpoint {
 	@Produces(APPLICATION_JSON)
 	public Response findIncomeById(
 				@PathParam("id") @Min(1) @NotNull Long incomeClassId) {
-		
+
 		IndividualIncome incomeClass = findIncomeClass(incomeClassId);
 		if (incomeClass == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -72,7 +72,8 @@ public class IncomeEndpoint {
 
 	@DELETE
 	@Path("{id: \\d+}")
-	public Response deleteIncomeClass(@PathParam("id") @NotNull @Min(1) Long incomeClassId) {
+	public Response deleteIncomeClass(
+				@PathParam("id") @NotNull @Min(1) Long incomeClassId) {
 		IndividualIncome incomeClass = findIncomeClass(incomeClassId);
 		if (incomeClass == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -85,7 +86,8 @@ public class IncomeEndpoint {
 	@PUT
 	@Path("{id: \\d+}")
 	@Consumes(APPLICATION_JSON)
-	public Response updateIncomeClass(@PathParam("id") @NotNull @Min(1) Long incomeClassId,
+	public Response updateIncomeClass(
+				@PathParam("id") @NotNull @Min(1) Long incomeClassId,
 				@NotNull IndividualIncome incomeClass) {
 		if (!incomeClassId.equals(incomeClass.getId())) {
 			return Response.status(Response.Status.CONFLICT).build();
@@ -106,7 +108,7 @@ public class IncomeEndpoint {
 	}
 
 	// ===========================================
-	// Define a single common method 
+	// Define a single common method
 	// ==========================================
 
 	public IndividualIncome findIncomeClass(Long incomeClassId) {
