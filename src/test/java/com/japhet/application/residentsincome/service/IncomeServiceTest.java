@@ -18,7 +18,7 @@ import com.japhet.application.residentsincome.model.IncomeClass;
 import com.japhet.application.residentsincome.model.IndividualIncome;
 
 @RunWith(Arquillian.class)
-class IncomeServiceTest {
+public class IncomeServiceTest {
 	
 	@Inject
 	private IncomeService incomeService;
