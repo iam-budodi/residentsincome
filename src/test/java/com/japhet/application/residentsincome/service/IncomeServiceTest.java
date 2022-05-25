@@ -170,4 +170,70 @@ public class IncomeServiceTest {
 		incomeService.createIncomeClass(new IndividualIncome(null, 0L, 270000L,
 					0L, 0L, "description"));
 	}
+	
+	@Test(expected = Exception.class)
+	@InSequence(17)
+	public void shouldFailCreateClassWithNullAmount() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, null, 270000L,
+					0L, 0L, "description"));
+	}
+	
+	@Test(expected = Exception.class)
+	@InSequence(18)
+	public void shouldFailCreateClassWithNullClassLimit() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, null,
+					0L, 0L, "description"));
+	}
+	
+	@Test(expected = Exception.class)
+	@InSequence(19)
+	public void shouldFailCreateClassWithNullTaxPerClass() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
+					null, 0L, "description"));
+	}
+	
+	@Test(expected = Exception.class)
+	@InSequence(20)
+	public void shouldFailCreateClassWithNullTaxOnExcessIncome() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
+					0L, null, "description"));
+	}
+
+	@Test(expected = Exception.class)
+	@InSequence(21)
+	public void shouldFailCreateClassWithNegativeIncome() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
+					-270000L, 520000L, 0L, 8L, "description"));
+	}
+	
+	@Test(expected = Exception.class)
+	@InSequence(22)
+	public void shouldFailCreateClassBelowMinimumLimit() {
+		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
+					0L, 150000L, 0L, 8L, "description"));
+	}
+
+	@Test(expected = Exception.class)
+	@InSequence(23)
+	public void shouldFailUponNullID() {
+		incomeService.findIncomeById(null);
+	}
+
+	@Test
+	@InSequence(24)
+	public void shouldFailUponUnknownID() {
+		assertNull(incomeService.findIncomeById(2607L));
+	}
+
+	@Test(expected = Exception.class)
+	@InSequence(25)
+	public void shouldFailDeleteClassUponNullID() {
+		incomeService.deleteIncomeClass(null);
+	}
+
+	@Test(expected = Exception.class)
+	@InSequence(26)
+	public void shouldNotDeleteClassWithUnknownID() {
+		incomeService.deleteIncomeClass(2607L);
+	}
 }
