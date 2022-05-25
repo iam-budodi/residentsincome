@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.japhet.application.residentsincome.model.IndividualIncome;
-import com.japhet.application.residentsincome.service.IncomeService;
+import com.japhet.application.residentsincome.repository.IncomeRepository;
 
 import javax.inject.Inject;
 import javax.persistence.OptimisticLockException;
@@ -28,12 +28,12 @@ import javax.ws.rs.core.UriInfo;
 public class IncomeEndpoint {
 
 	@Inject
-	private IncomeService incomeService;
+	private IncomeRepository incomeRepository;
 
 	@GET
 	@Produces(APPLICATION_JSON)
 	public Response listIncomes() {
-		List<IndividualIncome> incomeClasses = incomeService.listAllIncomes();
+		List<IndividualIncome> incomeClasses = incomeRepository.listAllIncomes();
 
 		if (incomeClasses.isEmpty())
 			return Response.status(Response.Status.NO_CONTENT).build();
@@ -59,7 +59,7 @@ public class IncomeEndpoint {
 	public Response createIncomeClass(@NotNull IndividualIncome incomeClass,
 				@Context() UriInfo uriInfo) {
 		try {
-			incomeClass = incomeService.createIncomeClass(incomeClass);
+			incomeClass = incomeRepository.createIncomeClass(incomeClass);
 		} catch (Exception rollbackException) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
@@ -78,7 +78,7 @@ public class IncomeEndpoint {
 		if (incomeClass == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
 
-		incomeService.deleteIncomeClass(incomeClassId);
+		incomeRepository.deleteIncomeClass(incomeClassId);
 
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
@@ -98,7 +98,7 @@ public class IncomeEndpoint {
 		}
 
 		try {
-			incomeService.updateIncomeClass(incomeClass);
+			incomeRepository.updateIncomeClass(incomeClass);
 		} catch (OptimisticLockException ex) {
 			return Response.status(Response.Status.CONFLICT)
 						.entity(ex.getEntity()).build();
@@ -112,7 +112,7 @@ public class IncomeEndpoint {
 	// ==========================================
 
 	public IndividualIncome findIncomeClass(Long incomeClassId) {
-		return incomeService.findIncomeById(incomeClassId);
+		return incomeRepository.findIncomeById(incomeClassId);
 
 	}
 }

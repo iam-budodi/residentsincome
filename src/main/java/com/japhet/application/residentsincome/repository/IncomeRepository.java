@@ -1,4 +1,4 @@
-package com.japhet.application.residentsincome.service;
+package com.japhet.application.residentsincome.repository;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
@@ -15,7 +15,7 @@ import com.japhet.application.residentsincome.model.IndividualIncome;
 
 //@Stateless
 @Transactional(SUPPORTS)
-public class IncomeService {
+public class IncomeRepository {
 
 	@PersistenceContext(unitName = "residentIncomePU")
 	private EntityManager entityManager;

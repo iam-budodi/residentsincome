@@ -1,4 +1,4 @@
-package com.japhet.application.residentsincome.service;
+package com.japhet.application.residentsincome.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,10 +23,10 @@ import com.japhet.application.residentsincome.model.IncomeClass;
 import com.japhet.application.residentsincome.model.IndividualIncome;
 
 @RunWith(Arquillian.class)
-public class IncomeServiceTest {
+public class IncomeRepositoryTest {
 
 	@Inject
-	private IncomeService incomeService;
+	private IncomeRepository incomeRepository;
 
 	public static Long untaxableClassId;
 	public static Long lowClassId;
@@ -35,7 +35,7 @@ public class IncomeServiceTest {
 	public static Archive<?> createDeploymentPackage() {
 		return ShrinkWrap.create(JavaArchive.class).addClass(IncomeClass.class)
 					.addClass(IndividualIncome.class)
-					.addClass(IncomeService.class)
+					.addClass(IncomeRepository.class)
 					.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
 					.addAsManifestResource("META-INF/test-persistence.xml",
 								"persistence.xml");
@@ -44,13 +44,13 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(1)
 	public void shouldBeDeployed() {
-		assertNotNull(incomeService);
+		assertNotNull(incomeRepository);
 	}
 
 	@Test
 	@InSequence(2)
 	public void shouldNotGetIncomeClass() {
-		assertEquals(0, incomeService.listAllIncomes().size());
+		assertEquals(0, incomeRepository.listAllIncomes().size());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class IncomeServiceTest {
 	public void shouldCreateUntaxableClass() {
 		IndividualIncome untaxableClass = new IndividualIncome(
 					IncomeClass.UNTAXABLE, 0L, 270000L, 0L, 0L, "description");
-		untaxableClass = incomeService.createIncomeClass(untaxableClass);
+		untaxableClass = incomeRepository.createIncomeClass(untaxableClass);
 
 		assertNotNull(untaxableClass);
 		assertNotNull(untaxableClass.getId());
@@ -70,7 +70,7 @@ public class IncomeServiceTest {
 	public void shouldCreateLowClass() {
 		IndividualIncome lowClass = new IndividualIncome(IncomeClass.LOW,
 					270000L, 520000L, 0L, 8L, "description");
-		lowClass = incomeService.createIncomeClass(lowClass);
+		lowClass = incomeRepository.createIncomeClass(lowClass);
 
 		assertNotNull(lowClass);
 		assertNotNull(lowClass.getId());
@@ -80,13 +80,13 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(5)
 	public void shouldGetAvailableClass() {
-		assertEquals(2, incomeService.listAllIncomes().size());
+		assertEquals(2, incomeRepository.listAllIncomes().size());
 	}
 
 	@Test
 	@InSequence(6)
 	public void shouldCheckClass() {
-		IndividualIncome untaxableClass = incomeService
+		IndividualIncome untaxableClass = incomeRepository
 					.findIncomeById(untaxableClassId);
 		assertNotNull(untaxableClass);
 		assertTrue(untaxableClass.getCategory().equals(IncomeClass.UNTAXABLE));
@@ -95,7 +95,7 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(7)
 	public void shouldGetUntaxableClassOverAmountBelowLimit() {
-		IndividualIncome untaxableClass = incomeService.searchByIncome(20000L);
+		IndividualIncome untaxableClass = incomeRepository.searchByIncome(20000L);
 		assertNotNull(untaxableClass);
 		assertEquals(IncomeClass.UNTAXABLE, untaxableClass.getCategory());
 	}
@@ -103,7 +103,7 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(8)
 	public void shouldGetUntaxableClassOverClassLimit() {
-		IndividualIncome untaxableClass = incomeService
+		IndividualIncome untaxableClass = incomeRepository
 					.searchByIncome(270000L);
 		assertNotNull(untaxableClass);
 		assertEquals(IncomeClass.UNTAXABLE, untaxableClass.getCategory());
@@ -112,7 +112,7 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(9)
 	public void shouldGetUntaxableClassBeyondClassLimit() {
-		IndividualIncome lowClass = incomeService.searchByIncome(270001L);
+		IndividualIncome lowClass = incomeRepository.searchByIncome(270001L);
 		assertNotNull(lowClass);
 		assertNotEquals(IncomeClass.UNTAXABLE, lowClass.getCategory());
 		assertEquals(IncomeClass.LOW, lowClass.getCategory());
@@ -121,7 +121,7 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(10)
 	public void shouldGetLowClassLimit() {
-		IndividualIncome lowClass = incomeService.searchByIncome(520000L);
+		IndividualIncome lowClass = incomeRepository.searchByIncome(520000L);
 		assertNotNull(lowClass);
 		assertEquals(IncomeClass.LOW, lowClass.getCategory());
 	}
@@ -129,11 +129,11 @@ public class IncomeServiceTest {
 	@Test
 	@InSequence(11)
 	public void shouldUpdateClass() {
-		IndividualIncome untaxableClass = incomeService
+		IndividualIncome untaxableClass = incomeRepository
 					.findIncomeById(untaxableClassId);
 		untaxableClass.setCategory(IncomeClass.MIDDLE);
 
-		IndividualIncome middleClass = incomeService
+		IndividualIncome middleClass = incomeRepository
 					.updateIncomeClass(untaxableClass);
 
 		assertFalse(middleClass.equals(untaxableClass));
@@ -143,97 +143,97 @@ public class IncomeServiceTest {
 	@Test(expected = Exception.class)
 	@InSequence(12)
 	public void shouldFailToGetAnyClass() {
-		incomeService.searchByIncome(0L);
+		incomeRepository.searchByIncome(0L);
 	}
 
 	@Test
 	@InSequence(13)
 	public void shouldDeleteClass() {
-		incomeService.deleteIncomeClass(untaxableClassId);
+		incomeRepository.deleteIncomeClass(untaxableClassId);
 	}
 
 	@Test
 	@InSequence(14)
 	public void shouldNotGetDeletedClass() {
-		assertNull(incomeService.findIncomeById(untaxableClassId));
+		assertNull(incomeRepository.findIncomeById(untaxableClassId));
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(15)
 	public void shouldFailCreateNullClass() {
-		incomeService.createIncomeClass(null);
+		incomeRepository.createIncomeClass(null);
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(16)
 	public void shouldFailCreateClassWithNullCategory() {
-		incomeService.createIncomeClass(new IndividualIncome(null, 0L, 270000L,
+		incomeRepository.createIncomeClass(new IndividualIncome(null, 0L, 270000L,
 					0L, 0L, "description"));
 	}
 	
 	@Test(expected = Exception.class)
 	@InSequence(17)
 	public void shouldFailCreateClassWithNullAmount() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, null, 270000L,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, null, 270000L,
 					0L, 0L, "description"));
 	}
 	
 	@Test(expected = Exception.class)
 	@InSequence(18)
 	public void shouldFailCreateClassWithNullClassLimit() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, null,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, null,
 					0L, 0L, "description"));
 	}
 	
 	@Test(expected = Exception.class)
 	@InSequence(19)
 	public void shouldFailCreateClassWithNullTaxPerClass() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
 					null, 0L, "description"));
 	}
 	
 	@Test(expected = Exception.class)
 	@InSequence(20)
 	public void shouldFailCreateClassWithNullTaxOnExcessIncome() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
 					0L, null, "description"));
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(21)
 	public void shouldFailCreateClassWithNegativeIncome() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
 					-270000L, 520000L, 0L, 8L, "description"));
 	}
 	
 	@Test(expected = Exception.class)
 	@InSequence(22)
 	public void shouldFailCreateClassBelowMinimumLimit() {
-		incomeService.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
+		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
 					0L, 150000L, 0L, 8L, "description"));
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(23)
 	public void shouldFailUponNullID() {
-		incomeService.findIncomeById(null);
+		incomeRepository.findIncomeById(null);
 	}
 
 	@Test
 	@InSequence(24)
 	public void shouldFailUponUnknownID() {
-		assertNull(incomeService.findIncomeById(2607L));
+		assertNull(incomeRepository.findIncomeById(2607L));
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(25)
 	public void shouldFailDeleteClassUponNullID() {
-		incomeService.deleteIncomeClass(null);
+		incomeRepository.deleteIncomeClass(null);
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(26)
 	public void shouldNotDeleteClassWithUnknownID() {
-		incomeService.deleteIncomeClass(2607L);
+		incomeRepository.deleteIncomeClass(2607L);
 	}
 }
