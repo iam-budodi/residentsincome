@@ -5,19 +5,20 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import com.japhet.application.residentsincome.model.IndividualIncome;
 
-//@Stateless
+@Stateless
 @Transactional(SUPPORTS)
 public class IncomeRepository {
 
-	@PersistenceContext(unitName = "residentIncomePU")
+	@Inject
 	private EntityManager entityManager;
 
 	public List<IndividualIncome> listAllIncomes() {

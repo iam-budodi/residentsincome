@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import com.japhet.application.residentsincome.model.IncomeClass;
 import com.japhet.application.residentsincome.model.IndividualIncome;
+import com.japhet.application.residentsincome.util.ResourceProducer;
 
 @RunWith(Arquillian.class)
 public class IncomeRepositoryTest {
@@ -33,9 +34,11 @@ public class IncomeRepositoryTest {
 
 	@Deployment
 	public static Archive<?> createDeploymentPackage() {
-		return ShrinkWrap.create(JavaArchive.class).addClass(IncomeClass.class)
+		return ShrinkWrap.create(JavaArchive.class)
+					.addClass(IncomeClass.class)
 					.addClass(IndividualIncome.class)
 					.addClass(IncomeRepository.class)
+					.addClass(ResourceProducer.class)
 					.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
 					.addAsManifestResource("META-INF/test-persistence.xml",
 								"persistence.xml");
@@ -95,7 +98,8 @@ public class IncomeRepositoryTest {
 	@Test
 	@InSequence(7)
 	public void shouldGetUntaxableClassOverAmountBelowLimit() {
-		IndividualIncome untaxableClass = incomeRepository.searchByIncome(20000L);
+		IndividualIncome untaxableClass = incomeRepository
+					.searchByIncome(20000L);
 		assertNotNull(untaxableClass);
 		assertEquals(IncomeClass.UNTAXABLE, untaxableClass.getCategory());
 	}
@@ -167,50 +171,51 @@ public class IncomeRepositoryTest {
 	@Test(expected = Exception.class)
 	@InSequence(16)
 	public void shouldFailCreateClassWithNullCategory() {
-		incomeRepository.createIncomeClass(new IndividualIncome(null, 0L, 270000L,
-					0L, 0L, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(null, 0L,
+					270000L, 0L, 0L, "description"));
 	}
-	
+
 	@Test(expected = Exception.class)
 	@InSequence(17)
 	public void shouldFailCreateClassWithNullAmount() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, null, 270000L,
-					0L, 0L, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(
+					IncomeClass.HIGH, null, 270000L, 0L, 0L, "description"));
 	}
-	
+
 	@Test(expected = Exception.class)
 	@InSequence(18)
 	public void shouldFailCreateClassWithNullClassLimit() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, null,
-					0L, 0L, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(
+					IncomeClass.HIGH, 0L, null, 0L, 0L, "description"));
 	}
-	
+
 	@Test(expected = Exception.class)
 	@InSequence(19)
 	public void shouldFailCreateClassWithNullTaxPerClass() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
-					null, 0L, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(
+					IncomeClass.HIGH, 0L, 270000L, null, 0L, "description"));
 	}
-	
+
 	@Test(expected = Exception.class)
 	@InSequence(20)
 	public void shouldFailCreateClassWithNullTaxOnExcessIncome() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.HIGH, 0L, 270000L,
-					0L, null, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(
+					IncomeClass.HIGH, 0L, 270000L, 0L, null, "description"));
 	}
 
 	@Test(expected = Exception.class)
 	@InSequence(21)
 	public void shouldFailCreateClassWithNegativeIncome() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
-					-270000L, 520000L, 0L, 8L, "description"));
+		incomeRepository
+					.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
+								-270000L, 520000L, 0L, 8L, "description"));
 	}
-	
+
 	@Test(expected = Exception.class)
 	@InSequence(22)
 	public void shouldFailCreateClassBelowMinimumLimit() {
-		incomeRepository.createIncomeClass(new IndividualIncome(IncomeClass.LOW,
-					0L, 150000L, 0L, 8L, "description"));
+		incomeRepository.createIncomeClass(new IndividualIncome(
+					IncomeClass.LOW, 0L, 150000L, 0L, 8L, "description"));
 	}
 
 	@Test(expected = Exception.class)
