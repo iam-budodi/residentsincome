@@ -31,7 +31,7 @@ public class IndividualIncome implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private IncomeClass category;
 
 	@NotNull
