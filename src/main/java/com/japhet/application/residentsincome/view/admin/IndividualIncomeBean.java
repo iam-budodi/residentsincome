@@ -3,6 +3,7 @@ package com.japhet.application.residentsincome.view.admin;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -10,7 +11,9 @@ import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -34,6 +37,9 @@ public class IndividualIncomeBean implements Serializable {
 
 	@Inject
 	private Conversation conversation;
+	
+	@Inject
+	private Logger LOG;
 
 	@Resource
 	private SessionContext sessionContext;
@@ -47,7 +53,7 @@ public class IndividualIncomeBean implements Serializable {
 	private List<IndividualIncome> pageItems;
 	private IndividualIncome incomeClass;
 	private IndividualIncome defaultIncomeClass = new IndividualIncome();
-//	private IndividualIncome addIncomeClass = new IndividualIncome();
+	private IndividualIncome addIncomeClass = new IndividualIncome();
 
 	public Long getId() {
 		return id;
@@ -71,9 +77,10 @@ public class IndividualIncomeBean implements Serializable {
 		this.incomeClass = incomeClass;
 	}
 
-	public String create() {
+	public String initializeConversationScope() { // create()
 		this.conversation.begin();
 		this.conversation.setTimeout(1800000L); // 30 minutes
+		LOG.info("CONVERSATION SCOPED : " + conversation.toString());
 		return "create?faces-redirect=true";
 	}
 
@@ -98,10 +105,12 @@ public class IndividualIncomeBean implements Serializable {
 		this.conversation.end();
 		try {
 			if (this.id == null) {
-				this.entityManager.persist(this.incomeClass);
+				LOG.info("CREATE INCOME CLASS : " + incomeClass.toString());
+				this.entityManager.persist(incomeClass);
 				return "search?faces-redirect=true";
 			} else {
-				this.entityManager.merge(this.incomeClass);
+				LOG.info("UPDATE INCOME CLASS : " + incomeClass.toString());
+				this.entityManager.merge(incomeClass);
 				return "view?faces-redirect=" + this.incomeClass.getId();
 			}
 		} catch (Exception ex) {
@@ -125,11 +134,7 @@ public class IndividualIncomeBean implements Serializable {
 			return null;
 		}
 	}
-
-	public IndividualIncome findIncomeClassById(Long incomeId) {
-		return this.entityManager.find(IndividualIncome.class, incomeId);
-	}
-
+	
 	public int getPage() {
 		return page;
 	}
@@ -202,11 +207,62 @@ public class IndividualIncomeBean implements Serializable {
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 
+	/*
+	 * Support listing and POSTing back Book entities (e.g. from inside an
+	 * HtmlSelectOneMenu)
+	 */
 	public long getCount() {
 		return count;
 	}
 
 	public List<IndividualIncome> getPageItems() {
 		return pageItems;
+	}
+
+	public List<IndividualIncome> listAll() {
+		CriteriaQuery<IndividualIncome> criteria = this.entityManager
+				.getCriteriaBuilder().createQuery(IndividualIncome.class);
+		return this.entityManager
+				.createQuery(criteria
+						.select(criteria.from(IndividualIncome.class)))
+				.getResultList();
+	}
+
+	/*
+	 * Support adding children to bidirectional, one-to-many tables
+	 */
+	public Converter<IndividualIncome> getConverter() {
+		final IndividualIncomeBean ejbProxy = this.sessionContext
+				.getBusinessObject(IndividualIncomeBean.class);
+
+		return new Converter<IndividualIncome>() {
+			public IndividualIncome getAsObject(FacesContext context,
+					UIComponent component, String value) {
+				return ejbProxy.findIncomeClassById(Long.valueOf(value));
+			};
+
+			public String getAsString(FacesContext context,
+					UIComponent component, IndividualIncome value) {
+				if (value == null) {
+					return "";
+				}
+
+				return String.valueOf(value.getId());
+			}
+		};
+	}
+
+	public IndividualIncome findIncomeClassById(Long incomeId) {
+		return this.entityManager.find(IndividualIncome.class, incomeId);
+	}
+
+	public IndividualIncome getAddIncomeClass() {
+		return addIncomeClass;
+	}
+
+	public IndividualIncome getAddedIncomeClass() {
+		IndividualIncome addedIncomeClass = this.addIncomeClass;
+		this.addIncomeClass = new IndividualIncome();
+		return addedIncomeClass;
 	}
 }
