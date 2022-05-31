@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -26,7 +28,10 @@ public class IndividualIncomeBeanTest {
 
 	@Inject
 	private IndividualIncomeBean individualIncomeBean;
-
+	
+	@Inject
+	private Logger LOG;
+	
 	private static IndividualIncome incomeClass;
 	private static final IndividualIncome UNTAXABLE = new IndividualIncome(
 			IncomeClass.UNTAXABLE, 0L, 270000L, 0L, 0L, "description");
@@ -77,9 +82,20 @@ public class IndividualIncomeBeanTest {
 //		individualIncomeBean.retrieveIndividualIncome();
 //		assertTrue(UNTAXABLE.equals(individualIncomeBean.getIncomeClass()));
 //	}
-
+	
 	@Test
 	@InSequence(5)
+	public void shouldPaginateOneItem() {
+		individualIncomeBean.paginate();
+		LOG.info(individualIncomeBean.getPageItems().size() + " EQUALS " + individualIncomeBean.getCount());		
+		assertTrue((individualIncomeBean.getPageItems()
+				.size() == individualIncomeBean.getPageSize())
+				|| (individualIncomeBean.getPageItems()
+						.size() == individualIncomeBean.getCount()));
+	}
+
+	@Test
+	@InSequence(6)
 	public void shouldDeleteIncomeClass() {
 		// Deletes the object from the database and checks it's not there anymore
 		individualIncomeBean.setId(incomeClass.getId());
@@ -91,7 +107,7 @@ public class IndividualIncomeBeanTest {
 	}
 
 	@Test
-	@InSequence(6)
+	@InSequence(7)
 	public void shouldPaginate() {
 		incomeClass = individualIncomeBean.getDefaultIncomeClass();
 		individualIncomeBean.setDefaultIncomeClass(incomeClass);

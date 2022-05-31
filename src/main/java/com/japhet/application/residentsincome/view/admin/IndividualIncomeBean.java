@@ -37,7 +37,7 @@ public class IndividualIncomeBean implements Serializable {
 
 	@Inject
 	private Conversation conversation;
-	
+
 	@Inject
 	private Logger LOG;
 
@@ -105,11 +105,13 @@ public class IndividualIncomeBean implements Serializable {
 		this.conversation.end();
 		try {
 			if (this.id == null) {
-				LOG.info("CREATE INCOME CLASS : " + incomeClass.toString());
+				LOG.info(
+						"CREATE INCOME CLASS : " + incomeClass.toString());
 				this.entityManager.persist(incomeClass);
 				return "search?faces-redirect=true";
 			} else {
-				LOG.info("UPDATE INCOME CLASS : " + incomeClass.toString());
+				LOG.info(
+						"UPDATE INCOME CLASS : " + incomeClass.toString());
 				this.entityManager.merge(incomeClass);
 				return "view?faces-redirect=" + this.incomeClass.getId();
 			}
@@ -134,7 +136,7 @@ public class IndividualIncomeBean implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public int getPage() {
 		return page;
 	}
