@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/admin-template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{individualIncomeBean.page}" />
+		<f:event listener="#{individualIncomeBean.paginate}"
+			type="preRenderView" />
+	</f:metadata>
+	<ui:param name="pageTitle" value="Individual Income Classes" />
+	<ui:define name="header">Income Classes</ui:define>
+	<ui:define name="subheader">Add New Income Class</ui:define>
+	<ui:define name="footer" />
+	<ui:define name="main">
+		<h:form id="create">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="create">
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="individualIncomeBeanDefaultCategory"
+							value="Category:" />
+						<h:panelGroup>
+							<h:selectOneMenu id="individualIncomeBeanDefaultCategory"
+								value="#{individualIncomeBean.defaultIncomeClass.category}">
+								<f:selectItem />
+								<f:selectItem itemValue="UNTAXABLE" />
+								<f:selectItem itemValue="LOW" />
+								<f:selectItem itemValue="MIDDLE" />
+								<f:selectItem itemValue="UPPER" />
+								<f:selectItem itemValue="HIGH" />
+							</h:selectOneMenu>
+							<h:message for="individualIncomeBeanDefaultCategory"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputLabel for="individualIncomeBeanDefaultAmount"
+							value="From Amount:" />
+						<h:panelGroup>
+							<h:inputText id="individualIncomeBeanDefaultAmount"
+								value="#{individualIncomeBean.defaultIncomeClass.classAmount}" />
+							<h:message for="individualIncomeBeanDefaultAmount"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputLabel for="individualIncomeBeanDefaultMaxLimit"
+							value="Maximum Limit:" />
+						<h:panelGroup>
+							<h:inputText id="individualIncomeBeanDefaultMaxLimit"
+								value="#{individualIncomeBean.defaultIncomeClass.classLimit}" />
+							<h:message for="individualIncomeBeanDefaultMaxLimit"
+								styleClass="error" />
+						</h:panelGroup>
+						Tax Per Class<h:outputLabel
+							for="individualIncomeBeanDefaultTaxPerClass"
+							value="Tax Per Income Class:" />
+						<h:panelGroup>
+							<h:inputText id="individualIncomeBeanDefaultTaxPerClass"
+								value="#{individualIncomeBean.defaultIncomeClass.taxPerClass}" />
+							<h:message for="individualIncomeBeanDefaultTaxPerClass"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputLabel for="individualIncomeBeanDefaultTaxOnExcessIncome"
+							value="Tax On Excess Income:" />
+						<h:panelGroup>
+							<h:inputText id="individualIncomeBeanDefaultTaxOnExcessIncome"
+								value="#{individualIncomeBean.defaultIncomeClass.taxPerClass}" />
+							<h:message for="individualIncomeBeanDefaultTaxOnExcessIncome"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputLabel for="individualIncomeBeanDefaultDescription"
+							value="Description:" />
+						<h:panelGroup>
+							<h:inputText id="individualIncomeBeanDefaultDescription"
+								value="#{individualIncomeBean.defaultIncomeClass.taxPerClass}" />
+							<h:message for="individualIncomeBeanDefaultDescription"
+								styleClass="error" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Create"
+							action='#{individualIncomeBean.initializeConversationScope()}'
+							styleClass="btn btn-primary" />
+						<h:commandLink value="Search"
+							action='#{individualIncomeBean.search}'
+							styleClass="btn btn-primary" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			<h:dataTable id="individualIncomeBeanPageItems"
+				styleClass="data-table" value="#{individualIncomeBean.pageItems}"
+				var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Category" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="From Amount" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Maximum Limit" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Tax Per Income Class" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Tax On Excess Income" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+					<!-- Implement view navigation -->
+				</h:column>
+			</h:dataTable>
+			<!-- implement pagenator facelet -->
+		</h:form>
+	</ui:define>
+</ui:composition>
