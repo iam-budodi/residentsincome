@@ -36,23 +36,24 @@ public class IndividualIncomeBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Conversation conversation;
-
-	@Inject
 	private Logger LOG;
 
-	@Resource
-	private SessionContext sessionContext;
+	private Long id;
+	private IndividualIncome incomeClass;
+	
+	@Inject
+	private Conversation conversation;
 
 	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
-
-	private Long id;
+	
 	private int page;
 	private long count;
 	private List<IndividualIncome> pageItems;
-	private IndividualIncome incomeClass;
 	private IndividualIncome defaultIncomeClass = new IndividualIncome();
+
+	@Resource
+	private SessionContext sessionContext;
 	private IndividualIncome addIncomeClass = new IndividualIncome();
 
 	public Long getId() {

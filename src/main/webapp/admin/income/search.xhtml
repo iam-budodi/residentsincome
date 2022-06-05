@@ -9,18 +9,21 @@
 	template="/resources/scaffold/admin-template.xhtml">
 
 	<f:metadata>
-		<f:viewParam name="page" value="#{individualIncomeBean.page}" />
-		<f:event listener="#{individualIncomeBean.paginate}"
+		<f:viewParam name="page" value='#{individualIncomeBean.page}' />
+		<f:event listener='#{individualIncomeBean.paginate}'
 			type="preRenderView" />
 	</f:metadata>
-	<ui:param name="pageTitle" value="Individual Income Classes" />
+	
+	<ui:define name="pageTitle">Admin Panel</ui:define>
 	<ui:define name="header">Income Classes</ui:define>
 	<ui:define name="subheader">Add New Income Class</ui:define>
 	<ui:define name="footer" />
+	
 	<ui:define name="main">
-		<h:form id="create">
+		<h:form id="search">
 			<f:validateBean disabled="true">
-				<h:panelGroup styleClass="create">
+				<h:panelGroup styleClass="search">
+				
 					<h:panelGrid columnClasses="label,component,required" columns="3">
 						<h:outputLabel for="individualIncomeBeanDefaultCategory"
 							value="Category:" />
@@ -37,6 +40,7 @@
 							<h:message for="individualIncomeBeanDefaultCategory"
 								styleClass="error" />
 						</h:panelGroup>
+						<h:outputText/>
 						<h:outputLabel for="individualIncomeBeanDefaultAmount"
 							value="From Amount:" />
 						<h:panelGroup>
@@ -45,6 +49,7 @@
 							<h:message for="individualIncomeBeanDefaultAmount"
 								styleClass="error" />
 						</h:panelGroup>
+						<h:outputText/>
 						<h:outputLabel for="individualIncomeBeanDefaultMaxLimit"
 							value="Maximum Limit:" />
 						<h:panelGroup>
@@ -53,7 +58,8 @@
 							<h:message for="individualIncomeBeanDefaultMaxLimit"
 								styleClass="error" />
 						</h:panelGroup>
-						Tax Per Class<h:outputLabel
+						<h:outputText/>
+						<h:outputLabel
 							for="individualIncomeBeanDefaultTaxPerClass"
 							value="Tax Per Income Class:" />
 						<h:panelGroup>
@@ -62,26 +68,29 @@
 							<h:message for="individualIncomeBeanDefaultTaxPerClass"
 								styleClass="error" />
 						</h:panelGroup>
+						<h:outputText/>
 						<h:outputLabel for="individualIncomeBeanDefaultTaxOnExcessIncome"
 							value="Tax On Excess Income:" />
 						<h:panelGroup>
 							<h:inputText id="individualIncomeBeanDefaultTaxOnExcessIncome"
-								value="#{individualIncomeBean.defaultIncomeClass.taxPerClass}" />
+								value="#{individualIncomeBean.defaultIncomeClass.taxOnExcessIncome}" />
 							<h:message for="individualIncomeBeanDefaultTaxOnExcessIncome"
 								styleClass="error" />
 						</h:panelGroup>
+						<h:outputText/>
 						<h:outputLabel for="individualIncomeBeanDefaultDescription"
 							value="Description:" />
 						<h:panelGroup>
 							<h:inputText id="individualIncomeBeanDefaultDescription"
-								value="#{individualIncomeBean.defaultIncomeClass.taxPerClass}" />
+								value="#{individualIncomeBean.defaultIncomeClass.description}" />
 							<h:message for="individualIncomeBeanDefaultDescription"
 								styleClass="error" />
 						</h:panelGroup>
+						<h:outputText/>
 					</h:panelGrid>
 					<h:panelGroup styleClass="buttons">
 						<h:commandLink value="Create"
-							action='#{individualIncomeBean.initializeConversationScope()}'
+							action='#{individualIncomeBean.initializeConversationScope}'
 							styleClass="btn btn-primary" />
 						<h:commandLink value="Search"
 							action='#{individualIncomeBean.search}'
@@ -89,6 +98,7 @@
 					</h:panelGroup>
 				</h:panelGroup>
 			</f:validateBean>
+			
 			<h:dataTable id="individualIncomeBeanPageItems"
 				styleClass="data-table" value="#{individualIncomeBean.pageItems}"
 				var="_item">
