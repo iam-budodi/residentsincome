@@ -106,37 +106,34 @@
 					<f:facet name="header">
 						<h:outputText value="Category" />
 					</f:facet>
-					<!-- Implement view navigation -->
+                    <h:link outcome="/admin/income/view">
+                    <f:param name="id" value="#{_item.id}"/>
+                    <h:outputText id="itemCategory" value="#{_item.category}" />
+                    </h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="From Amount" />
 					</f:facet>
-					<!-- Implement view navigation -->
+					<h:outputText id="itemInitAmount" value="#{_item.classAmount}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Maximum Limit" />
 					</f:facet>
-					<!-- Implement view navigation -->
+					<h:outputText id="itemMaxAmtLimit" value="#{_item.classLimit}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Tax Per Income Class" />
 					</f:facet>
-					<!-- Implement view navigation -->
+					<h:outputText id="itemTaxPerClass" value="#{_item.taxPerClass}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Tax On Excess Income" />
 					</f:facet>
-					<!-- Implement view navigation -->
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Description" />
-					</f:facet>
-					<!-- Implement view navigation -->
+					<h:outputText id="itemTaxOnExcessIncome" value="#{_item.taxOnExcessIncome}" />
 				</h:column>
 			</h:dataTable>
 			<!-- implement pagenator facelet -->
