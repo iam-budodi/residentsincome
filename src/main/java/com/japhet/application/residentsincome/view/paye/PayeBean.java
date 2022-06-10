@@ -124,6 +124,7 @@ public class PayeBean implements Serializable {
 				paye.setHeslbDeduction(0.0);
 			}
 			paye.setTakeHome(getAmount() - paye.getTotalDeduction());
+			paye.setIncomeClass(getIncomeClass().getCategory());
 			LOG.info("COMPUTED PAYE : " + paye);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,

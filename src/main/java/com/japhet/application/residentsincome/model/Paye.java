@@ -25,20 +25,20 @@ public class Paye implements Serializable {
 	private Double takeHome;
 
 	@NotNull
-	private Double individualClassLimit;
+	private IncomeClass incomeClass;
 
 	public Paye() {
 	}
 
 	public Paye(Double socialSecurityFund, Double taxableAmount, Double paye,
 				Double heslbDeduction, Double takeHome,
-				Double individualClassLimit) {
+				IncomeClass incomeClass) {
 		this.socialSecurityFund = socialSecurityFund;
 		this.taxableAmount = taxableAmount;
 		this.paye = paye;
 		this.heslbDeduction = heslbDeduction;
 		this.takeHome = takeHome;
-		this.individualClassLimit = individualClassLimit;
+		this.incomeClass = incomeClass;
 	}
 
 	public Double getSocialSecurityFund() {
@@ -81,12 +81,12 @@ public class Paye implements Serializable {
 		this.takeHome = takeHome;
 	}
 
-	public Double getIndividualClassLimit() {
-		return individualClassLimit;
+	public IncomeClass getIncomeClass() {
+		return incomeClass;
 	}
 
-	public void setIndividualClassLimit(Double individualClassLimit) {
-		this.individualClassLimit = individualClassLimit;
+	public void setIncomeClass(IncomeClass incomeClass) {
+		this.incomeClass = incomeClass;
 	}
 
 	public double getTotalDeduction() {
@@ -95,8 +95,8 @@ public class Paye implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(socialSecurityFund, heslbDeduction,
-					individualClassLimit, paye, takeHome, taxableAmount);
+		return Objects.hash(socialSecurityFund, heslbDeduction, incomeClass,
+					paye, takeHome, taxableAmount);
 	}
 
 	@Override
@@ -107,14 +107,13 @@ public class Paye implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Paye other = (Paye) obj;
-		return Objects.equals(socialSecurityFund, other.socialSecurityFund)
-					&& Objects.equals(heslbDeduction, other.heslbDeduction)
-					&& Objects.equals(individualClassLimit,
-								other.individualClassLimit)
-					&& Objects.equals(paye, other.paye)
-					&& Objects.equals(takeHome, other.takeHome)
-					&& Objects.equals(taxableAmount, other.taxableAmount);
+		Paye paye = (Paye) obj;
+		return Objects.equals(socialSecurityFund, paye.socialSecurityFund)
+					&& Objects.equals(heslbDeduction, paye.heslbDeduction)
+					&& Objects.equals(incomeClass, paye.incomeClass)
+					&& Objects.equals(paye, paye.paye)
+					&& Objects.equals(takeHome, paye.takeHome)
+					&& Objects.equals(taxableAmount, paye.taxableAmount);
 	}
 
 	@Override
@@ -122,8 +121,7 @@ public class Paye implements Serializable {
 		return "Paye [socialSecurityFund=" + socialSecurityFund
 					+ ", taxableAmount=" + taxableAmount + ", paye=" + paye
 					+ ", heslbDeduction=" + heslbDeduction + ", takeHome="
-					+ takeHome + ", individualClassLimit="
-					+ individualClassLimit + "]";
+					+ takeHome + ", incomeClass=" + incomeClass + "]";
 	}
 
 }
