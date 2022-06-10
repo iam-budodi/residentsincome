@@ -102,20 +102,15 @@ public class PayeBean implements Serializable {
 	}
 
 	public void searchIncomeClass() {
-//		if (FacesContext.getCurrentInstance().isPostback()) {
-//			return;
-//		}
-
 		LOG.info("AMOUNT INPUT : " + getAmount());
 		if (conversation.isTransient()) {
 			conversation.begin();
 			conversation.setTimeout(1800000L);
 		}
 
-//		IndividualIncome incomeClassFound;
 		paye.setSocialSecurityFund(getAmount() * tenth);
 		paye.setTaxableAmount(getAmount() - (getAmount() * tenth));
-//		IndividualIncome incomeClassFound = findIncomeClass(Math.round(paye.getTaxableAmount()));
+		
 		try {
 			LOG.info("FOUND INCOME CLASS : " + findIncomeClass(
 						Math.round(paye.getTaxableAmount())));
@@ -134,29 +129,6 @@ public class PayeBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(e.getMessage()));
 		}
-
-//		double paye = calculatePaye(incomeClassFound);
-
-		// TODO: check if there is value of taxable income
-		// ========= MWANZO ================
-//		paye.setPaye(calculatePaye(getIncomeClass()));
-//
-//		// TODO: check how you can handle hlsb smoothly
-//		if (heslb) {
-////			heslbDeduction += getAmount() * fifteenPercent;
-//			paye.setHeslbDeduction(getAmount() * fifteenPercent);
-//		} else {
-//			paye.setHeslbDeduction(0.0);
-//		}
-//
-//		paye.setTakeHome(getAmount() - paye.getTotalDeduction());
-//		
-//		LOG.info("COMPUTED PAYE : " + paye);
-		// ====== MWISHO =========
-//		criteria.where(builder.and(builder.notEqual(builder.literal(taxable),
-//					root.<Long>get("classAmount")), builder.between(builder.literal(taxable),
-//								root.<Long>get("classAmount"),
-//								root.<Long>get("classLimit"))));
 	}
 
 	private IndividualIncome findIncomeClass(Long taxable) {
@@ -171,18 +143,8 @@ public class PayeBean implements Serializable {
 								root.<Long>get("classLimit")),
 					builder.and(builder.notEqual(builder.literal(taxable),
 								root.<Long>get("classAmount"))));
+		
 		return entityManager.createQuery(criteria).getSingleResult();
-
-//		use this when criteria fails
-//		String statementString = "SELECT income FROM Income income "
-//					+ "WHERE :earnedIncome BETWEEN income.income AND income.incomeLimit "
-//					+ "AND :earnedIncome != income.income";
-//		TypedQuery<IndividualIncome> query = entityManager
-//		.createQuery(statementString, IndividualIncome.class);
-//query.setParameter("earnedIncome", earnedIncome);
-//
-//return query.getSingleResult();
-//
 	}
 
 	private double calculatePaye(IndividualIncome incomeClass) {
