@@ -58,7 +58,7 @@ public class PayeBean implements Serializable {
 	@Hundredth
 	private Double hundredth;
 
-	private Paye paye;
+	private Paye paye = new Paye();
 	private double amount;
 	private boolean heslb;
 	private IndividualIncome incomeClass;
@@ -106,6 +106,7 @@ public class PayeBean implements Serializable {
 //			return;
 //		}
 
+		LOG.info("AMOUNT INPUT : " + getAmount());
 		if (conversation.isTransient()) {
 			conversation.begin();
 			conversation.setTimeout(1800000L);
