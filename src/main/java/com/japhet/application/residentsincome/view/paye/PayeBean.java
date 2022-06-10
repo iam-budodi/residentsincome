@@ -23,11 +23,15 @@ import javax.persistence.criteria.Root;
 
 import com.japhet.application.residentsincome.model.IndividualIncome;
 import com.japhet.application.residentsincome.model.Paye;
+import com.japhet.application.residentsincome.util.Auditable;
 import com.japhet.application.residentsincome.util.FifteenPercent;
 import com.japhet.application.residentsincome.util.Hundredth;
+import com.japhet.application.residentsincome.util.Loggable;
 import com.japhet.application.residentsincome.util.Tenth;
 
 @Named
+@Auditable
+@Loggable
 @Stateful
 @ConversationScoped
 public class PayeBean implements Serializable {
@@ -98,6 +102,7 @@ public class PayeBean implements Serializable {
 	public String searchConversation() {
 		conversation.begin();
 		conversation.setTimeout(1800000L);
+		LOG.info("CONVERSATION SCOPED : " + conversation.toString());
 		return "retrieve?faces-redirect=true";
 	}
 
@@ -126,6 +131,8 @@ public class PayeBean implements Serializable {
 			paye.setTakeHome(getAmount() - paye.getTotalDeduction());
 			paye.setIncomeClass(getIncomeClass().getCategory());
 			LOG.info("COMPUTED PAYE : " + paye);
+			
+			conversation.end();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(e.getMessage()));

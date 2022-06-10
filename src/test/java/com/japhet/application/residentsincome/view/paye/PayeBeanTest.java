@@ -20,8 +20,12 @@ import org.junit.runner.RunWith;
 import com.japhet.application.residentsincome.model.IncomeClass;
 import com.japhet.application.residentsincome.model.IndividualIncome;
 import com.japhet.application.residentsincome.model.Paye;
+import com.japhet.application.residentsincome.util.AuditInterceptor;
+import com.japhet.application.residentsincome.util.Auditable;
 import com.japhet.application.residentsincome.util.FifteenPercent;
 import com.japhet.application.residentsincome.util.Hundredth;
+import com.japhet.application.residentsincome.util.Loggable;
+import com.japhet.application.residentsincome.util.LoggingInterceptor;
 import com.japhet.application.residentsincome.util.PercentProducer;
 import com.japhet.application.residentsincome.util.ResourceProducer;
 import com.japhet.application.residentsincome.util.Tenth;
@@ -58,6 +62,8 @@ public class PayeBeanTest {
 					.addClass(IndividualIncomeBean.class)
 					.addClass(IncomeClass.class).addClass(IncomeClass.class)
 					.addClass(PayeBean.class).addClass(Paye.class)
+					.addClass(Loggable.class).addClass(LoggingInterceptor.class)
+					.addClass(Auditable.class).addClass(AuditInterceptor.class)
 					.addClass(ResourceProducer.class)
 					.addClass(PercentProducer.class).addClass(Tenth.class)
 					.addClass(FifteenPercent.class).addClass(Hundredth.class)
@@ -156,6 +162,20 @@ public class PayeBeanTest {
 	public void shouldRetrieveMiddleIncomeClass() {
 		// Retrieve specified database records
 		payeBean.setAmount(780000);
+		payeBean.searchIncomeClass();
+		LOG.info("IN TEST: " + payeBean.getPaye());
+		assertNotNull(payeBean.getPaye());
+		LOG.info("IN TEST: " + payeBean.getIncomeClass());
+		assertTrue(MIDDLE.getCategory()
+					.equals(payeBean.getIncomeClass().getCategory()));
+	}
+	
+	@Test
+	@InSequence(8)
+	public void shouldComputeStudentLoan() {
+		// Retrieve specified database records
+		payeBean.setAmount(780000);
+		payeBean.setHeslb(true);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
