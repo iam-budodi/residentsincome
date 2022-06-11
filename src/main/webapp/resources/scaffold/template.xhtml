@@ -48,13 +48,14 @@
 						<ui:insert name="title" />
 					</h3>
 					<nav class="nav nav-masthead justify-content-center float-md-end">
-                        <h:link class="nav-link active" aria-current="page"
-                            outcome="/main.xhtml" value="Home" />
-                        <h:link class="nav-link" aria-current="page"
-                            outcome="/admin/income/search.xhtml" value="Admin" rendered="true"/>
-                        <!-- Add Login navigation -->
-                        <a class="nav-link" href="#">Features</a> <a class="nav-link"
-                            href="#">Contact</a>
+						<h:link class="nav-link active" aria-current="page"
+							outcome="/main.xhtml" value="Home" />
+						<h:link class="nav-link" aria-current="page"
+							outcome="/admin/income/search.xhtml" value="Admin"
+							rendered="true" />
+						<!-- Add Login navigation -->
+						<a class="nav-link" href="#">Features</a> <a class="nav-link"
+							href="#">Contact</a>
 					</nav>
 				</div>
 			</header>
@@ -64,12 +65,13 @@
 					<ui:insert name="hero" />
 				</h1>
 				<ui:insert name="home" />
+				<ui:insert name="paye"/>
 			</main>
 			<hr />
 			<footer class="mt-auto text-white-50">
 				<p>
 					Developed by <a href="https://japhet.vercel.app/"
-						class="text-white">Japhet Sebastian</a>
+						class="text-muted">Japhet Sebastian</a>
 				</p>
 			</footer>
 		</div>

@@ -11,10 +11,12 @@
 		<p class="lead">PAYE is a one-page template for building simple
 			and beautiful home pages. Download, edit the text, and add your own
 			fullscreen background photo to make it your own.</p>
+	</ui:define>
+	<ui:define name="paye">
 		<p class="lead">
-			<a href="#"
-				class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn
-				more</a>
+			<h:link outcome="/paye/retrieve"
+				class="btn btn-lg btn-secondary fw-bold border-white bg-white"
+				value="Get your PAYE" />
 		</p>
 	</ui:define>
 </ui:composition>

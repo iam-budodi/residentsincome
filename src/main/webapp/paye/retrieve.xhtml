@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	template="/resources/scaffold/template.xhtml">
+
+	<ui:define name="title">PAYE Evaluation</ui:define>
+	<ui:define name="home">
+		<h:form class="form-input">
+			<img class="mb-4" src='#{resource["bootstrap-logo.svg"]}'
+				alt="Income and Income Calculator" width="72" height="57" />
+
+			<h1 class="h4 mb-3 fw-normal">Please enter your gross salary</h1>
+
+			<div class="form-floating mb-3">
+				<h:inputText type="text" class="form-control" id="floatingInput"
+					aria-label="Amount (to the nearest tzs)"
+					pt:placeholder="99999999.99" pt:required="true"
+					value="#{payeBean.amount}" />
+				<h:outputLabel for="floatingInput" class="text-muted"
+					value="Gross Salary" />
+			</div>
+
+			<div class="checkbox mb-3">
+				<h:selectBooleanCheckbox class="mx-2" id="checkbox"
+					value="#{payeBean.heslb}" />
+				<h:outputLabel for="checkbox" value="Are you HESLB beneficiary?" />
+
+			</div>
+			<h:commandButton class="w-100 btn btn-lg btn-primary" value="Submit"
+				action="#{payeBean.searchIncomeClass()}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

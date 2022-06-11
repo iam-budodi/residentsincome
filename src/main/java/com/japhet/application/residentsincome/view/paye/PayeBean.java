@@ -23,15 +23,11 @@ import javax.persistence.criteria.Root;
 
 import com.japhet.application.residentsincome.model.IndividualIncome;
 import com.japhet.application.residentsincome.model.Paye;
-import com.japhet.application.residentsincome.util.Auditable;
 import com.japhet.application.residentsincome.util.FifteenPercent;
 import com.japhet.application.residentsincome.util.Hundredth;
-import com.japhet.application.residentsincome.util.Loggable;
 import com.japhet.application.residentsincome.util.Tenth;
 
 @Named
-@Auditable
-@Loggable
 @Stateful
 @ConversationScoped
 public class PayeBean implements Serializable {
@@ -115,7 +111,7 @@ public class PayeBean implements Serializable {
 
 		paye.setSocialSecurityFund(getAmount() * tenth);
 		paye.setTaxableAmount(getAmount() - (getAmount() * tenth));
-		
+
 		try {
 			LOG.info("FOUND INCOME CLASS : " + findIncomeClass(
 						Math.round(paye.getTaxableAmount())));
@@ -151,7 +147,7 @@ public class PayeBean implements Serializable {
 								root.<Long>get("classLimit")),
 					builder.and(builder.notEqual(builder.literal(taxable),
 								root.<Long>get("classAmount"))));
-		
+
 		return entityManager.createQuery(criteria).getSingleResult();
 	}
 
