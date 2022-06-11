@@ -59,7 +59,6 @@ public class PayeBean implements Serializable {
 	private Double hundredth;
 
 	private Paye paye = new Paye();
-	private double amount;
 	private boolean heslb;
 	private IndividualIncome incomeClass;
 
@@ -69,14 +68,6 @@ public class PayeBean implements Serializable {
 
 	public void setPaye(Paye paye) {
 		this.paye = paye;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
 	}
 
 	public boolean isHeslb() {
@@ -91,48 +82,44 @@ public class PayeBean implements Serializable {
 		return incomeClass;
 	}
 
-	public void setIncomeClass(IndividualIncome incomeClass) {
-		this.incomeClass = incomeClass;
-	}
-
-	public String searchConversation() {
-		conversation.begin();
-		conversation.setTimeout(1800000L);
-		LOG.info("CONVERSATION SCOPED : " + conversation.toString());
-		return "retrieve?faces-redirect=true";
-	}
-
-	public void searchIncomeClass() {
-		LOG.info("AMOUNT INPUT : " + getAmount());
+	public void retrievalCriteria() {
+		if (FacesContext.getCurrentInstance().isPostback()) {
+			return;
+		}
+		
 		if (conversation.isTransient()) {
 			conversation.begin();
 			conversation.setTimeout(1800000L);
 		}
 
-		paye.setSocialSecurityFund(getAmount() * tenth);
-		paye.setTaxableAmount(getAmount() - (getAmount() * tenth));
-
+		paye.setSocialSecurityFund(paye.getSalary() * tenth);
+		paye.setTaxableAmount(paye.getSalary() - (paye.getSalary() * tenth));
+		
 		try {
-			LOG.info("FOUND INCOME CLASS : " + findIncomeClass(
-						Math.round(paye.getTaxableAmount())));
-			setIncomeClass(
-						findIncomeClass(Math.round(paye.getTaxableAmount())));
-			paye.setPaye(calculatePaye(getIncomeClass()));
-
-			if (heslb) {
-				paye.setHeslbDeduction(getAmount() * fifteenPercent);
-			} else {
-				paye.setHeslbDeduction(0.0);
-			}
-			paye.setTakeHome(getAmount() - paye.getTotalDeduction());
-			paye.setIncomeClass(getIncomeClass().getCategory());
-			LOG.info("COMPUTED PAYE : " + paye);
 			
-			conversation.end();
+			incomeClass = findIncomeClass(
+						Math.round(paye.getTaxableAmount()));
+			LOG.info("FOUND INCOME CLASS : " + incomeClass);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(e.getMessage()));
 		}
+	}
+
+	public void searchIncomeClass() {
+		conversation.end();
+
+			paye.setPaye(calculatePaye());
+
+			if (heslb) {
+				paye.setHeslbDeduction(paye.getSalary() * fifteenPercent);
+			} else {
+				paye.setHeslbDeduction(0.0);
+			}
+			
+			paye.setTakeHome(paye.getSalary() - paye.getTotalDeduction());
+			paye.setIncomeClass(incomeClass.getCategory());
+			LOG.info("COMPUTED PAYE : " + paye);
 	}
 
 	private IndividualIncome findIncomeClass(Long taxable) {
@@ -151,7 +138,7 @@ public class PayeBean implements Serializable {
 		return entityManager.createQuery(criteria).getSingleResult();
 	}
 
-	private double calculatePaye(IndividualIncome incomeClass) {
+	private double calculatePaye() {
 		double percent = incomeClass.getTaxOnExcessIncome() * hundredth;
 		double taxOnExcessIncome = percent
 					* (paye.getTaxableAmount() - incomeClass.getClassAmount());
