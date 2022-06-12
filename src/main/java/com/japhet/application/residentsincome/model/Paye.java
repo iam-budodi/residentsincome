@@ -27,24 +27,14 @@ public class Paye implements Serializable {
 
 	@NotNull
 	private Double takeHome;
+	
+	private boolean displayTable;
 
 	@NotNull
 	private IncomeClass incomeClass;
 
 	public Paye() {
 	}
-//
-//	public Paye(Double socialSecurityFund, Double taxableAmount, Double paye,
-//				Double heslbDeduction, Double takeHome,
-//				IncomeClass incomeClass) {
-//		this.socialSecurityFund = socialSecurityFund;
-//		this.taxableAmount = taxableAmount;
-//		this.paye = paye;
-//		this.heslbDeduction = heslbDeduction;
-//		this.takeHome = takeHome;
-//		this.incomeClass = incomeClass;
-//	}
-
 	
 	public Double getSocialSecurityFund() {
 		return socialSecurityFund;
@@ -104,6 +94,15 @@ public class Paye implements Serializable {
 
 	public void setSalary(Double salary) {
 		this.salary = salary;
+	}
+	
+
+	public boolean isDisplayTable() {
+		return displayTable;
+	}
+
+	public void setDisplayTable(boolean displayTable) {
+		this.displayTable = displayTable;
 	}
 
 	@Override
