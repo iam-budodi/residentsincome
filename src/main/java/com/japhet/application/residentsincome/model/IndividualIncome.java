@@ -31,7 +31,7 @@ public class IndividualIncome implements Serializable {
 	private Long id;
 
 	@NotNull
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private IncomeClass category;
 
 	@NotNull
@@ -54,8 +54,8 @@ public class IndividualIncome implements Serializable {
 	@Column(name = "tax_on_excess_income")
 	private Long taxOnExcessIncome;
 
-	@Column(length = 1000)
-	@Size(min = 1, max = 1000)
+	@Column(length = 5000)
+	@Size(min = 1, max = 5000)
 	private String description;
 
 	public IndividualIncome() {

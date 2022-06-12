@@ -10,8 +10,12 @@ public class Paye implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
+	private Double salary;
+	
+	@NotNull
 	private Double socialSecurityFund;
 
+	
 	@NotNull
 	private Double taxableAmount;
 
@@ -93,10 +97,18 @@ public class Paye implements Serializable {
 		return socialSecurityFund + paye + heslbDeduction;
 	}
 
+	public Double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(socialSecurityFund, heslbDeduction, incomeClass,
-					paye, takeHome, taxableAmount);
+		return Objects.hash(heslbDeduction, incomeClass, paye, salary,
+						socialSecurityFund, takeHome, taxableAmount);
 	}
 
 	@Override
@@ -108,20 +120,23 @@ public class Paye implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Paye paye = (Paye) obj;
-		return Objects.equals(socialSecurityFund, paye.socialSecurityFund)
-					&& Objects.equals(heslbDeduction, paye.heslbDeduction)
-					&& Objects.equals(incomeClass, paye.incomeClass)
-					&& Objects.equals(paye, paye.paye)
-					&& Objects.equals(takeHome, paye.takeHome)
-					&& Objects.equals(taxableAmount, paye.taxableAmount);
+		return Objects.equals(heslbDeduction, paye.heslbDeduction)
+						&& incomeClass == paye.incomeClass
+						&& Objects.equals(paye, paye.paye)
+						&& Objects.equals(salary, paye.salary)
+						&& Objects.equals(socialSecurityFund,
+										paye.socialSecurityFund)
+						&& Objects.equals(takeHome, paye.takeHome)
+						&& Objects.equals(taxableAmount, paye.taxableAmount);
 	}
 
 	@Override
 	public String toString() {
-		return "Paye [socialSecurityFund=" + socialSecurityFund
-					+ ", taxableAmount=" + taxableAmount + ", paye=" + paye
-					+ ", heslbDeduction=" + heslbDeduction + ", takeHome="
-					+ takeHome + ", incomeClass=" + incomeClass + "]";
+		return "Paye [salary=" + salary + ", socialSecurityFund="
+						+ socialSecurityFund + ", taxableAmount="
+						+ taxableAmount + ", paye=" + paye + ", heslbDeduction="
+						+ heslbDeduction + ", takeHome=" + takeHome
+						+ ", incomeClass=" + incomeClass + "]";
 	}
 
 }

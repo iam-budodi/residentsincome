@@ -109,7 +109,7 @@ public class PayeBeanTest {
 	@InSequence(3)
 	public void shouldRetrieveUntaxableIncomeClass() {
 		// Retrieve specified database records
-		payeBean.setAmount(150000.56);
+		payeBean.getPaye().setSalary(150000.56);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
@@ -122,7 +122,7 @@ public class PayeBeanTest {
 	@InSequence(4)
 	public void shouldStillRetrieveUntaxableIncomeClass() {
 		// Retrieve specified database records
-		payeBean.setAmount(300000);
+		payeBean.getPaye().setSalary(300000.0);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
@@ -135,7 +135,7 @@ public class PayeBeanTest {
 	@InSequence(5)
 	public void shouldAlsoRetrieveUntaxableIncomeClass() {
 		// Retrieve specified database records
-		payeBean.setAmount(300000.48);
+		payeBean.getPaye().setSalary(300000.48);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
@@ -148,7 +148,7 @@ public class PayeBeanTest {
 	@InSequence(6)
 	public void shouldRetrieveLowIncomeClass() {
 		// Retrieve specified database records
-		payeBean.setAmount(300000.59);
+		payeBean.getPaye().setSalary(300000.59);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
@@ -161,7 +161,7 @@ public class PayeBeanTest {
 	@InSequence(7)
 	public void shouldRetrieveMiddleIncomeClass() {
 		// Retrieve specified database records
-		payeBean.setAmount(780000);
+		payeBean.getPaye().setSalary(780000.0);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
 		assertNotNull(payeBean.getPaye());
@@ -174,7 +174,7 @@ public class PayeBeanTest {
 	@InSequence(8)
 	public void shouldComputeStudentLoan() {
 		// Retrieve specified database records
-		payeBean.setAmount(780000);
+		payeBean.getPaye().setSalary(780000.0);
 		payeBean.setHeslb(true);
 		payeBean.searchIncomeClass();
 		LOG.info("IN TEST: " + payeBean.getPaye());
