@@ -108,11 +108,11 @@ public class PayeBean implements Serializable {
 		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
 
 		try {
-			LOG.info("FOUND INPUT INCOME CLASS : " + findIncomeClass(
-							Math.round(paye.getTaxableAmount())));
-			setIncomeClass(findIncomeClass(
-							Math.round(paye.getTaxableAmount())));
-			paye.setPaye(calculatePaye(getIncomeClass()));
+			findIncomeClass(Math.round(paye.getTaxableAmount()));
+			LOG.info("FOUND INPUT INCOME CLASS : " + incomeClass);
+//			setIncomeClass(findIncomeClass(
+//							Math.round(paye.getTaxableAmount())));
+			paye.setPaye(calculatePaye());
 
 			if (heslb) {
 				paye.setHeslbDeduction(getPaye().getSalary() * fifteenPercent);
@@ -130,7 +130,7 @@ public class PayeBean implements Serializable {
 		}
 	}
 
-	private IndividualIncome findIncomeClass(Long taxable) {
+	private void findIncomeClass(Long taxable) {
 		LOG.info("AMOUNT CRITERIA TAXABLE INPUT INCOME : " + taxable);
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<IndividualIncome> criteria = builder
@@ -144,16 +144,74 @@ public class PayeBean implements Serializable {
 										root.<Long>get("classAmount"))));
 
 		LOG.info("AMOUNT TAXABLE INPUT INCOME : " + entityManager.createQuery(criteria).getSingleResult());
-		return entityManager.createQuery(criteria).getSingleResult();
+		incomeClass = entityManager.createQuery(criteria).getSingleResult();
 	}
 
-	private double calculatePaye(IndividualIncome incomeClass) {
+	private double calculatePaye() {
 		double percent = incomeClass.getTaxOnExcessIncome() * hundredth;
 		double taxOnExcessIncome = percent * (paye.getTaxableAmount()
 						- incomeClass.getClassAmount());
 
 		return taxOnExcessIncome + incomeClass.getTaxPerClass();
 	}
+	
+//	public void searchIncomeClass() {
+//		LOG.info("AMOUNT INPUT INCOME : " + getPaye().getSalary());
+////		if (conversation.isTransient()) {
+////			conversation.begin();
+////			conversation.setTimeout(1800000L);
+////		}
+//
+//		paye.setSocialSecurityFund(getPaye().getSalary() * tenth);
+//		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
+//
+//		try {
+//			LOG.info("FOUND INPUT INCOME CLASS : " + findIncomeClass(
+//							Math.round(paye.getTaxableAmount())));
+//			setIncomeClass(findIncomeClass(
+//							Math.round(paye.getTaxableAmount())));
+//			paye.setPaye(calculatePaye(getIncomeClass()));
+//
+//			if (heslb) {
+//				paye.setHeslbDeduction(getPaye().getSalary() * fifteenPercent);
+//			} else {
+//				paye.setHeslbDeduction(0.0);
+//			}
+//			paye.setTakeHome(getPaye().getSalary() - paye.getTotalDeduction());
+//			paye.setIncomeClass(getIncomeClass().getCategory());
+//			LOG.info("COMPUTED PAYE : " + paye);
+//
+////			conversation.end();
+//		} catch (Exception e) {
+//			FacesContext.getCurrentInstance().addMessage(null,
+//							new FacesMessage(e.getMessage()));
+//		}
+//	}
+	
+//	private IndividualIncome findIncomeClass(Long taxable) {
+//		LOG.info("AMOUNT CRITERIA TAXABLE INPUT INCOME : " + taxable);
+//		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//		CriteriaQuery<IndividualIncome> criteria = builder
+//						.createQuery(IndividualIncome.class);
+//		Root<IndividualIncome> root = criteria.from(IndividualIncome.class);
+//		criteria.select(root);
+//		criteria.where(builder.between(builder.literal(taxable),
+//						root.<Long>get("classAmount"),
+//						root.<Long>get("classLimit")),
+//						builder.and(builder.notEqual(builder.literal(taxable),
+//										root.<Long>get("classAmount"))));
+//
+//		LOG.info("AMOUNT TAXABLE INPUT INCOME : " + entityManager.createQuery(criteria).getSingleResult());
+//		return entityManager.createQuery(criteria).getSingleResult();
+//	}
+	
+//	private double calculatePaye(IndividualIncome incomeClass) {
+//		double percent = incomeClass.getTaxOnExcessIncome() * hundredth;
+//		double taxOnExcessIncome = percent * (paye.getTaxableAmount()
+//						- incomeClass.getClassAmount());
+//		
+//		return taxOnExcessIncome + incomeClass.getTaxPerClass();
+//	}
 
 //	public Converter<IndividualIncome> getConverter() {
 //		final PayeBean ejbProxy = sessionContext
