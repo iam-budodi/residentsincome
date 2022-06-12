@@ -5,7 +5,7 @@
 	xsi:schemaLocation="
         http://xmlns.jcp.org/xml/ns/persistence
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-        
+
 	<persistence-unit name="residentsIncomePU"
 		transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
@@ -19,6 +19,8 @@
 			<property
 				name="javax.persistence.schema-generation.drop-source"
 				value="metadata" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="import_postgres.sql" />
 
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.show_sql" value="true" />

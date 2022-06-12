@@ -50,11 +50,11 @@ public class IncomeRepositoryTest {
 		assertNotNull(incomeRepository);
 	}
 
-	@Test
-	@InSequence(2)
-	public void shouldNotGetIncomeClass() {
-		assertEquals(0, incomeRepository.listAllIncomes().size());
-	}
+//	@Test
+//	@InSequence(2)
+//	public void shouldNotGetIncomeClass() {
+//		assertEquals(0, incomeRepository.listAllIncomes().size());
+//	}
 
 	@Test
 	@InSequence(3)
@@ -80,11 +80,11 @@ public class IncomeRepositoryTest {
 		lowClassId = lowClass.getId();
 	}
 
-	@Test
-	@InSequence(5)
-	public void shouldGetAvailableClass() {
-		assertEquals(2, incomeRepository.listAllIncomes().size());
-	}
+//	@Test
+//	@InSequence(5)
+//	public void shouldGetAvailableClass() {
+//		assertEquals(2, incomeRepository.listAllIncomes().size());
+//	}
 
 	@Test
 	@InSequence(6)

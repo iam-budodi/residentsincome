@@ -10,11 +10,12 @@ public class Paye implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	private double salary;
+	private Double salary;
 	
 	@NotNull
 	private Double socialSecurityFund;
 
+	
 	@NotNull
 	private Double taxableAmount;
 
@@ -44,14 +45,6 @@ public class Paye implements Serializable {
 //		this.incomeClass = incomeClass;
 //	}
 
-
-	public double getSalary() {
-		return salary;
-	}
-
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
 	
 	public Double getSocialSecurityFund() {
 		return socialSecurityFund;
@@ -105,6 +98,14 @@ public class Paye implements Serializable {
 		return socialSecurityFund + paye + heslbDeduction;
 	}
 
+	public Double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(heslbDeduction, incomeClass, paye, salary,
@@ -121,14 +122,13 @@ public class Paye implements Serializable {
 			return false;
 		Paye paye = (Paye) obj;
 		return Objects.equals(heslbDeduction, paye.heslbDeduction)
-					&& incomeClass == paye.incomeClass
-					&& Objects.equals(paye, paye.paye)
-					&& Double.doubleToLongBits(salary) == Double
-								.doubleToLongBits(paye.salary)
-					&& Objects.equals(socialSecurityFund,
-								paye.socialSecurityFund)
-					&& Objects.equals(takeHome, paye.takeHome)
-					&& Objects.equals(taxableAmount, paye.taxableAmount);
+						&& incomeClass == paye.incomeClass
+						&& Objects.equals(paye, paye.paye)
+						&& Objects.equals(salary, paye.salary)
+						&& Objects.equals(socialSecurityFund,
+										paye.socialSecurityFund)
+						&& Objects.equals(takeHome, paye.takeHome)
+						&& Objects.equals(taxableAmount, paye.taxableAmount);
 	}
 
 	@Override
