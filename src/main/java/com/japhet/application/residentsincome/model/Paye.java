@@ -33,18 +33,19 @@ public class Paye implements Serializable {
 
 	public Paye() {
 	}
+//
+//	public Paye(Double socialSecurityFund, Double taxableAmount, Double paye,
+//				Double heslbDeduction, Double takeHome,
+//				IncomeClass incomeClass) {
+//		this.socialSecurityFund = socialSecurityFund;
+//		this.taxableAmount = taxableAmount;
+//		this.paye = paye;
+//		this.heslbDeduction = heslbDeduction;
+//		this.takeHome = takeHome;
+//		this.incomeClass = incomeClass;
+//	}
 
-	public Paye(Double socialSecurityFund, Double taxableAmount, Double paye,
-				Double heslbDeduction, Double takeHome,
-				IncomeClass incomeClass) {
-		this.socialSecurityFund = socialSecurityFund;
-		this.taxableAmount = taxableAmount;
-		this.paye = paye;
-		this.heslbDeduction = heslbDeduction;
-		this.takeHome = takeHome;
-		this.incomeClass = incomeClass;
-	}
-
+	
 	public Double getSocialSecurityFund() {
 		return socialSecurityFund;
 	}
@@ -108,7 +109,7 @@ public class Paye implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(heslbDeduction, incomeClass, paye, salary,
-						socialSecurityFund, takeHome, taxableAmount);
+					socialSecurityFund, takeHome, taxableAmount);
 	}
 
 	@Override
@@ -133,10 +134,10 @@ public class Paye implements Serializable {
 	@Override
 	public String toString() {
 		return "Paye [salary=" + salary + ", socialSecurityFund="
-						+ socialSecurityFund + ", taxableAmount="
-						+ taxableAmount + ", paye=" + paye + ", heslbDeduction="
-						+ heslbDeduction + ", takeHome=" + takeHome
-						+ ", incomeClass=" + incomeClass + "]";
+					+ socialSecurityFund + ", taxableAmount=" + taxableAmount
+					+ ", paye=" + paye + ", heslbDeduction=" + heslbDeduction
+					+ ", takeHome=" + takeHome + ", incomeClass=" + incomeClass
+					+ "]";
 	}
 
 }
