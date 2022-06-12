@@ -75,7 +75,7 @@ public class PayeBean implements Serializable {
 		this.incomeClass = incomeClass;
 	}
     
-	public void searchIncomeClass() {
+	public String searchIncomeClass() {
 		LOG.info("AMOUNT INPUT INCOME : " + getPaye().getSalary());
 		paye.setSocialSecurityFund(getPaye().getSalary() * tenth);
 		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
@@ -94,9 +94,11 @@ public class PayeBean implements Serializable {
 			paye.setIncomeClass(getIncomeClass().getCategory());
 			paye.setDisplayTable(true);
 			LOG.info("COMPUTED PAYE : " + paye);
+			return "retrieve?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 							new FacesMessage(e.getMessage()));
+			return null;
 		}
 	}
 
