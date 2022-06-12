@@ -31,13 +31,7 @@ public class PayeBean implements Serializable {
 
 	@Inject
 	private Logger LOG;
-
-//	@Inject
-//	private Conversation conversation;
-//
-//	@Resource
-//	private SessionContext sessionContext;
-//
+	
 	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 
@@ -54,7 +48,6 @@ public class PayeBean implements Serializable {
 	private Double hundredth;
 
 	private Paye paye = new Paye();
-//	private double amount;
 	private boolean heslb;
 	private IndividualIncome incomeClass;
 
@@ -65,14 +58,6 @@ public class PayeBean implements Serializable {
 	public void setPaye(Paye paye) {
 		this.paye = paye;
 	}
-
-//	public double getAmount() {
-//		return amount;
-//	}
-//
-//	public void setAmount(double amount) {
-//		this.amount = amount;
-//	}
 
 	public boolean isHeslb() {
 		return heslb;
@@ -89,29 +74,15 @@ public class PayeBean implements Serializable {
 	public void setIncomeClass(IndividualIncome incomeClass) {
 		this.incomeClass = incomeClass;
 	}
-
-//	public String searchConversation() {
-//		conversation.begin();
-//		conversation.setTimeout(1800000L);
-//		LOG.info("CONVERSATION SCOPED : " + conversation.toString());
-//		return "retrieve?faces-redirect=true";
-//	}
-
+	
 	public void searchIncomeClass() {
 		LOG.info("AMOUNT INPUT INCOME : " + getPaye().getSalary());
-//		if (conversation.isTransient()) {
-//			conversation.begin();
-//			conversation.setTimeout(1800000L);
-//		}
-
 		paye.setSocialSecurityFund(getPaye().getSalary() * tenth);
 		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
 
 		try {
 			findIncomeClass(Math.round(paye.getTaxableAmount()));
 			LOG.info("FOUND INPUT INCOME CLASS : " + incomeClass);
-//			setIncomeClass(findIncomeClass(
-//							Math.round(paye.getTaxableAmount())));
 			paye.setPaye(calculatePaye());
 
 			if (heslb) {
@@ -122,8 +93,6 @@ public class PayeBean implements Serializable {
 			paye.setTakeHome(getPaye().getSalary() - paye.getTotalDeduction());
 			paye.setIncomeClass(getIncomeClass().getCategory());
 			LOG.info("COMPUTED PAYE : " + paye);
-
-//			conversation.end();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 							new FacesMessage(e.getMessage()));
@@ -154,84 +123,4 @@ public class PayeBean implements Serializable {
 
 		return taxOnExcessIncome + incomeClass.getTaxPerClass();
 	}
-	
-//	public void searchIncomeClass() {
-//		LOG.info("AMOUNT INPUT INCOME : " + getPaye().getSalary());
-////		if (conversation.isTransient()) {
-////			conversation.begin();
-////			conversation.setTimeout(1800000L);
-////		}
-//
-//		paye.setSocialSecurityFund(getPaye().getSalary() * tenth);
-//		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
-//
-//		try {
-//			LOG.info("FOUND INPUT INCOME CLASS : " + findIncomeClass(
-//							Math.round(paye.getTaxableAmount())));
-//			setIncomeClass(findIncomeClass(
-//							Math.round(paye.getTaxableAmount())));
-//			paye.setPaye(calculatePaye(getIncomeClass()));
-//
-//			if (heslb) {
-//				paye.setHeslbDeduction(getPaye().getSalary() * fifteenPercent);
-//			} else {
-//				paye.setHeslbDeduction(0.0);
-//			}
-//			paye.setTakeHome(getPaye().getSalary() - paye.getTotalDeduction());
-//			paye.setIncomeClass(getIncomeClass().getCategory());
-//			LOG.info("COMPUTED PAYE : " + paye);
-//
-////			conversation.end();
-//		} catch (Exception e) {
-//			FacesContext.getCurrentInstance().addMessage(null,
-//							new FacesMessage(e.getMessage()));
-//		}
-//	}
-	
-//	private IndividualIncome findIncomeClass(Long taxable) {
-//		LOG.info("AMOUNT CRITERIA TAXABLE INPUT INCOME : " + taxable);
-//		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-//		CriteriaQuery<IndividualIncome> criteria = builder
-//						.createQuery(IndividualIncome.class);
-//		Root<IndividualIncome> root = criteria.from(IndividualIncome.class);
-//		criteria.select(root);
-//		criteria.where(builder.between(builder.literal(taxable),
-//						root.<Long>get("classAmount"),
-//						root.<Long>get("classLimit")),
-//						builder.and(builder.notEqual(builder.literal(taxable),
-//										root.<Long>get("classAmount"))));
-//
-//		LOG.info("AMOUNT TAXABLE INPUT INCOME : " + entityManager.createQuery(criteria).getSingleResult());
-//		return entityManager.createQuery(criteria).getSingleResult();
-//	}
-	
-//	private double calculatePaye(IndividualIncome incomeClass) {
-//		double percent = incomeClass.getTaxOnExcessIncome() * hundredth;
-//		double taxOnExcessIncome = percent * (paye.getTaxableAmount()
-//						- incomeClass.getClassAmount());
-//		
-//		return taxOnExcessIncome + incomeClass.getTaxPerClass();
-//	}
-
-//	public Converter<IndividualIncome> getConverter() {
-//		final PayeBean ejbProxy = sessionContext
-//					.getBusinessObject(PayeBean.class);
-//		return new Converter<IndividualIncome>() {
-//
-//			@Override
-//			public IndividualIncome getAsObject(FacesContext context,
-//						UIComponent component, String value) {
-//				return ejbProxy.findIncomeClass(Long.valueOf(value));
-//			}
-//
-//			@Override
-//			public String getAsString(FacesContext context,
-//						UIComponent component, IndividualIncome value) {
-//				if (value == null) {
-//					return "";
-//				}
-//				return String.valueOf(value.getId());
-//			}
-//		};
-//	}
 }
