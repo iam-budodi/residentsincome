@@ -19,3 +19,6 @@ Arquillian.xml
 .settings/
 .tern-project
 *.DS_Store
+
+.idea/
+residentsincome.iml

@@ -32,8 +32,6 @@ public class PayeBean implements Serializable {
 	@Inject
 	private Logger LOG;
 	
-	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
-	private EntityManager entityManager;
 
 	@Inject
 	@Tenth
@@ -51,6 +49,9 @@ public class PayeBean implements Serializable {
 	private boolean heslb;
 	private IndividualIncome incomeClass;
 
+	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
+	
 	public Paye getPaye() {
 		return paye;
 	}
@@ -75,7 +76,7 @@ public class PayeBean implements Serializable {
 		this.incomeClass = incomeClass;
 	}
     
-	public String searchIncomeClass() {
+	public void searchIncomeClass() {
 		LOG.info("AMOUNT INPUT INCOME : " + getPaye().getSalary());
 		paye.setSocialSecurityFund(getPaye().getSalary() * tenth);
 		paye.setTaxableAmount(getPaye().getSalary() - (getPaye().getSalary() * tenth));
@@ -94,11 +95,9 @@ public class PayeBean implements Serializable {
 			paye.setIncomeClass(getIncomeClass().getCategory());
 			paye.setDisplayTable(true);
 			LOG.info("COMPUTED PAYE : " + paye);
-			return "retrieve?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 							new FacesMessage(e.getMessage()));
-			return null;
 		}
 	}
 
