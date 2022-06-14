@@ -32,8 +32,6 @@ public class PayeBean implements Serializable {
 	@Inject
 	private Logger LOG;
 	
-	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
-	private EntityManager entityManager;
 
 	@Inject
 	@Tenth
@@ -51,6 +49,9 @@ public class PayeBean implements Serializable {
 	private boolean heslb;
 	private IndividualIncome incomeClass;
 
+	@PersistenceContext(unitName = "residentsIncomePU", type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
+	
 	public Paye getPaye() {
 		return paye;
 	}
