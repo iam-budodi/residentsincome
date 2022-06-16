@@ -15,7 +15,7 @@
 			<h4 class="mb-3 font-weight-light">Enter your gross salary</h4>
 
 			<div class="form-floating mb-3">
-				<h:inputText class="form-control" id="floatingInput"
+				<h:inputText class="form-control input-sm" id="floatingInput"
 					aria-label="Amount (to the nearest tzs)"
 					pt:placeholder="99999999.99" required="true"
 					value="#{payeBean.paye.salary}" />
@@ -29,7 +29,7 @@
 				<h:outputLabel for="checkbox" value="Are you HESLB beneficiary?" />
 
 			</div>
-			<h:commandButton class="w-100 btn btn-lg btn-primary" value="Submit"
+			<h:commandButton class="w-100 btn btn-sm btn-primary" value="Submit"
 				action="#{payeBean.searchIncomeClass()}">
 				<f:ajax execute="@form" render=":paye"></f:ajax>
 			</h:commandButton>
@@ -50,7 +50,7 @@
 										 minFractionDigits="2" maxFractionDigits="2" />
 					</h:outputText>
 					<h:outputText/>
-					<h:outputLabel for="nssf" value="Nssf or Psssf:"/>
+					<h:outputLabel for="nssf" value="Nssf or Psssf"/>
 					<h:outputText id="nssf" value="#{payeBean.paye.socialSecurityFund}">
 						<f:convertNumber type="currency" locale="sw_TZ"
 										 minFractionDigits="2" maxFractionDigits="2" />
