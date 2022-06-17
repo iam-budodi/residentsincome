@@ -19,7 +19,6 @@ main > .container {
 
 .form-input input[type="text"] {
   margin-bottom: -1px;
-  border: 1px solid #DADCE0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }

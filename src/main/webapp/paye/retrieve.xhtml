@@ -8,6 +8,7 @@
 	template="/resources/scaffold/template.xhtml">
 
 	<!-- <ui:define name="title">PAYE Evaluation</ui:define> -->
+	
 	<ui:define name="home">
 		<h:form id="form-input" class="form-input">
 <!--			<h:graphicImage class="mb-4" value='#{resource["bootstrap-logo.svg"]}'-->
@@ -15,9 +16,8 @@
 
 			<h4 class="mb-3 font-weight-light">Enter your gross salary</h4>
 
-			<div class="form-floating border border-5 rounded-3pb-2 mb-3">
+			<div class="form-floating border border-5 rounded-3 py-2 mb-3 mt-3">
 				<h:inputText class="form-control" id="floatingInput"
-				
 					aria-label="Amount (to the nearest tzs)"
 					pt:placeholder="99999999.99" required="true"
 					value="#{payeBean.paye.salary}" />
@@ -36,15 +36,15 @@
 				<f:ajax execute="@form" render=":paye"></f:ajax>
 			</h:commandButton>
 		</h:form>
-		<section jsf:id="paye" class="my-3">
+		<section jsf:id="paye" class="mt-5">
 			<ui:fragment rendered="#{!payeBean.paye.displayTable}">
 				<span class="text-muted"> Your income breakdown will be
 					displayed here! </span>
 			</ui:fragment>
 			<ui:fragment rendered="#{payeBean.paye.displayTable}" >
-				<h:panelGrid id="panel" class="table table-sm table-hover table-borderless text-start text-muted"  columns="3">
+				<h:panelGrid id="panel" class="table table-striped table-sm table-hover table-borderless text-start text-muted"  columns="3">
 					<h:outputLabel for="incomeClass" value="Income class"/>
-					<h:outputText id="incomeClass" class="text-capitalize" value="#{payeBean.paye.incomeClass}"/>
+					<h:outputText id="incomeClass" class="text-capitalize border-bottom-5 border-primary" value="#{payeBean.paye.incomeClass}"/>
 					<h:outputText/>
 					<h:outputLabel for="salary" value="Your gross Salary"/>
 					<h:outputText id="salary" value="#{payeBean.paye.salary}">
