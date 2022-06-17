@@ -3,19 +3,21 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:p="http://primefaces.org/ui"
 	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	template="/resources/scaffold/template.xhtml">
 
-	<ui:define name="title">PAYE Evaluation</ui:define>
+	<!-- <ui:define name="title">PAYE Evaluation</ui:define> -->
 	<ui:define name="home">
-		<h:form class="form-input">
+		<h:form id="form-input" class="form-input">
 <!--			<h:graphicImage class="mb-4" value='#{resource["bootstrap-logo.svg"]}'-->
 <!--				alt="Income and Income Calculator" width="72" height="57" />-->
 
 			<h4 class="mb-3 font-weight-light">Enter your gross salary</h4>
 
-			<div class="form-floating mb-3">
-				<h:inputText class="form-control input-sm" id="floatingInput"
+			<div class="form-floating border border-5 rounded-3pb-2 mb-3">
+				<h:inputText class="form-control" id="floatingInput"
+				
 					aria-label="Amount (to the nearest tzs)"
 					pt:placeholder="99999999.99" required="true"
 					value="#{payeBean.paye.salary}" />
