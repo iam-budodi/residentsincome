@@ -29,15 +29,14 @@ import com.japhet.application.residentsincome.util.PasswordDigest;
 		@NamedQuery(name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = User.FIND_BY_UUID, query = "SELECT u FROM User u WHERE u.uuid = :uuid"),
 		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.userName = :userName"),
-		@NamedQuery(name = User.FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.userName= :userName AND u.password = :password"),
-		@NamedQuery(name = User.FIND_ALL, query = "SELECT u FROM User u") })
+		@NamedQuery(name = User.FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.userName= :userName AND u.password = :password")
+		 })
 public class User implements Serializable {
 
 	public static final String FIND_BY_EMAIL = "User.findByEmail";
 	public static final String FIND_BY_USERNAME = "User.findByUserName";
 	public static final String FIND_BY_UUID = "User.findByUUID";
 	public static final String FIND_BY_USERNAME_PASSWORD = "User.findByUserNameAndPassword";
-	public static final String FIND_ALL = "User.findAll";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
