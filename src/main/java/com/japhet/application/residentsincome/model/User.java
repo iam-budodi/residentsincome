@@ -8,29 +8,77 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Entity implementation class for Entity: User
  *
  */
 @Entity
-
+@Table(name = "User", uniqueConstraints = @UniqueConstraint(columnNames = {"id", "phoneNumber", "userName"}))
 public class User implements Serializable {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private Long id;
+	
+	@Size(min = 1, max = 256)
+	@Column(length = 256)
 	private String uuid;
+	
+	@NotNull
+	@Size(min = 2, max = 32)
+	@Column(length = 32, name = "first_name", nullable = false)
+	@Pattern(regexp = "[A-Za-z]*", message = "should not be empty and contains only letters")
 	private String firstName;
+	
+	@NotNull
+	@Size(min = 2, max = 32)
+	@Column(length = 32, name = "last_name", nullable = false)
+	@Pattern(regexp = "[A-Za-z]*", message = "should not be empty and contains only letters")
 	private String lastName;
+	
+	@NotNull
+	@NotEmpty
+	@Email(message = "enter valid and well-formed email address")
 	private String email;
-	private String mobile;
+	
+	@NotNull
+	@Size(min = 9, max = 12, message = "phone number must be a min of 9 and max of 12 digits")
+	@Digits(fraction = 0, integer = 12)
+	@Column(name = "phone_number")
+	private String phoneNumber;
+	
+	@NotNull
+	@Size(min = 1, max = 12)
+	@Column(length = 12, name = "user_name", nullable = false)
+	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
 	private String userName;
-	private String passw0rd;   
+	
+	@NotNull
+	@Size(min = 1, max = 12)
+	@Column(length = 12, name = "user_name", nullable = false)
+	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
+	private String passw0rd;
+	
+	@Past
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
+	
+	@Enumerated
+	@Column(name = "user_name")
 	private UserRole role;
+	
+	@Column(name = "updated_on")
 	private LocalDateTime updatedOn;
+	
+	@Column(name = "created_on")
 	private LocalDateTime createdOn;
 	private static final long serialVersionUID = 1L;
 
@@ -59,12 +107,12 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}   
-	public String getMobile() {
-		return this.mobile;
+	public String getPhoneNumber() {
+		return this.phoneNumber;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}   
 	public String getUserName() {
 		return this.userName;
@@ -129,7 +177,7 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(createdOn, dateOfBirth, email, firstName, id,
-					lastName, mobile, passw0rd, role, updatedOn, userName,
+					lastName, phoneNumber, passw0rd, role, updatedOn, userName,
 					uuid);
 	}
 
@@ -148,7 +196,7 @@ public class User implements Serializable {
 					&& Objects.equals(firstName, user.firstName)
 					&& Objects.equals(id, user.id)
 					&& Objects.equals(lastName, user.lastName)
-					&& Objects.equals(mobile, user.mobile)
+					&& Objects.equals(phoneNumber, user.phoneNumber)
 					&& Objects.equals(passw0rd, user.passw0rd)
 					&& role == user.role
 					&& Objects.equals(updatedOn, user.updatedOn)
@@ -160,7 +208,7 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", uuid=" + uuid + ", firstName=" + firstName
 					+ ", lastName=" + lastName + ", email=" + email
-					+ ", mobile=" + mobile + ", userName=" + userName
+					+ ", phoneNumber=" + phoneNumber + ", userName=" + userName
 					+ ", passw0rd=" + passw0rd + ", dateOfBirth=" + dateOfBirth
 					+ ", role=" + role + ", updatedOn=" + updatedOn
 					+ ", createdOn=" + createdOn + "]";
