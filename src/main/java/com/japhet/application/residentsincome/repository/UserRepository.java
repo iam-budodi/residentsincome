@@ -16,17 +16,26 @@ public class UserRepository {
 
 	@Inject
 	private EntityManager entityManager;
-	
+
 	public User findById(Long userid) {
 		return entityManager.find(User.class, userid);
 	}
-	
+
+	public boolean isExists(User user) {
+		return entityManager
+					.createNamedQuery(User.FIND_BY_USERNAME, User.class)
+					.setParameter("userName", user.getUserName())
+					.getResultList().size() > 0;
+	}
+
 	public List<User> findAllOrderedByName() {
 		// using Hibernate Session and Criteria Query via Hibernate Native API
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+		CriteriaQuery<User> criteriaQuery = criteriaBuilder
+					.createQuery(User.class);
 		Root<User> users = criteriaQuery.from(User.class);
-		criteriaQuery.orderBy(criteriaBuilder.asc(users.get("firstName")), criteriaBuilder.asc(users.get("lastName")));
+		criteriaQuery.orderBy(criteriaBuilder.asc(users.get("firstName")),
+					criteriaBuilder.asc(users.get("lastName")));
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 }
