@@ -1,5 +1,6 @@
 package com.japhet.application.residentsincome.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -7,6 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.japhet.application.residentsincome.model.User;
@@ -37,5 +39,61 @@ public class UserRepository {
 		criteriaQuery.orderBy(criteriaBuilder.asc(users.get("firstName")),
 					criteriaBuilder.asc(users.get("lastName")));
 		return entityManager.createQuery(criteriaQuery).getResultList();
+	}
+
+	public void paginate(User user) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+		// count entity records
+
+		CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+		Root<User> root = countCriteria.from(User.class);
+		countCriteria = countCriteria.select(builder.count(root))
+					.where(criteriaPedicates(root, user));
+
+		return entityManager.createQuery(countCriteria).getSingleResult();
+
+	}
+
+	private Predicate[] criteriaPedicates(Root<User> root, User user) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		List<Predicate> predicates = new ArrayList<>();
+
+		String firstName = user.getFirstName();
+		if (firstName != null && !"".equals(firstName)) {
+			predicates.add(builder.like(
+						builder.lower(root.<String>get("firstName")),
+						'%' + firstName.toLowerCase() + '%'));
+		}
+
+		String lastName = user.getLastName();
+		if (lastName != null && !"".equals(lastName)) {
+			predicates.add(builder.like(
+						builder.lower(root.<String>get("lastName")),
+						'%' + lastName.toLowerCase() + '%'));
+		}
+
+		String phoneNumber = user.getPhoneNumber();
+		if (phoneNumber != null && !"".equals(phoneNumber)) {
+			predicates.add(builder.like(
+						builder.lower(root.<String>get("phoneNumber")),
+						'%' + phoneNumber.toLowerCase() + '%'));
+		}
+
+		String email = user.getEmail();
+		if (email != null && !"".equals(email)) {
+			predicates.add(
+						builder.like(builder.lower(root.<String>get("email")),
+									'%' + email.toLowerCase() + '%'));
+		}
+
+		String userName = user.getUserName();
+		if (userName != null && !"".equals(userName)) {
+			predicates.add(builder.like(
+						builder.lower(root.<String>get("userName")),
+						'%' + userName.toLowerCase() + '%'));
+		}
+
+		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 }
