@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.Session;
+//import org.hibernate.Session;
 
 public class ResourceProducer {
 
@@ -17,11 +17,11 @@ public class ResourceProducer {
 	@PersistenceContext(unitName = "residentsIncomePU")
 	private EntityManager entityManager;
 	
-	// using Hibernate session(Native API) and JPA entitymanager
-	@Produces
-	public Session produceSession() {
-		return (Session) entityManager.getDelegate();
-	}
+//	// using Hibernate session(Native API) and JPA entitymanager
+//	@Produces
+//	public Session produceSession() {
+//		return (Session) entityManager.getDelegate();
+//	}
 
 	
 	@Produces

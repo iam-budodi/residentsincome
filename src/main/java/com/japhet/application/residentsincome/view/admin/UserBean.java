@@ -1,14 +1,19 @@
 package com.japhet.application.residentsincome.view.admin;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -39,22 +44,14 @@ public class UserBean implements Serializable {
 	@Inject
 	private RootError rootError;
 
+	@Resource
+	private SessionContext sessionContext;
+
 	private User user;
 	private Long userId;
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	@Named
-	@Produces
-	public User getUser() {
-		return user;
-	}
+	private Long count;
+	private int page;
+	private List<User> pageUsers;
 
 	public String create() {
 		conversation.begin();
@@ -110,7 +107,7 @@ public class UserBean implements Serializable {
 
 	public String delete() {
 		conversation.end();
-		
+
 		try {
 			User deletable = userRepository.findById(getUserId());
 			userRegistration.delete(deletable);
@@ -124,13 +121,82 @@ public class UserBean implements Serializable {
 		}
 	}
 
+	public void paginate() {
+		count = userRepository.userCount(getUser());
+		pageUsers = userRepository.usersPerPage(getUser(), getPage(),
+					getPageSize());
+	}
+
+	public Converter<User> getConverter() {
+		final UserBean ejbProxy = sessionContext
+					.getBusinessObject(UserBean.class);
+
+		return new Converter<User>() {
+
+			@Override
+			public User getAsObject(FacesContext context,
+						UIComponent component, String value) {
+				return ejbProxy.userRepository.findById(Long.valueOf(value));
+			}
+
+			@Override
+			public String getAsString(FacesContext context,
+						UIComponent component, User value) {
+				if (value == null) {
+					return "";
+				}
+				return String.valueOf(((User) value).getId());
+			}
+		};
+	}
+	
+
+	public List<User> getPageUsers() {
+		return pageUsers;
+	}
+
+	public void setPageUsers(List<User> pageUsers) {
+		this.pageUsers = pageUsers;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return 10;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	@Named
+	@Produces
+	public User getUser() {
+		return user;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
+	}
+
+
 	@PostConstruct
 	public void initUser() {
 		user = new User();
-	}
-
-	public UserBean() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

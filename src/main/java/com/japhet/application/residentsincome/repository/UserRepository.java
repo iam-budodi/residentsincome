@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -41,7 +42,7 @@ public class UserRepository {
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
-	public void paginate(User user) {
+	public Long userCount(User user) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		// count entity records
@@ -52,6 +53,21 @@ public class UserRepository {
 					.where(criteriaPedicates(root, user));
 
 		return entityManager.createQuery(countCriteria).getSingleResult();
+
+	}
+
+	public List<User> usersPerPage(User user, int page, int pageSize) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+		// populate list of users per page
+
+		CriteriaQuery<User> userCriteria = builder.createQuery(User.class);
+		Root<User> root = userCriteria.from(User.class);
+		TypedQuery<User> userQuery = entityManager.createQuery(userCriteria
+					.select(root).where(criteriaPedicates(root, user)));
+		userQuery.setFirstResult(page * pageSize).setMaxResults(pageSize);
+
+		return userQuery.getResultList();
 
 	}
 
