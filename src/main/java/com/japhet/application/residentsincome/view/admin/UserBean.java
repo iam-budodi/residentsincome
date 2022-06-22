@@ -193,7 +193,6 @@ public class UserBean implements Serializable {
 		this.count = count;
 	}
 
-
 	@PostConstruct
 	public void initUser() {
 		user = new User();

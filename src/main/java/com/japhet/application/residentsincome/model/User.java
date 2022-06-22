@@ -24,7 +24,7 @@ import com.japhet.application.residentsincome.util.PasswordDigest;
  */
 @Entity
 @Table(name = "User", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"id", "phoneNumber", "userName" }))
+		"id", "phone_number", "user_name" }))
 @NamedQueries({
 		@NamedQuery(name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = User.FIND_BY_UUID, query = "SELECT u FROM User u WHERE u.uuid = :uuid"),
@@ -77,7 +77,7 @@ public class User implements Serializable {
 
 	@NotNull
 	@Size(min = 1, max = 12)
-	@Column(length = 12, name = "user_name", nullable = false)
+	@Column(length = 12, name = "password", nullable = false)
 	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
 	private String password;
 
@@ -86,7 +86,7 @@ public class User implements Serializable {
 	private LocalDate dateOfBirth;
 
 	@Enumerated
-	@Column(name = "user_name")
+	@Column(name = "user_role")
 	private UserRole role;
 
 	@Column(name = "updated_on")
