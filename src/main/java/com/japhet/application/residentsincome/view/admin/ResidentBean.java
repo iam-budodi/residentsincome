@@ -2,6 +2,7 @@ package com.japhet.application.residentsincome.view.admin;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -18,28 +19,31 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.japhet.application.residentsincome.error.RootError;
-import com.japhet.application.residentsincome.model.User;
-import com.japhet.application.residentsincome.repository.UserRepository;
-import com.japhet.application.residentsincome.view.account.UserRegistration;
+import com.japhet.application.residentsincome.model.Resident;
+import com.japhet.application.residentsincome.repository.ResidentRepository;
+import com.japhet.application.residentsincome.view.account.ResidentRegistration;
 
 @Named
 @Stateful
 @ConversationScoped
-public class UserBean implements Serializable {
+public class ResidentBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private Conversation conversation;
+	
+	@Inject
+	private Logger LOG;
 
 	@Inject
 	private FacesContext facesContext;
 
 	@Inject
-	private UserRegistration userRegistration;
+	private ResidentRegistration residentRegistration;
 
 	@Inject
-	private UserRepository userRepository;
+	private ResidentRepository residentRepository;
 
 	@Inject
 	private RootError rootError;
@@ -47,11 +51,12 @@ public class UserBean implements Serializable {
 	@Resource
 	private SessionContext sessionContext;
 
-	private User user;
-	private Long userId;
+	private Resident resident;
+	private Resident newResident;
+	private Long residentId;
 	private Long count;
 	private int page;
-	private List<User> pageUsers;
+	private List<Resident> pageResidents;
 
 	public String create() {
 		conversation.begin();
@@ -69,10 +74,10 @@ public class UserBean implements Serializable {
 			conversation.setTimeout(1800000L);
 		}
 
-		if (userId == null) {
-			initUser();
+		if (residentId == null) {
+			resident = newResident;
 		} else {
-			user = userRepository.findById(getUserId());
+			resident = residentRepository.findById(getResidentId());
 		}
 	}
 
@@ -80,21 +85,22 @@ public class UserBean implements Serializable {
 		conversation.end();
 
 		try {
-			if (userId == null) {
-				userRegistration.register(user);
-				facesContext.addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-										"User is registered!",
-										"Registration is successful"));
-				initUser();
+			if (residentId == null) {
+				LOG.info("CREATE NEW USER : " + resident);
+				residentRegistration.register(resident);
+//				facesContext.addMessage(null,
+//							new FacesMessage(FacesMessage.SEVERITY_INFO,
+//										"Resident is registered!",
+//										"Registration is successful"));
+//				initUser();
 				return "search?faces-redirect=true";
 			} else {
-				userRegistration.modify(user);
-				facesContext.addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-										"User is updated!",
-										"Updation is successful"));
-				return "view?faces-redirect=true&id=" + user.getId();
+				residentRegistration.modify(resident);
+//				facesContext.addMessage(null,
+//							new FacesMessage(FacesMessage.SEVERITY_INFO,
+//										"Resident is updated!",
+//										"Updation is successful"));
+				return "view?faces-redirect=true&id=" + resident.getId();
 			}
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
@@ -109,54 +115,50 @@ public class UserBean implements Serializable {
 		conversation.end();
 
 		try {
-			User deletable = userRepository.findById(getUserId());
-			userRegistration.delete(deletable);
+			Resident deletable = residentRepository.findById(getResidentId());
+			residentRegistration.delete(deletable);
 			return "search?faces-redirect=true";
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									errorMessage, "Failed to delete user"));
+									errorMessage, "Failed to delete resident"));
 			return null;
 		}
 	}
 
 	public void paginate() {
-		count = userRepository.userCount(getUser());
-		pageUsers = userRepository.usersPerPage(getUser(), getPage(),
+		count = residentRepository.userCount(getResident());
+		pageResidents = residentRepository.usersPerPage(getResident(), getPage(),
 					getPageSize());
 	}
 
-	public Converter<User> getConverter() {
-		final UserBean ejbProxy = sessionContext
-					.getBusinessObject(UserBean.class);
+	public Converter<Resident> getConverter() {
+		final ResidentBean ejbProxy = sessionContext
+					.getBusinessObject(ResidentBean.class);
 
-		return new Converter<User>() {
+		return new Converter<Resident>() {
 
 			@Override
-			public User getAsObject(FacesContext context,
+			public Resident getAsObject(FacesContext context,
 						UIComponent component, String value) {
-				return ejbProxy.userRepository.findById(Long.valueOf(value));
+				return ejbProxy.residentRepository.findById(Long.valueOf(value));
 			}
 
 			@Override
 			public String getAsString(FacesContext context,
-						UIComponent component, User value) {
+						UIComponent component, Resident value) {
 				if (value == null) {
 					return "";
 				}
-				return String.valueOf(((User) value).getId());
+				return String.valueOf(((Resident) value).getId());
 			}
 		};
 	}
 	
 
-	public List<User> getPageUsers() {
-		return pageUsers;
-	}
-
-	public void setPageUsers(List<User> pageUsers) {
-		this.pageUsers = pageUsers;
+	public List<Resident> getPageResidents() {
+		return pageResidents;
 	}
 
 	public int getPage() {
@@ -171,18 +173,22 @@ public class UserBean implements Serializable {
 		return 10;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public Long getResidentId() {
+		return residentId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setResidentId(Long residentId) {
+		this.residentId = residentId;
 	}
 
 	@Named
 	@Produces
-	public User getUser() {
-		return user;
+	public Resident getResident() {
+		return resident;
+	}
+
+	public void setResident(Resident resident) {
+		this.resident = resident;
 	}
 
 	public Long getCount() {
@@ -194,8 +200,10 @@ public class UserBean implements Serializable {
 	}
 
 	@PostConstruct
-	public void initUser() {
-		user = new User();
+	public void initResident() {
+		LOG.info("This was run : " + resident);
+		newResident = new Resident();
+		LOG.info("This new resident : " + resident);
 	}
 
 }

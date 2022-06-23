@@ -12,98 +12,98 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.japhet.application.residentsincome.model.User;
+import com.japhet.application.residentsincome.model.Resident;
 
 @ApplicationScoped
-public class UserRepository {
+public class ResidentRepository {
 
 	@Inject
 	private EntityManager entityManager;
 
-	public User findById(Long userid) {
-		return entityManager.find(User.class, userid);
+	public Resident findById(Long residentId) {
+		return entityManager.find(Resident.class, residentId);
 	}
 
-	public boolean isExists(User user) {
+	public boolean isExists(Resident resident) {
 		return entityManager
-					.createNamedQuery(User.FIND_BY_USERNAME, User.class)
-					.setParameter("userName", user.getUserName())
+					.createNamedQuery(Resident.FIND_BY_USERNAME, Resident.class)
+					.setParameter("userName", resident.getUserName())
 					.getResultList().size() > 0;
 	}
 
-	public List<User> findAllOrderedByName() {
+	public List<Resident> findAllOrderedByName() {
 		// using Hibernate Session and Criteria Query via Hibernate Native API
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> criteriaQuery = criteriaBuilder
-					.createQuery(User.class);
-		Root<User> users = criteriaQuery.from(User.class);
-		criteriaQuery.orderBy(criteriaBuilder.asc(users.get("firstName")),
-					criteriaBuilder.asc(users.get("lastName")));
+		CriteriaQuery<Resident> criteriaQuery = criteriaBuilder
+					.createQuery(Resident.class);
+		Root<Resident> residents = criteriaQuery.from(Resident.class);
+		criteriaQuery.orderBy(criteriaBuilder.asc(residents.get("firstName")),
+					criteriaBuilder.asc(residents.get("lastName")));
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
-	public Long userCount(User user) {
+	public Long userCount(Resident resident) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		// count entity records
 
 		CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
-		Root<User> root = countCriteria.from(User.class);
+		Root<Resident> root = countCriteria.from(Resident.class);
 		countCriteria = countCriteria.select(builder.count(root))
-					.where(criteriaPedicates(root, user));
+					.where(criteriaPedicates(root, resident));
 
 		return entityManager.createQuery(countCriteria).getSingleResult();
 
 	}
 
-	public List<User> usersPerPage(User user, int page, int pageSize) {
+	public List<Resident> usersPerPage(Resident resident, int page, int pageSize) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		// populate list of users per page
 
-		CriteriaQuery<User> userCriteria = builder.createQuery(User.class);
-		Root<User> root = userCriteria.from(User.class);
-		TypedQuery<User> userQuery = entityManager.createQuery(userCriteria
-					.select(root).where(criteriaPedicates(root, user)));
+		CriteriaQuery<Resident> userCriteria = builder.createQuery(Resident.class);
+		Root<Resident> root = userCriteria.from(Resident.class);
+		TypedQuery<Resident> userQuery = entityManager.createQuery(userCriteria
+					.select(root).where(criteriaPedicates(root, resident)));
 		userQuery.setFirstResult(page * pageSize).setMaxResults(pageSize);
 
 		return userQuery.getResultList();
 
 	}
 
-	private Predicate[] criteriaPedicates(Root<User> root, User user) {
+	private Predicate[] criteriaPedicates(Root<Resident> root, Resident resident) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		List<Predicate> predicates = new ArrayList<>();
 
-		String firstName = user.getFirstName();
+		String firstName = resident.getFirstName();
 		if (firstName != null && !"".equals(firstName)) {
 			predicates.add(builder.like(
 						builder.lower(root.<String>get("firstName")),
 						'%' + firstName.toLowerCase() + '%'));
 		}
 
-		String lastName = user.getLastName();
+		String lastName = resident.getLastName();
 		if (lastName != null && !"".equals(lastName)) {
 			predicates.add(builder.like(
 						builder.lower(root.<String>get("lastName")),
 						'%' + lastName.toLowerCase() + '%'));
 		}
 
-		String phoneNumber = user.getPhoneNumber();
+		String phoneNumber = resident.getPhoneNumber();
 		if (phoneNumber != null && !"".equals(phoneNumber)) {
 			predicates.add(builder.like(
 						builder.lower(root.<String>get("phoneNumber")),
 						'%' + phoneNumber.toLowerCase() + '%'));
 		}
 
-		String email = user.getEmail();
+		String email = resident.getEmail();
 		if (email != null && !"".equals(email)) {
 			predicates.add(
 						builder.like(builder.lower(root.<String>get("email")),
 									'%' + email.toLowerCase() + '%'));
 		}
 
-		String userName = user.getUserName();
+		String userName = resident.getUserName();
 		if (userName != null && !"".equals(userName)) {
 			predicates.add(builder.like(
 						builder.lower(root.<String>get("userName")),

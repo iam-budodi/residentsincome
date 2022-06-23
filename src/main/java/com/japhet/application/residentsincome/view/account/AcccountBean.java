@@ -11,9 +11,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
-import com.japhet.application.residentsincome.model.User;
+import com.japhet.application.residentsincome.model.Resident;
 import com.japhet.application.residentsincome.model.UserRole;
-import com.japhet.application.residentsincome.repository.UserRepository;
+import com.japhet.application.residentsincome.repository.ResidentRepository;
 
 @Named
 @Transactional
@@ -26,12 +26,12 @@ public class AcccountBean implements Serializable {
 	private FacesContext facesContext;
 
 	@Inject
-	private UserRegistration userRegistration;
+	private ResidentRegistration residentRegistration;
 
 	@Inject
-	private UserRepository userRepository;
+	private ResidentRepository residentRepository;
 
-	private User newUser;
+	private Resident newUser;
 	private boolean loggedIn;
 	private boolean admin;
 	private String password;
@@ -43,12 +43,12 @@ public class AcccountBean implements Serializable {
 
 	@Produces
 	@Named
-	public User getNewUser() {
+	public Resident getNewUser() {
 		return newUser;
 	}
 
 	public String signUp() {
-		if (userRepository.isExists(newUser)) {
+		if (residentRepository.isExists(newUser)) {
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 									newUser.getUserName()
@@ -58,7 +58,7 @@ public class AcccountBean implements Serializable {
 		}
 
 		try {
-			userRegistration.register(newUser);
+			residentRegistration.register(newUser);
 			resetPassword();
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -108,7 +108,7 @@ public class AcccountBean implements Serializable {
 
 	@PostConstruct
 	public void initNewUser() {
-		newUser = new User();
+		newUser = new Resident();
 	}
 
 	public boolean isLoggedIn() {

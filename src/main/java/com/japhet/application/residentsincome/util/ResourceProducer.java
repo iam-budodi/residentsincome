@@ -31,7 +31,7 @@ public class ResourceProducer {
 	}
 
     @Produces
-    @RequestScoped
+//    @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
     }

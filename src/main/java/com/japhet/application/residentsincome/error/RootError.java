@@ -1,9 +1,7 @@
 package com.japhet.application.residentsincome.error;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
 
-@Named
 @ApplicationScoped
 public class RootError {
 

@@ -19,24 +19,24 @@ import javax.validation.constraints.Size;
 import com.japhet.application.residentsincome.util.PasswordDigest;
 
 /**
- * Entity implementation class for Entity: User
+ * Entity implementation class for Entity: Resident
  *
  */
 @Entity
-@Table(name = "User", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"id", "phone_number", "user_name" }))
+//@Table(name = "Resident", uniqueConstraints = @UniqueConstraint(columnNames = {
+//		"id", "phone_number", "user_name" }))
 @NamedQueries({
-		@NamedQuery(name = User.FIND_BY_EMAIL, query = "SELECT u FROM User u WHERE u.email = :email"),
-		@NamedQuery(name = User.FIND_BY_UUID, query = "SELECT u FROM User u WHERE u.uuid = :uuid"),
-		@NamedQuery(name = User.FIND_BY_USERNAME, query = "SELECT u FROM User u WHERE u.userName = :userName"),
-		@NamedQuery(name = User.FIND_BY_USERNAME_PASSWORD, query = "SELECT u FROM User u WHERE u.userName= :userName AND u.password = :password")
+		@NamedQuery(name = Resident.FIND_BY_EMAIL, query = "SELECT user FROM Resident user WHERE user.email = :email"),
+		@NamedQuery(name = Resident.FIND_BY_UUID, query = "SELECT user FROM Resident user WHERE user.uuid = :uuid"),
+		@NamedQuery(name = Resident.FIND_BY_USERNAME, query = "SELECT user FROM Resident user WHERE user.userName = :userName"),
+		@NamedQuery(name = Resident.FIND_BY_USERNAME_PASSWORD, query = "SELECT user FROM Resident user WHERE user.userName= :userName AND user.password = :password")
 		 })
-public class User implements Serializable {
+public class Resident implements Serializable {
 
-	public static final String FIND_BY_EMAIL = "User.findByEmail";
-	public static final String FIND_BY_USERNAME = "User.findByUserName";
-	public static final String FIND_BY_UUID = "User.findByUUID";
-	public static final String FIND_BY_USERNAME_PASSWORD = "User.findByUserNameAndPassword";
+	public static final String FIND_BY_EMAIL = "Resident.findByEmail";
+	public static final String FIND_BY_USERNAME = "Resident.findByUserName";
+	public static final String FIND_BY_UUID = "Resident.findByUUID";
+	public static final String FIND_BY_USERNAME_PASSWORD = "Resident.findByUserNameAndPassword";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -72,13 +72,13 @@ public class User implements Serializable {
 	@NotNull
 	@Size(min = 1, max = 12)
 	@Column(length = 12, name = "user_name", nullable = false)
-	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
+//	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
 	private String userName;
 
 	@NotNull
-	@Size(min = 1, max = 12)
-	@Column(length = 12, name = "password", nullable = false)
-	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
+	@Size(min = 8, max = 255)
+	@Column(length = 255, name = "password", nullable = false)
+//	@Pattern(regexp = "[A-Za-z0-9_@.$&+-]*", message = "should contains only alphanumeric and special characters")
 	private String password;
 
 	@Past
@@ -103,7 +103,7 @@ public class User implements Serializable {
 		password = PasswordDigest.digestPassword(password);
 	}
 
-	public User() {
+	public Resident() {
 		super();
 	}
 
@@ -218,24 +218,24 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User user = (User) obj;
-		return Objects.equals(createdOn, user.createdOn)
-					&& Objects.equals(dateOfBirth, user.dateOfBirth)
-					&& Objects.equals(email, user.email)
-					&& Objects.equals(firstName, user.firstName)
-					&& Objects.equals(id, user.id)
-					&& Objects.equals(lastName, user.lastName)
-					&& Objects.equals(phoneNumber, user.phoneNumber)
-					&& Objects.equals(password, user.password)
-					&& role == user.role
-					&& Objects.equals(updatedOn, user.updatedOn)
-					&& Objects.equals(userName, user.userName)
-					&& Objects.equals(uuid, user.uuid);
+		Resident resident = (Resident) obj;
+		return Objects.equals(createdOn, resident.createdOn)
+					&& Objects.equals(dateOfBirth, resident.dateOfBirth)
+					&& Objects.equals(email, resident.email)
+					&& Objects.equals(firstName, resident.firstName)
+					&& Objects.equals(id, resident.id)
+					&& Objects.equals(lastName, resident.lastName)
+					&& Objects.equals(phoneNumber, resident.phoneNumber)
+					&& Objects.equals(password, resident.password)
+					&& role == resident.role
+					&& Objects.equals(updatedOn, resident.updatedOn)
+					&& Objects.equals(userName, resident.userName)
+					&& Objects.equals(uuid, resident.uuid);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", uuid=" + uuid + ", firstName=" + firstName
+		return "Resident [id=" + id + ", uuid=" + uuid + ", firstName=" + firstName
 					+ ", lastName=" + lastName + ", email=" + email
 					+ ", phoneNumber=" + phoneNumber + ", userName=" + userName
 					+ ", passw0rd=" + password + ", dateOfBirth=" + dateOfBirth
