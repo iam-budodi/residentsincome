@@ -21,6 +21,7 @@ import javax.inject.Named;
 import com.japhet.application.residentsincome.error.RootError;
 import com.japhet.application.residentsincome.model.Resident;
 import com.japhet.application.residentsincome.repository.ResidentRepository;
+import com.japhet.application.residentsincome.util.Faces;
 import com.japhet.application.residentsincome.view.account.ResidentRegistration;
 
 @Named
@@ -32,11 +33,12 @@ public class ResidentBean implements Serializable {
 
 	@Inject
 	private Conversation conversation;
-	
+
 	@Inject
 	private Logger LOG;
 
 	@Inject
+	@Faces
 	private FacesContext facesContext;
 
 	@Inject
@@ -44,6 +46,9 @@ public class ResidentBean implements Serializable {
 
 	@Inject
 	private ResidentRepository residentRepository;
+
+//	@Inject
+//	private UserInputValidator passwordValidator;
 
 	@Inject
 	private RootError rootError;
@@ -87,6 +92,11 @@ public class ResidentBean implements Serializable {
 		try {
 			if (residentId == null) {
 				LOG.info("CREATE NEW USER : " + resident);
+				// TODO: Check for password strength
+//				if (!passwordValidator.isValid(resident.getPassword())) {
+//					throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+//				                "  Weak Password", null));
+//				}
 				residentRegistration.register(resident);
 //				facesContext.addMessage(null,
 //							new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -122,15 +132,19 @@ public class ResidentBean implements Serializable {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									errorMessage, "Failed to delete resident"));
+									errorMessage,
+									"Failed to delete resident"));
 			return null;
 		}
 	}
 
 	public void paginate() {
-		count = residentRepository.userCount(getResident());
-		pageResidents = residentRepository.usersPerPage(getResident(), getPage(),
-					getPageSize());
+//		count = residentRepository.userCount(getResident());
+//		pageResidents = residentRepository.usersPerPage(getResident(),
+//					getPage(), getPageSize());
+		count = residentRepository.userCount(getNewResident());
+		pageResidents = residentRepository.usersPerPage(getNewResident(),
+					getPage(), getPageSize());
 	}
 
 	public Converter<Resident> getConverter() {
@@ -142,7 +156,8 @@ public class ResidentBean implements Serializable {
 			@Override
 			public Resident getAsObject(FacesContext context,
 						UIComponent component, String value) {
-				return ejbProxy.residentRepository.findById(Long.valueOf(value));
+				return ejbProxy.residentRepository
+							.findById(Long.valueOf(value));
 			}
 
 			@Override
@@ -155,7 +170,6 @@ public class ResidentBean implements Serializable {
 			}
 		};
 	}
-	
 
 	public List<Resident> getPageResidents() {
 		return pageResidents;
@@ -186,6 +200,10 @@ public class ResidentBean implements Serializable {
 	public Resident getResident() {
 		return resident;
 	}
+	
+	public Resident getNewResident() {
+		return newResident;
+	}
 
 	public void setResident(Resident resident) {
 		this.resident = resident;
@@ -201,9 +219,7 @@ public class ResidentBean implements Serializable {
 
 	@PostConstruct
 	public void initResident() {
-		LOG.info("This was run : " + resident);
 		newResident = new Resident();
-		LOG.info("This new resident : " + resident);
 	}
 
 }

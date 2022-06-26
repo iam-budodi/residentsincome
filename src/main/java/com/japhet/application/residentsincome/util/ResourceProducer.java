@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 //import org.hibernate.Session;
 
+@RequestScoped
 public class ResourceProducer {
 
 	@Produces
@@ -31,7 +32,8 @@ public class ResourceProducer {
 	}
 
     @Produces
-//    @RequestScoped
+    @Faces
+    @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
     }

@@ -23,8 +23,8 @@ import com.japhet.application.residentsincome.util.PasswordDigest;
  *
  */
 @Entity
-//@Table(name = "Resident", uniqueConstraints = @UniqueConstraint(columnNames = {
-//		"id", "phone_number", "user_name" }))
+@Table(name = "Resident", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"id", "phone_number", "user_name" }))
 @NamedQueries({
 		@NamedQuery(name = Resident.FIND_BY_EMAIL, query = "SELECT user FROM Resident user WHERE user.email = :email"),
 		@NamedQuery(name = Resident.FIND_BY_UUID, query = "SELECT user FROM Resident user WHERE user.uuid = :uuid"),
