@@ -61,7 +61,7 @@ public class ResidentBean implements Serializable {
 	private Long residentId;
 	private Long count;
 	private int page;
-	private List<Resident> pageResidents;
+	private List<Resident> pageItems;
 
 	public String create() {
 		conversation.begin();
@@ -140,10 +140,10 @@ public class ResidentBean implements Serializable {
 
 	public void paginate() {
 //		count = residentRepository.userCount(getResident());
-//		pageResidents = residentRepository.usersPerPage(getResident(),
+//		pageItems = residentRepository.usersPerPage(getResident(),
 //					getPage(), getPageSize());
 		count = residentRepository.userCount(getNewResident());
-		pageResidents = residentRepository.usersPerPage(getNewResident(),
+		pageItems = residentRepository.usersPerPage(getNewResident(),
 					getPage(), getPageSize());
 	}
 
@@ -171,8 +171,8 @@ public class ResidentBean implements Serializable {
 		};
 	}
 
-	public List<Resident> getPageResidents() {
-		return pageResidents;
+	public List<Resident> getPageItems() {
+		return pageItems;
 	}
 
 	public int getPage() {
@@ -184,7 +184,8 @@ public class ResidentBean implements Serializable {
 	}
 
 	public int getPageSize() {
-		return 10;
+//		return 10;
+		return 2;
 	}
 
 	public Long getResidentId() {

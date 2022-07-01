@@ -104,11 +104,11 @@ public class ResidentBeanTest {
 	@InSequence(4)
 	public void shouldPaginateOneResident() {
 		residentBean.paginate();
-		LOG.info(residentBean.getPageResidents().size() + " EQUALS "
+		LOG.info(residentBean.getPageItems().size() + " EQUALS "
 					+ residentBean.getCount());
-		assertTrue((residentBean.getPageResidents().size() == residentBean
+		assertTrue((residentBean.getPageItems().size() == residentBean
 					.getPageSize())
-					|| (residentBean.getPageResidents().size() == residentBean
+					|| (residentBean.getPageItems().size() == residentBean
 								.getCount()));
 	}
 
@@ -128,9 +128,9 @@ public class ResidentBeanTest {
 		user = residentBean.getNewResident();
 		residentBean.setResident(user);
 		residentBean.paginate();
-		assertTrue((residentBean.getPageResidents().size() == residentBean
+		assertTrue((residentBean.getPageItems().size() == residentBean
 					.getPageSize())
-					|| (residentBean.getPageResidents().size() == residentBean
+					|| (residentBean.getPageItems().size() == residentBean
 								.getCount()));
 	}
 }

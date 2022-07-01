@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/admin-template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="Admin Dashboard" />
+	</ui:define>
+	<ui:define name="top-div">
+		<div class="page-breadcrumb bg-white">
+			<div class="row align-items-center sticky-top">
+				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					<h4 class="page-title">
+						<h:outputText value="Dashboard" />
+					</h4>
+				</div>
+				<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					<div class="d-md-flex">
+						<ol class="breadcrumb ms-auto">
+							<li><h:link outcome="resident/search.xhtml"
+									class="fw-normal" value="User Management" /></li>
+						</ol>
+						<h:link outcome="go/to/home/"
+							class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
+							value="Back to Home" />
+					</div>
+				</div>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+	</ui:define>
+
+	<!-- ============================================================== -->
+	<!-- LEVERAGE THE USE OF ui:repeat WHEN yOU STORE THESE DATA IN DB-->
+	<!-- ============================================================== -->
+	<ui:define name="dashboard-hero">
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-12">
+				<div class="white-box analytics-info">
+					<h3 class="box-title">
+						<h:outputText value="Total Visit" />
+					</h3>
+					<ul class="list-inline two-part d-flex align-items-center mb-0">
+						<li>
+							<div id="sparklinedash">
+								<canvas width="67" height="30"
+									style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+							</div>
+						</li>
+						<li class="ms-auto"><span class="counter text-success"><h:outputText
+									value="659" /></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-12">
+				<div class="white-box analytics-info">
+					<h3 class="box-title">
+						<h:outputText value="Total Page Views" />
+					</h3>
+					<ul class="list-inline two-part d-flex align-items-center mb-0">
+						<li>
+							<div id="sparklinedash2">
+								<canvas width="67" height="30"
+									style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+							</div>
+						</li>
+						<li class="ms-auto"><span class="counter text-purple"><h:outputText
+									value="869" /></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-12">
+				<div class="white-box analytics-info">
+					<h3 class="box-title">
+						<h:outputText value="Unique Visitor" />
+					</h3>
+					<ul class="list-inline two-part d-flex align-items-center mb-0">
+						<li>
+							<div id="sparklinedash3">
+								<canvas width="67" height="30"
+									style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+							</div>
+						</li>
+						<li class="ms-auto"><span class="counter text-info"><h:outputText
+									value="911" /></span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="dashboard-chart">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+				<div class="white-box">
+					<h3 class="box-title">
+						<h:outputText value="Yearly Registered Users" />
+					</h3>
+					<div class="d-md-flex">
+						<ul class="list-inline d-flex ms-auto">
+							<li class="ps-3">
+								<h5>
+									<i class="fa fa-circle me-1 text-info"></i>
+									<h:outputText value="Mac" />
+								</h5>
+							</li>
+							<li class="ps-3">
+								<h5>
+									<i class="fa fa-circle me-1 text-inverse"></i>
+									<h:outputText value="Windows" />
+								</h5>
+							</li>
+						</ul>
+					</div>
+					<div id="ct-visits" style="height: 405px;">
+						<div class="chartist-tooltip" style="top: -17px; left: -12px;">
+							<span class="chartist-tooltip-value">6</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+	<ui:define name="main">
+		<div class="col-md-12 col-lg-8 col-sm-12">
+			<div class="card white-box p-0">
+				<div class="card-body">
+					<h3 class="box-title mb-0">
+						<h:outputText value="Recent Reviews" />
+					</h3>
+				</div>
+				<div class="comment-widgets">
+					<!-- Comment Row -->
+					<div class="d-flex flex-row comment-row p-3 mt-0">
+						<div class="p-2">
+							<h:graphicImage
+								value='#{resource["plugins/images/users/varun.jpg"]}' alt="user"
+								width="50" class="rounded-circle" />
+						</div>
+						<div class="comment-text ps-2 ps-md-3 w-100">
+							<h5 class="font-medium">
+								<h:outputText value="James Anderson" />
+							</h5>
+							<span class="mb-3 d-block"><h:outputText
+									value="Lorem Ipsum is simply dummy
+                                                text of the printing and type setting industry.It has
+                                                survived not only five centuries." /></span>
+							<div class="comment-footer d-md-flex align-items-center">
+								<span class="badge bg-primary rounded"><h:outputText
+										value="Pending" /></span>
+
+								<div class="text-muted fs-1 ms-auto mt-1 mt-md-0">
+									<span><h:outputText value="April 14, 2021" /></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Comment Row -->
+					<div class="d-flex flex-row comment-row p-3">
+						<div class="p-2">
+							<h:graphicImage
+								value='#{resource["plugins/images/users/genu.jpg"]}' alt="user"
+								width="50" class="rounded-circle" />
+						</div>
+						<div class="comment-text ps-2 ps-md-3 active w-100">
+							<h5 class="font-medium">
+								<h:outputText value="Michael Jorden" />
+							</h5>
+							<span class="mb-3 d-block"><h:outputText
+									value="Lorem Ipsum is simply dummy
+                                                text of the printing and type setting industry.It has
+                                                survived not only five centuries." />
+							</span>
+							<div class="comment-footer d-md-flex align-items-center">
+
+								<span class="badge bg-success rounded"><h:outputText
+										value="Approved" /></span>
+
+								<div class="text-muted fs-2 ms-auto mt-2 mt-md-0">
+									<h:outputText value="April 14, 2021" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Comment Row -->
+					<div class="d-flex flex-row comment-row p-3">
+						<div class="p-2">
+							<h:graphicImage
+								value='#{resource["plugins/images/users/ritesh.jpg"]}'
+								alt="user" width="50" class="rounded-circle" />
+						</div>
+						<div class="comment-text ps-2 ps-md-3 w-100">
+							<h5 class="font-medium">
+								<h:outputText value="Johnathan Doeting" />
+							</h5>
+							<span class="mb-3 d-block"><h:outputText
+									value="Lorem Ipsum is simply dummy
+                                                text of the printing and type setting industry.It has
+                                                survived not only five centuries." />
+							</span>
+							<div class="comment-footer d-md-flex align-items-center">
+
+								<span class="badge rounded bg-danger"><h:outputText
+										value="Rejected" /></span>
+
+								<div class="text-muted fs-2 ms-auto mt-2 mt-md-0">
+									<h:outputText value="April 14, 2021" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-md-12 col-sm-12">
+			<div class="card white-box p-0">
+				<div class="card-heading">
+					<h3 class="box-title mb-0">
+						<h:outputText value="Chat Listing" />
+					</h3>
+				</div>
+				<div class="card-body">
+					<ul class="chatonline">
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+								<h:graphicImage
+									value='#{resource["plugins/images/users/varun.jpg"]}'
+									alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark"><h:outputText
+											value="Varun Dhavan" /><small
+										class="d-block text-success d-block"><h:outputText
+												value="online" /></small></span>
+								</div>
+						</a>
+						</li>
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+							<h:graphicImage
+                                    value='#{resource["plugins/images/users/genu.jpg"]}'
+                                    alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark">Genelia Deshmukh <small
+										class="d-block text-warning">Away</small></span>
+								</div> </a>
+						</li>
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+							<h:graphicImage
+                                    value='#{resource["plugins/images/users/ritesh.jpg"]}'
+                                    alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark">Ritesh Deshmukh <small
+										class="d-block text-danger">Busy</small></span>
+								</div> </a>
+						</li>
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+							<h:graphicImage
+                                    value='#{resource["plugins/images/users/arijit.jpg"]}'
+                                    alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark">Arijit Sinh <small
+										class="d-block text-muted">Offline</small></span>
+								</div> </a>
+						</li>
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+							<h:graphicImage
+                                    value='#{resource["plugins/images/users/govinda.jpg"]}'
+                                    alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark">Govinda Star <small
+										class="d-block text-success">online</small></span>
+								</div> </a>
+						</li>
+						<li>
+							<div class="call-chat">
+								<button class="btn btn-success text-white btn-circle btn"
+									type="button">
+									<i class="fas fa-phone"></i>
+								</button>
+								<button class="btn btn-info btn-circle btn" type="button">
+									<i class="far fa-comments text-white"></i>
+								</button>
+							</div> <a href="javascript:void(0)" class="d-flex align-items-center">
+							<h:graphicImage
+                                    value='#{resource["plugins/images/users/hritik.jpg"]}'
+                                    alt="user" class="img-circle" />
+								<div class="ms-2">
+									<span class="text-dark">John Abraham<small
+										class="d-block text-success">online</small></span>
+								</div> </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
