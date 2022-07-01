@@ -15,7 +15,7 @@
             &lt; Previous
         </h:commandLink>
 		<h:outputText
-			value="Showing #{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} out of #{paginatorBean.count} entries DONE" />
+			value="Showing #{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} out of #{paginatorBean.count} entries" />
 		<h:commandLink
 			rendered="#{(paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count}">
 			<f:param name="page" value="#{paginatorBean.page + 1}" />

@@ -121,17 +121,6 @@ body {
   color: #3e5569;
   text-align: left;
   background-color: #eef5f9; }
-  
-#search .paginator {
-    display: block;
-    text-align: right;
-    padding-bottom: 5px;
-}
-
-.paginator-content {
-    margin-left: 5px;
-    margin-right: 5px;
-}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
