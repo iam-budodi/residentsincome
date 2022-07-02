@@ -33,27 +33,16 @@
 									value="Return to Dashboard" /></li>
 						</ul>
 						<h:form id="popup">
-						<h:commandLink id="popupLink" value="#{jSPopupWindowBean.linkName}" class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
-                                target="popUpWindow"
-                                onclick="javascript: void window.open('', 'popUpWindow', 'status=0,toolbar=0,location=0,menubar=0,resizable,width=750,height=500,scrollbars,left=0,top=0');"
-                                action="#{jSPopupWindowBean.redirect()}"
-                                binding="#{jSPopupWindowBean.popupLink}">
-                                <i class="fa fa-user-plus"></i>
-                            <span><h:outputText value="#{jSPopupWindowBean.linkName}" /></span>
-                            </h:commandLink>
+							<h:commandLink id="popupLink"
+								class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
+								target="popUpWindow"
+								onclick="javascript: void window.open('', 'popUpWindow', 'status=0,toolbar=0,location=0,menubar=0,resizable,width=750,height=500,scrollbars,left=0,top=0');"
+								action="#{jSPopupWindowBean.redirect()}"
+								binding="#{jSPopupWindowBean.popupLink}">
+								<i class="fa fa-user-plus"></i>
+								<span><h:outputText value="#{jSPopupWindowBean.linkName}" /></span>
+							</h:commandLink>
 						</h:form>
-						<!-- <h:link outcome="admin/resident/create"
-							class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
-							<i class="fa fa-user-plus"></i>
-							<span><h:outputText value="Add User" /></span>
-						</h:link> -->
-						
-						<!-- <h:outputLink value="#{jSPopupWindowBean.redirectLink}" target="_blank" class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
-							<i class="fa fa-user-plus"></i>
-							<span>#{jSPopupWindowBean.linkName}</span>
-							<span><h:outputText value="Add User" /></span>
-						</h:outputLink> -->
-						
 					</div>
 				</div>
 			</div>
@@ -201,11 +190,14 @@
 									<f:facet name="header">
 										<h:outputText value="Action" />
 									</f:facet>
-									<h:link outcome="#" class="btn btn-outline-danger btn-sm border border-1 border-danger rounded-circle me-2"
+									<h:link outcome="#"
+										class="btn btn-outline-danger btn-sm border border-1 border-danger rounded-circle me-2"
 										title="delete">
 										<i class="fa fa-trash-alt"></i>
 									</h:link>
-									<h:link outcome="#" class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle" title="edit">
+									<h:link outcome="#"
+										class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
+										title="edit">
 										<i class="fa fa-edit"></i>
 									</h:link>
 								</h:column>

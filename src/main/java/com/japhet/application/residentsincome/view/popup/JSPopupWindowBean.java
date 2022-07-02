@@ -58,7 +58,7 @@ public class JSPopupWindowBean implements Serializable {
 
 		try {
 			String url = fc.getExternalContext()
-						.encodeRedirectURL("/admin/dashboard.xhtml?faces-redirect=true", parameters);
+						.encodeRedirectURL("/residentsincome/faces/admin/dashboard.xhtml?faces-redirect=true", parameters);
 //			.encodeRedirectURL(getPortfolioLink(), parameters);
 			fc.getExternalContext().redirect(url);
 		} catch (IOException e) {
