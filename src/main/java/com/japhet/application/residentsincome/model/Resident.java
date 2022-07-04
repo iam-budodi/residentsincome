@@ -64,8 +64,8 @@ public class Resident implements Serializable {
 	private String email;
 
 	@NotNull
-	@Size(min = 9, max = 12, message = "phone number must be a min of 9 and max of 12 digits")
-	@Digits(fraction = 0, integer = 12)
+	@Size(min = 9, max = 13, message = "phone number must be a min of 9 and max of 13 digits")
+	@Digits(fraction = 0, integer = 13)
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
@@ -151,8 +151,8 @@ public class Resident implements Serializable {
 		return this.password;
 	}
 
-	public void setPassw0rd(String passw0rd) {
-		this.password = passw0rd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUuid() {
@@ -238,7 +238,7 @@ public class Resident implements Serializable {
 		return "Resident [id=" + id + ", uuid=" + uuid + ", firstName=" + firstName
 					+ ", lastName=" + lastName + ", email=" + email
 					+ ", phoneNumber=" + phoneNumber + ", userName=" + userName
-					+ ", passw0rd=" + password + ", dateOfBirth=" + dateOfBirth
+					+ ", password=" + password + ", dateOfBirth=" + dateOfBirth
 					+ ", role=" + role + ", updatedOn=" + updatedOn
 					+ ", createdOn=" + createdOn + "]";
 	}

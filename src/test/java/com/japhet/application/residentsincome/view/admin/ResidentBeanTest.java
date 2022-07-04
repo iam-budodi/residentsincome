@@ -73,7 +73,7 @@ public class ResidentBeanTest {
 		resident.setLastName("Sebastian");
 		resident.setPhoneNumber("0744608510");
 		resident.setUserName("budodi");
-		resident.setPassw0rd("budodi");
+		resident.setPassword("budodi");
 		resident.setEmail("japhetseba@gmail.com");
 		resident.setRole(UserRole.ADMIN);
 		resident.setDateOfBirth(LocalDate.of(1992, 06, 23));

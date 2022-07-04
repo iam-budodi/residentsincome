@@ -7,6 +7,6 @@ INSERT INTO INDIVIDUAL_INCOME (id, category, class_amount, class_limit, tax_per_
 
 
 -- USER
-INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (1, 'japhets', 'B12js6dy$', 'Japhet', 'Sebastian', '255744608510', 'japhets@gmail.com', '1935-07-01', 0)
-INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (2, 'budodi', 'B12js6dy$', 'Jeff', 'Sebastian', '255744608511', 'japhet@gmail.com', '1935-07-01', 1)
-INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (3, 'japhets', 'B12js6dy$', 'Budodi', 'Sebastian', '255744608511', 'japhetb@gmail.com', '1935-07-01', 1)
+INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (5, 'japhets', 'B12js6dy$', 'Japhet', 'Sebastian', '255744608510', 'japhets@gmail.com', '1935-07-01', 0)
+INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (6, 'budodi', 'B12js6dy$', 'Jeff', 'Sebastian', '255744608511', 'japhet@gmail.com', '1935-07-01', 1)
+INSERT INTO RESIDENT (id, user_name, password, first_name, last_name, phone_number, email, date_of_birth, user_role) VALUES (7, 'japhets', 'B12js6dy$', 'Budodi', 'Sebastian', '255744608511', 'japhetb@gmail.com', '1935-07-01', 1)

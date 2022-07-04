@@ -24,22 +24,57 @@
 		<link rel="icon" type="image/png" sizes="16x16"
 			href="plugins/images/favicon.png" />
 		<!-- Custom CSS -->
+		<!-- <link href="https://wrappixel.com/demos/free-admin-templates/all-lite-landing-pages/dist/css/style.css"
+        rel="stylesheet" /> -->
+		<h:outputStylesheet
+			name="plugins/bower_components/chartist/dist/chartist.min.css" />
 		<h:outputStylesheet
 			name="plugins/bower_components/chartist/dist/chartist.min.css" />
 		<h:outputStylesheet
 			name="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" />
-		<h:outputStylesheet
-			name="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" />
+
 		<!-- Custom CSS -->
-		<h:outputStylesheet
-			name="plugins/bower_components/chartist/dist/chartist.min.css" />
-		<h:outputStylesheet
-			name="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css" />
+		<!-- <h:outputStylesheet library="webjars"
+			name="bootstrap/5.1.3/css/bootstrap.min-jsf.css" /> -->
+		<!-- <link href="https://wrappixel.com/demos/free-admin-templates/all-lite-landing-pages/dist/css/style.css"
+        rel="stylesheet" />  -->
 		<h:outputStylesheet name="css/style.min.css" />
-		<h:outputStylesheet library="webjars"
-			name="bootstrap/5.1.3/css/bootstrap.min-jsf.css" />
 		<!-- <h:outputStylesheet library="webjars"
 			name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" /> -->
+			
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- All Jquery -->
+        <!-- ============================================================== -->
+
+		<h:outputScript library="plugins"
+			name="bower_components/jquery/dist/jquery.min.js" target="head" />
+			<!-- Bootstrap tether Core JavaScript -->
+		<h:outputScript library="bootstrap"
+			name="dist/js/bootstrap.bundle.min.js" target="head" />
+		<h:outputScript library="js" name="app-style-switcher.js"
+			target="head" />
+		<h:outputScript library="plugins"
+			name="bower_components/jquery-sparkline/jquery.sparkline.min.js"
+			target="head" />
+			<!--Wave Effects -->
+		<h:outputScript library="js" name="waves.js" target="head" />
+		<h:outputScript library="js" name="sidebarmenu.js" target="head" />
+		<!--Custom JavaScript -->
+		<h:outputScript library="js" name="custom.js" target="body" />
+		<!--This page JavaScript -->
+        <!--chartis chart-->
+		<h:outputScript library="plugins"
+			name="bower_components/chartist/dist/chartist.min.js" target="head" />
+
+		<h:outputScript library="plugins"
+			name="bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"
+			target="head" />
+		<h:outputScript library="js" name="pages/dashboards/dashboard1.js"
+			target="head" />
+
 	</h:head>
 
 	<h:body>
@@ -251,32 +286,6 @@
 			<!-- End Page wrapper  -->
 			<!-- ============================================================== -->
 		</div>
-		<!-- ============================================================== -->
-		<!-- End Wrapper -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- All Jquery -->
-		<!-- ============================================================== -->
-		<h:outputScript
-			name="plugins/bower_components/jquery/dist/jquery.min.js" />
-		<!-- Bootstrap tether Core JavaScript -->
-		<h:outputScript name="bootstrap/dist/js/bootstrap.bundle.min.js" />
-		<h:outputScript name="js/app-style-switcher.js" />
-		<h:outputScript
-			name="plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js" />
-		<!--Wave Effects -->
-		<h:outputScript name="js/waves.js" />
-		<!--Menu sidebar -->
-		<h:outputScript name="js/sidebarmenu.js" />
-		<!--Custom JavaScript -->
-		<h:outputScript name="js/custom.js" />
-		<!--This page JavaScript -->
-		<!--chartis chart-->
-		<h:outputScript
-			name="plugins/bower_components/chartist/dist/chartist.min.js" />
-		<h:outputScript
-			name="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js" />
-		<h:outputScript name="js/pages/dashboards/dashboard1.js" />
 	</h:body>
 </f:view>
 </html>

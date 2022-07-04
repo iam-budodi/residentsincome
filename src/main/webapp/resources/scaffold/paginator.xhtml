@@ -11,19 +11,19 @@
 		<h:panelGroup id="page" class="d-none d-md-block mt-3 me-3 pb-2"
 			rendered="#{paginatorBean.count gt paginatorBean.pageSize}">
 			<!-- Use commandLink, not outputLink, so that search criteria is not lost -->
-			<h:commandLink class="btn btn-secondary"
+			<h:commandLink id="previouspage" class="btn btn-secondary"
 				rendered="#{paginatorBean.page gt 0}">
 				<f:param name="page" value="#{paginatorBean.page - 1}" />
-                    &lt; <h:outputText value="Previous page" />
+                    &lt; <h:outputText id="previousoutput" value="Previous page" />
             <!-- <f:ajax render="@form page"></f:ajax> -->
 			</h:commandLink>
-			<h:outputText class="mx-2 text-sm text-muted"
+			<h:outputText id="paging" class="mx-2 text-sm text-muted"
 				value="Showing #{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} out of #{paginatorBean.count} entries" />
-			<h:commandLink class="btn btn-secondary"
+			<h:commandLink id="nextpage" class="btn btn-secondary"
 				rendered="#{(paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count}">
 				<f:param name="page" value="#{paginatorBean.page + 1}" />
-                    <h:outputText value="Next page" /> &gt;
-                <!-- <f:ajax render="@form paging"></f:ajax> -->
+                    <h:outputText id="nextoutput" value="Next page" /> &gt;
+                <!-- <f:ajax execute="@form" render="@form"></f:ajax> -->
 				<!-- <f:ajax execute="@form" render=":paging" /> -->
 			</h:commandLink>
 		</h:panelGroup>

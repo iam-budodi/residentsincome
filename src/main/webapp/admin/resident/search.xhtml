@@ -16,10 +16,9 @@
 	<ui:define name="title">
 		<h:outputText value="User Management" />
 	</ui:define>
-	<ui:define name="footer" />
 
 	<ui:define name="top-div">
-		<div class="page-breadcrumb bg-white mb-5">
+		<div class="page-breadcrumb bg-white">
 			<div class="row align-items-center mb-3">
 				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 					<h4 class="page-title">
@@ -36,10 +35,10 @@
 							<h:commandLink id="popupLink"
 								class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
 								target="popUpWindow"
-								onclick="javascript: void window.open('', 'popUpWindow', 'status=0,toolbar=0,location=0,menubar=0,resizable,width=750,height=500,scrollbars,left=0,top=0');"
+								onclick="javascript: void window.open('', 'popUpWindow', 'directories=no,titlebar=no,status=no,toolbar=no,location=no,menubar=no,resizable=no,width=750,height=500,scrollbars=no,left=500,top=400');"
 								action="#{jSPopupWindowBean.redirect()}"
 								binding="#{jSPopupWindowBean.popupLink}">
-								<i class="fa fa-user-plus"></i>
+								<i class="fas fa-user-plus"></i>
 								<span><h:outputText value="#{jSPopupWindowBean.linkName}" /></span>
 							</h:commandLink>
 						</h:form>
@@ -49,59 +48,41 @@
 		</div>
 	</ui:define>
 	<ui:define name="main">
-
-		<h:form id="search">
-			<div class="row">
-				<div class="col-md-12 col-lg-12 col-sm-12">
-					<div class="white-box">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<div class="white-box">
+					<h:form id="users" class="form-horizontal form-material">
 						<div class="d-md-flex mb-3">
-							<!-- <h:panelGroup rendered="#{empty residents}"> -->
 							<h:panelGroup id="paging"
 								rendered="#{empty residentBean.pageItems }">
 								<h3 class="box-title mb-0">
 									<h:outputText value="No Registered Users" />
 								</h3>
-								<div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-									<h:form role="search" class="d-none d-md-block me-3">
-										<h:link outcome="#" class="btn btn-secondary">
-											<i class="fa fa-file"></i>
-											<span><h:outputText value="Export to Excel" /></span>
-										</h:link>
-
-										<div class="position-relative form-floating py-1 mb-3 mt-3">
-											<h:inputText type="text" id="floatingInput"
-												pt:placeholder="Search..." required="true"
-												class="form-control mt-0" />
-											<a href="" class="active"> <i
-												class="position-absolute top-50 end-0 tranlate-middle-y pe-2 fa fa-search"></i>
-											</a>
-											<h:outputLabel for="floatingInput" class="text-muted"
-												value="Search User..." />
-										</div>
-									</h:form>
-
-								</div>
 							</h:panelGroup>
 							<h:panelGroup rendered="#{not empty residentBean.pageItems }">
 								<h3 class="box-title mb-0">
 									<h:outputText value="Registered Users" />
 								</h3>
 								<div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
-									<h:form role="search" class="d-none d-md-block me-3">
-										<h:link outcome="#" class="btn btn-secondary">
-											<i class="fa fa-file"></i>
-											<span><h:outputText value="Export to Excel" /></span>
-										</h:link>
+									<h:form id="search"
+										class="form-horizontal form-material d-none d-md-block me-3">
+										<div class="form-group">
+											<h:link outcome="#" class="btn btn-secondary">
+												<i class="fas fa-file-excel"></i>
+												<span><h:outputText value="Export to Excel" /></span>
+											</h:link>
 
-										<div class="position-relative form-floating py-1 mb-3 mt-3">
-											<h:inputText type="text" id="floatingInput"
-												pt:placeholder="Search..." required="true"
-												class="form-control mt-0" />
-											<a href="" class="active"> <i
-												class="position-absolute top-50 end-0 tranlate-middle-y pe-2 fa fa-search"></i>
-											</a>
-											<h:outputLabel for="floatingInput" class="text-muted"
-												value="Search User..." />
+											<div
+												class="position-relative form-floating mt-3 border-1 border-bottom p-0">
+												<h:inputText type="text" id="floatingInput"
+													pt:placeholder="Search..." required="true"
+													class="form-control p-0 border-0" />
+												<a href="" class="active"> <i
+													class="position-absolute top-50 end-0 translate-middle-y pe-2 fas fa-search-plus"></i>
+												</a>
+												<h:outputLabel for="floatingInput" class="text-muted"
+													value="Search User..." />
+											</div>
 										</div>
 									</h:form>
 
@@ -139,6 +120,12 @@
 										<h:outputText id="residentLastName"
 											value="#{_resident.lastName}" />
 									</h:link>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Date Of Birth" />
+									</f:facet>
+									<h:outputText id="residentDOB" value="#{_resident.dateOfBirth}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
@@ -190,14 +177,16 @@
 									<f:facet name="header">
 										<h:outputText value="Action" />
 									</f:facet>
-									<h:link outcome="#"
+									<h:link outcome="create"
 										class="btn btn-outline-danger btn-sm border border-1 border-danger rounded-circle me-2"
 										title="delete">
 										<i class="fa fa-trash-alt"></i>
 									</h:link>
-									<h:link outcome="#"
+									<h:link outcome="create?faces-redirect=true"
+										includeViewParams="true"
 										class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
-										title="edit">
+										title="Edit">
+										<f:param name="residentId" value="#{_resident.id}" />
 										<i class="fa fa-edit"></i>
 									</h:link>
 								</h:column>
@@ -208,9 +197,9 @@
 								</ui:include>
 							</div>
 						</div>
-					</div>
+					</h:form>
 				</div>
 			</div>
-		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>
