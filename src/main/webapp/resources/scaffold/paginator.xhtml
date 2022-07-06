@@ -6,7 +6,6 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
-
 	<h:form id="page">
 		<h:panelGroup id="page" class="d-none d-md-block mt-3 me-3 pb-2"
 			rendered="#{paginatorBean.count gt paginatorBean.pageSize}">
@@ -14,17 +13,18 @@
 			<h:commandLink id="previouspage" class="btn btn-secondary"
 				rendered="#{paginatorBean.page gt 0}">
 				<f:param name="page" value="#{paginatorBean.page - 1}" />
-                    &lt; <h:outputText id="previousoutput" value="Previous page" />
-            <!-- <f:ajax render="@form page"></f:ajax> -->
+                    &lt; <h:outputText id="previousoutput"
+					value="Previous page" />
+				<f:ajax execute="@form" render="@form :users:residents" />
 			</h:commandLink>
 			<h:outputText id="paging" class="mx-2 text-sm text-muted"
-				value="Showing #{paginatorBean.page * paginatorBean.pageSize + 1} to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} out of #{paginatorBean.count} entries" />
+				value="Showing #{paginatorBean.page * paginatorBean.pageSize + 1} 
+				        to #{paginatorBean.page * paginatorBean.pageSize + fn:length(paginatorBean.pageItems)} out of #{paginatorBean.count} entries" />
 			<h:commandLink id="nextpage" class="btn btn-secondary"
 				rendered="#{(paginatorBean.page + 1) * paginatorBean.pageSize lt paginatorBean.count}">
 				<f:param name="page" value="#{paginatorBean.page + 1}" />
-                    <h:outputText id="nextoutput" value="Next page" /> &gt;
-                <!-- <f:ajax execute="@form" render="@form"></f:ajax> -->
-				<!-- <f:ajax execute="@form" render=":paging" /> -->
+				<h:outputText id="nextoutput" value="Next page" /> &gt;
+                <f:ajax execute="@form" render="@form :users:residents" />
 			</h:commandLink>
 		</h:panelGroup>
 	</h:form>

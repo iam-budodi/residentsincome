@@ -91,7 +91,7 @@ public class ResidentBean implements Serializable {
 
 		try {
 			if (residentId == null) {
-				LOG.info("CREATE NEW USER : " + resident);
+				LOG.info("CREATE NEW RESIDENT : " + resident);
 				// TODO: Check for password strength
 //				if (!passwordValidator.isValid(resident.getPassword())) {
 //					throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -105,6 +105,7 @@ public class ResidentBean implements Serializable {
 //				initUser();
 				return "search?faces-redirect=true";
 			} else {
+				LOG.info("UPDATE RESIDENT : " + resident);
 				residentRegistration.modify(resident);
 //				facesContext.addMessage(null,
 //							new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -121,12 +122,19 @@ public class ResidentBean implements Serializable {
 		}
 	}
 
+	// public String delete(Resident resident)
 	public String delete() {
 		conversation.end();
 
 		try {
+			LOG.info("DELETING RESIDENT:  " + resident);
 			Resident deletable = residentRepository.findById(getResidentId());
 			residentRegistration.delete(deletable);
+			LOG.info("REMAINING PAGE ITEMS:  " + pageItems);
+//			if (pageItems.contains(resident)) {
+//				pageItems.remove(resident);
+//				LOG.info("NO ITEMS:  " + pageItems.size());
+//			}
 			return "search?faces-redirect=true";
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
@@ -175,6 +183,10 @@ public class ResidentBean implements Serializable {
 		return pageItems;
 	}
 
+	public void setPageItems(List<Resident> pageItems) {
+		this.pageItems = pageItems;
+	}
+
 	public int getPage() {
 		return page;
 	}
@@ -201,7 +213,7 @@ public class ResidentBean implements Serializable {
 	public Resident getResident() {
 		return resident;
 	}
-	
+
 	public Resident getNewResident() {
 		return newResident;
 	}

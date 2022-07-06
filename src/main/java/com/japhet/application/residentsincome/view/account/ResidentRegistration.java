@@ -32,12 +32,12 @@ public class ResidentRegistration {
 		// using Hibernate session(Native API) and JPA entitymanager
 		Session session = (Session) entityManager.getDelegate();
 		session.persist(resident);
-		LOG.info("RegisterED " + resident.toString());
+		LOG.info("Registered resident:  " + resident.toString());
 		residentEventSrc.fire(resident);
 	}
 
 	public void modify(Resident resident) throws Exception {
-		LOG.info("Updating " + resident.getFirstName());
+		LOG.info("Updating resident :  " + resident.getFirstName());
 
 		Session session = (Session) entityManager.getDelegate();
 		session.merge(resident);
@@ -45,11 +45,12 @@ public class ResidentRegistration {
 	}
 
 	public void delete(Resident resident) throws Exception {
-		LOG.info("Updating " + resident.getFirstName());
+		LOG.info("Deleting resident :  " + resident.getFirstName());
 
 		Session session = (Session) entityManager.getDelegate();
 		session.remove(session.getReference(Resident.class, resident.getId()));
 		session.flush();
-		residentEventSrc.fire(resident);
+		LOG.info("Deleted :  " + resident.getFirstName());
+//		residentEventSrc.fire(resident);
 	}
 }

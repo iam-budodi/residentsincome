@@ -34,7 +34,7 @@
 			<div class="row">
 				<div class="col-md-12 col-lg-12 col-sm-12">
 					<div class="white-box">
-						<div class="d-md-flex mb-3">
+						<!-- <div class="d-md-flex mb-3">
 							<c:choose>
 								<c:when test='#{!empty residentBean.residentId}'>
 									<h3 class="box-title mb-0">
@@ -47,7 +47,31 @@
 									</h3>
 								</c:otherwise>
 							</c:choose>
-						</div>
+						</div> -->
+            <!-- Column -->
+                            <div class="user-bg"> <h:graphicImage width="100%" alt="user" value="plugins/images/large/img1.jpg"/>
+                                <div class="overlay-box">
+                                    <div class="user-content">
+                                        <a href="javascript:void(0)"><h:graphicImage value="plugins/images/users/genu.jpg"
+                                                class="thumb-lg img-circle" alt="img" /></a>
+                                        <h4 class="text-white mt-2">User Name</h4>
+                                        <h5 class="text-white mt-2">info@myadmin.com</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-btm-box mt-5 d-md-flex">
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <h1>258</h1>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <h1>125</h1>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <h1>556</h1>
+                                </div>
+                            </div>
+                    <!-- Column -->
+                    
 						<div class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto">
 							<div class="card">
 								<div class="card-body">
@@ -164,17 +188,17 @@
 												<!-- <button class="btn btn-success">Update Profile</button> -->
 												<c:choose>
 													<c:when test='#{!empty residentBean.residentId}'>
-														<h:commandButton action="#{residentBean.update}"
+														<h:commandButton id="update" action="#{residentBean.update}"
 															value="Update Profile" class="btn btn-success me-4">
 															<f:ajax execute="@form" render="@form :users:residents" />
 														</h:commandButton>
-														<h:commandLink outcome="search" value="Cancel"
-															class="btn btn-success">
+														<h:link id="cancel" outcome="search?faces-redirect=true"
+															value="Cancel" class="btn btn-success">
 															<f:ajax execute="@form" render="@form :users:residents" />
-														</h:commandLink>
+														</h:link>
 													</c:when>
 													<c:otherwise>
-														<h:commandButton action="#{residentBean.update}"
+														<h:commandButton id="add" action="#{residentBean.update}"
 															value="Register User" class="btn btn-success">
 															<f:ajax execute="@form" render="@form :users:residents" />
 														</h:commandButton>

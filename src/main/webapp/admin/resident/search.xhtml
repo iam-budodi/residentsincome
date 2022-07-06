@@ -105,8 +105,9 @@
 									<f:facet name="header">
 										<h:outputText value="First Name" />
 									</f:facet>
-									<h:link outcome="/admin/resident/view">
-										<f:param name="id" value="#{_resident.id}" />
+									<h:link outcome="view">
+										<f:param name="residentId" value="#{_resident.id}" />
+										<f:ajax execute="@form" render="@form :viewuser" />
 										<h:outputText id="residentFirstName"
 											value="#{_resident.firstName}" />
 									</h:link>
@@ -115,8 +116,8 @@
 									<f:facet name="header">
 										<h:outputText value="Last Name" />
 									</f:facet>
-									<h:link outcome="/admin/resident/view">
-										<f:param name="id" value="#{_resident.id}" />
+									<h:link outcome="view">
+										<f:param name="residentId" value="#{_resident.id}" />
 										<h:outputText id="residentLastName"
 											value="#{_resident.lastName}" />
 									</h:link>
@@ -131,20 +132,14 @@
 									<f:facet name="header">
 										<h:outputText value="User Name" />
 									</f:facet>
-									<h:link outcome="/admin/resident/view">
-										<f:param name="id" value="#{_resident.id}" />
-										<h:outputText id="residentUserName"
-											value="#{_resident.userName}" />
-									</h:link>
+									<h:outputText id="residentUserName"
+										value="#{_resident.userName}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
 										<h:outputText value="Email" />
 									</f:facet>
-									<h:link outcome="/admin/resident/view">
-										<f:param name="id" value="#{_resident.id}" />
-										<h:outputText id="residentEmail" value="#{_resident.email}" />
-									</h:link>
+									<h:outputText id="residentEmail" value="#{_resident.email}" />
 								</h:column>
 								<h:column>
 									<f:facet name="header">
@@ -177,19 +172,24 @@
 									<f:facet name="header">
 										<h:outputText value="Action" />
 									</f:facet>
-									<h:link outcome="create"
-										class="btn btn-outline-danger btn-sm border border-1 border-danger rounded-circle me-2"
-										title="delete">
-										<i class="fa fa-trash-alt"></i>
-									</h:link>
 									<h:link outcome="create?faces-redirect=true"
 										includeViewParams="true"
 										class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
 										title="Edit">
 										<f:param name="residentId" value="#{_resident.id}" />
+										<f:ajax execute="@form" render="@form :add" />
 										<i class="fa fa-edit"></i>
 									</h:link>
 								</h:column>
+								<!-- <h:column>
+									<h:commandButton id="delete"
+										action="#{residentBean.delete(_resident)}"
+										class="btn btn-outline-danger btn-sm border border-1 border-danger rounded-circle me-2"
+										title="delete">
+										<i class="fa fa-trash-alt"></i>
+										<f:ajax render="@namingcontainer" />
+									</h:commandButton>
+								</h:column> -->
 							</h:dataTable>
 							<div class="float-end">
 								<ui:include src="/resources/scaffold/paginator.xhtml">
