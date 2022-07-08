@@ -71,17 +71,16 @@
 												<i class="fas fa-file-excel"></i>
 												<span><h:outputText value="Export to Excel" /></span>
 											</h:link>
-
 											<div
-												class="position-relative form-floating mt-3 border-1 border-bottom p-0">
-												<h:inputText type="text" id="floatingInput"
+												class="position-relative mt-3 border-1 border-bottom p-0">
+												<h:inputText type="text" id="searchInput"
 													pt:placeholder="Search..." required="true"
-													class="form-control p-0 border-0" />
+													class="form-control p-2 border-0" />
 												<a href="" class="active"> <i
 													class="position-absolute top-50 end-0 translate-middle-y pe-2 fas fa-search-plus"></i>
 												</a>
-												<h:outputLabel for="floatingInput" class="text-muted"
-													value="Search User..." />
+												<!-- <h:outputLabel for="floatingInput" class="text-muted"
+													value="Search User..." /> -->
 											</div>
 										</div>
 									</h:form>
@@ -106,7 +105,7 @@
 										<h:outputText value="First Name" />
 									</f:facet>
 									<h:link outcome="view">
-										<f:param name="residentId" value="#{_resident.id}" />
+										<f:param name="resident" value="#{_resident.id}" />
 										<f:ajax execute="@form" render="@form :viewuser" />
 										<h:outputText id="residentFirstName"
 											value="#{_resident.firstName}" />
@@ -117,10 +116,22 @@
 										<h:outputText value="Last Name" />
 									</f:facet>
 									<h:link outcome="view">
-										<f:param name="residentId" value="#{_resident.id}" />
+										<f:param name="resident" value="#{_resident.id}" />
 										<h:outputText id="residentLastName"
 											value="#{_resident.lastName}" />
 									</h:link>
+									<!-- TRY TO IMPLEMENT POP UP VIEW -->
+									<!-- <h:form id="popup">
+									<h:commandLink id="popupView"
+	                                target="popUpWindow"
+	                                onclick="javascript: void window.open('', 'popUpWindow', 'directories=no,titlebar=no,status=no,toolbar=no,location=no,menubar=no,resizable=no,width=750,height=500,scrollbars=no,left=500,top=400');"
+	                                action="#{jSPopupWindowBean.redirect()}"
+	                                binding="#{jSPopupWindowBean.popupLink}">
+	                                <h:outputText id="residentLastName"
+	                                            value="#{_resident.lastName}" />
+		                            </h:commandLink>
+		                            </h:form> -->
+
 								</h:column>
 								<h:column>
 									<f:facet name="header">
@@ -176,11 +187,12 @@
 										includeViewParams="true"
 										class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
 										title="Edit">
-										<f:param name="residentId" value="#{_resident.id}" />
+										<f:param name="resident" value="#{_resident.id}" />
 										<f:ajax execute="@form" render="@form :add" />
 										<i class="fa fa-edit"></i>
 									</h:link>
 								</h:column>
+
 								<!-- <h:column>
 									<h:commandButton id="delete"
 										action="#{residentBean.delete(_resident)}"

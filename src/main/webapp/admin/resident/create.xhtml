@@ -11,7 +11,7 @@
 	template="/resources/scaffold/admin-template.xhtml">
 
 	<f:metadata>
-		<f:viewParam name="residentId" value='#{residentBean.residentId}' />
+		<f:viewParam name="resident" value='#{residentBean.residentId}' />
 		<f:event type="preRenderView" listener='#{residentBean.retrieve}' />
 	</f:metadata>
 	<ui:define name="title">
@@ -19,200 +19,193 @@
 	</ui:define>
 
 	<ui:define name="top-div">
-		<div class="page-breadcrumb bg-white">
-			<div class="row align-items-center mb-3">
-				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-					<h4 class="page-title">
-						<h:outputText value="User Registration" />
-					</h4>
-				</div>
-			</div>
-		</div>
+		<h:panelGroup id="titlePage" layout="block"
+			class="page-breadcrumb bg-white">
+			<h:panelGroup layout="block" class="row align-items-center mb-3">
+				<h:panelGroup layout="block"
+					class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					<c:choose>
+						<c:when test="#{!empty residentBean.residentId}">
+							<h4 class="page-title">
+								<h:outputText value="Update User Profile" />
+							</h4>
+						</c:when>
+						<c:otherwise>
+							<h4 class="page-title">
+								<h:outputText value="User Registration" />
+							</h4>
+						</c:otherwise>
+					</c:choose>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
 	</ui:define>
 	<ui:define name="main">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12 col-lg-12 col-sm-12">
-					<div class="white-box">
-						<!-- <div class="d-md-flex mb-3">
-							<c:choose>
-								<c:when test='#{!empty residentBean.residentId}'>
-									<h3 class="box-title mb-0">
-										<h:outputText id="edit" value="Modify User's Details" />
-									</h3>
-								</c:when>
-								<c:otherwise>
-									<h3 class="box-title mb-0">
-										<h:outputText id="create" value="Add User" />
-									</h3>
-								</c:otherwise>
-							</c:choose>
-						</div> -->
-            <!-- Column -->
-                            <div class="user-bg"> <h:graphicImage width="100%" alt="user" value="plugins/images/large/img1.jpg"/>
-                                <div class="overlay-box">
-                                    <div class="user-content">
-                                        <a href="javascript:void(0)"><h:graphicImage value="plugins/images/users/genu.jpg"
-                                                class="thumb-lg img-circle" alt="img" /></a>
-                                        <h4 class="text-white mt-2">User Name</h4>
-                                        <h5 class="text-white mt-2">info@myadmin.com</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="user-btm-box mt-5 d-md-flex">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <h1>258</h1>
-                                </div>
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <h1>125</h1>
-                                </div>
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <h1>556</h1>
-                                </div>
-                            </div>
-                    <!-- Column -->
-                    
-						<div class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto">
-							<div class="card">
-								<div class="card-body">
-									<h:form id="add" class="form-horizontal form-material">
-										<div class="form-group mb-4">
-											<div
-												class="form-floating col-md-12 border-1 border-bottom p-0">
-												<h:inputText id="floatingFirstName"
-													pt:placeholder="First Name" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.firstName}" />
-												<h:outputLabel for="floatingFirstName" value="First Name" />
-												<h:message for="floatingFirstName" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputText id="floatingLastName"
-													pt:placeholder="Last Name" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.lastName}" />
-												<h:outputLabel for="floatingLastName" value="Last Name" />
-												<h:message for="floatingLastName" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputText type="date" id="floatingDOB"
-													pt:placeholder="Date of Birth" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.dateOfBirth}">
-													<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
-												</h:inputText>
-												<h:outputLabel for="floatingDOB" value="Date of Birth" />
-												<h:message for="floatingDOB" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputText id="floatingPhoneNumber"
-													pt:placeholder="Phone Number" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.phoneNumber}" />
-												<h:outputLabel for="floatingPhoneNumber"
-													value="Phone Number" />
-												<h:message for="floatingPhoneNumber" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputText type="email" id="floatingEmail"
-													pt:placeholder="johnathan@admin.com" required="true"
-													class="form-control p-0 border-0" name="example-email"
-													value="#{residentBean.resident.email}" />
-												<h:outputLabel for="floatingEmail" value="Email" />
-												<h:message for="floatingEmail" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputText type="text" id="floatingUserName"
-													pt:placeholder="User Name" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.userName}" />
-												<h:outputLabel for="floatingUserName" value="User Name" />
-												<h:message for="floatingUserName" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:inputSecret id="floatingPassword"
-													pt:placeholder="Password" required="true"
-													class="form-control p-0 border-0"
-													value="#{residentBean.resident.password}" />
-												<h:outputLabel for="floatingPassword" value="Password" />
-												<h:message for="floatingPassword" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:selectOneMenu id="floatingRole" pt:placeholder="Role"
-													required="true"
-													class="form-select shadow-none border-0 form-control-line"
-													value="#{residentBean.resident.role}">
-													<f:selectItem itemValue="USER" />
-													<f:selectItem itemValue="ADMIN" />
-												</h:selectOneMenu>
-												<h:outputLabel for="floatingRole" value="Role" />
-												<h:message for="floatingRole" errorClass="invalid" />
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<label class="col-sm-12">Select Country</label>
-											<div class="col-sm-12 border-bottom">
-												<select
-													class="form-select shadow-none p-0 border-0 form-control-line">
-													<option>London</option>
-													<option>India</option>
-													<option>Usa</option>
-													<option>Canada</option>
-													<option>Thailand</option>
-												</select>
-											</div>
-										</div>
-										<div class="form-group mb-4">
-											<div class="col-sm-12">
-												<!-- <button class="btn btn-success">Update Profile</button> -->
-												<c:choose>
-													<c:when test='#{!empty residentBean.residentId}'>
-														<h:commandButton id="update" action="#{residentBean.update}"
-															value="Update Profile" class="btn btn-success me-4">
-															<f:ajax execute="@form" render="@form :users:residents" />
-														</h:commandButton>
-														<h:link id="cancel" outcome="search?faces-redirect=true"
-															value="Cancel" class="btn btn-success">
-															<f:ajax execute="@form" render="@form :users:residents" />
-														</h:link>
-													</c:when>
-													<c:otherwise>
-														<h:commandButton id="add" action="#{residentBean.update}"
-															value="Register User" class="btn btn-success">
-															<f:ajax execute="@form" render="@form :users:residents" />
-														</h:commandButton>
-													</c:otherwise>
-												</c:choose>
-											</div>
-										</div>
-									</h:form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<h:panelGroup layout="block" class="container-fluid">
+			<!-- ============================================================== -->
+			<!-- Start Page Content -->
+			<!-- ============================================================== -->
+			<!-- Row -->
+			<h:panelGroup layout="block" class="row">
+				<!-- Column -->
+				<h:panelGroup id="header" layout="block"
+					class="col-lg-4 col-xlg-3 col-md-12">
+					<h:panelGroup layout="block" class="white-box">
+						<h:panelGroup layout="block" class="user-bg">
+							<h:graphicImage width="100%" alt="user"
+								name="plugins/images/large/img1.jpg" />
+							<h:panelGroup layout="block" class="overlay-box">
+								<!-- <div class="overlay-box"> -->
+								<h:panelGroup layout="block" class="user-content">
+									<h:graphicImage
+										value='#{resource["plugins/images/users/genu.jpg"]}'
+										class="thumb-lg img-circle" alt="user image" />
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+				<!-- Column -->
+				<!-- Column -->
+				<h:panelGroup layout="block" class="col-lg-8 col-xlg-9 col-md-12">
+					<h:panelGroup layout="block" class="card">
+						<h:panelGroup layout="block" class="card-body">
+							<h:form class="form-horizontal form-material">
+								<h:panelGroup id="firstnameField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="firstName"
+										value="First Name" />
+									<h:panelGroup id="firstnameBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText id="firstName" pt:placeholder="First Name"
+											required="true" class="form-control p-0 border-0"
+											value="#{residentBean.resident.firstName}" />
+										<h:message for="firstName" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="lastnameField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="lastName"
+										value="Last Name" />
+									<h:panelGroup id="lastnameBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText id="lastName" pt:placeholder="Last Name"
+											required="true" class="form-control p-0 border-0"
+											value="#{residentBean.resident.lastName}" />
+										<h:message for="lastName" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="birthdateField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="birthdate"
+										value="Date of Birth" />
+									<h:panelGroup id="birthdateBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText type="date" id="birthdate"
+											pt:placeholder="Date of Birth" required="true"
+											class="form-control p-0 border-0"
+											value="#{residentBean.resident.dateOfBirth}">
+											<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+										</h:inputText>
+										<h:message for="birthdate" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="phoneNumberField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="phoneNumber"
+										value="Phone Number" />
+									<h:panelGroup id="phoneNumberBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText id="phoneNumber" pt:placeholder="Phone Number"
+											required="true" class="form-control p-0 border-0"
+											value="#{residentBean.resident.phoneNumber}" />
+										<h:message for="phoneNumber" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="emailField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="email" value="Email" />
+									<h:panelGroup id="emailBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText type="email" id="email"
+											pt:placeholder="johnathan@admin.com" required="true"
+											class="form-control p-0 border-0" name="example-email"
+											value="#{residentBean.resident.email}" />
+										<h:message for="email" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="usernameField" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="userName"
+										value="User Name" />
+									<h:panelGroup id="usernameBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputText id="userName" pt:placeholder="User Name"
+											required="true" class="form-control p-0 border-0"
+											value="#{residentBean.resident.userName}" />
+										<h:message for="userName" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="passwordField" class="form-group mb-4"
+									layout="block" rendered="#{empty residentBean.residentId}">
+									<h:outputLabel class="col-md-12 p-0" for="password"
+										value="Password" />
+									<h:panelGroup id="passwordBlock"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:inputSecret id="password" pt:placeholder="Password"
+											required="true" class="form-control p-0 border-0"
+											value="#{residentBean.resident.password}" />
+										<h:message for="password" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="roleSelector" class="form-group mb-4"
+									layout="block">
+									<h:outputLabel class="col-md-12 p-0" for="role" value="Role" />
+									<h:panelGroup id="roleField"
+										class="col-md-12 border-bottom p-0" layout="block">
+										<h:selectOneMenu id="role" pt:placeholder="Role"
+											required="true"
+											class="form-select shadow-none border-0 form-control-line"
+											value="#{residentBean.resident.role}">
+											<f:selectItem />
+											<f:selectItem itemValue="USER" />
+											<f:selectItem itemValue="ADMIN" />
+										</h:selectOneMenu>
+										<h:message for="role" errorClass="invalid" />
+									</h:panelGroup>
+								</h:panelGroup>
+								<h:panelGroup id="buttons" class="form-group mb-4"
+									layout="block">
+									<h:panelGroup id="buttonSuccess" class="col-sm-12"
+										layout="block">
+										<c:choose>
+											<c:when test='#{!empty residentBean.residentId}'>
+												<h:commandButton id="update" action="#{residentBean.update}"
+													value="Update Profile" class="btn btn-success me-4">
+												</h:commandButton>
+												<h:link id="cancel" outcome="search?faces-redirect=true"
+													value="Cancel" class="btn btn-success">
+													<f:ajax execute="@form" render="@form :users:residents" />
+												</h:link>
+											</c:when>
+											<c:otherwise>
+												<h:commandButton id="add" action="#{residentBean.update}"
+													value="Register User" class="btn btn-success me-4">
+													<f:ajax execute="@form" render="@form :users:residents" />
+												</h:commandButton>
+												<h:link id="back" outcome="search?faces-redirect=true"
+													value="Back to Users" class="btn btn-success">
+													<f:ajax execute="@form" render="@form :users:residents" />
+												</h:link>
+											</c:otherwise>
+										</c:choose>
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:form>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

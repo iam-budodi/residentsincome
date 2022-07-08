@@ -11,7 +11,7 @@
 	template="/resources/scaffold/admin-template.xhtml">
 
 	<f:metadata>
-		<f:viewParam name="residentId" value='#{residentBean.residentId}' />
+		<f:viewParam name="resident" value='#{residentBean.residentId}' />
 		<f:event type="preRenderView" listener='#{residentBean.retrieve}' />
 	</f:metadata>
 	<ui:define name="title">
@@ -52,67 +52,55 @@
 						<div class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto">
 							<div class="card">
 								<div class="card-body">
-									<h:form id="viewuser" class="form-horizontal form-material">
+									<h:form id="viewuser" class="form-horizontal form-material" rendered='#{!empty residentBean.residentId}'>
 										<div class="form-group mb-4">
-											<h:outputLabel for="firstName" value="First Name" />
-											<div
-												class="form-floating col-md-12 border-1 border-bottom p-0">
-												<h:outputText id="firstName"
-													class="form-control p-0 border-0"
+											<h:outputLabel class="col-md-12 p-0" for="firstName" value="First Name" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="firstName" class="form-control p-0 border-0"
 													value="#{residentBean.resident.firstName}" />
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="lastName" value="Last Name" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:outputText id="lastName"
-													class="form-control p-0 border-0"
+											<h:outputLabel class="col-md-12 p-0" for="lastName" value="Last Name" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="lastName" class="form-control p-0 border-0"
 													value="#{residentBean.resident.lastName}" />
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="birthdate" value="Date of Birth" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:outputText type="date" id="birthdate"
-													class="form-control p-0 border-0"
+											<h:outputLabel class="col-md-12 p-0" for="birthdate" value="Date of Birth" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText type="date" id="birthdate" class="form-control p-0 border-0"
 													value="#{residentBean.resident.dateOfBirth}">
 													<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
 												</h:outputText>
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="phoneNumber" value="Phone Number" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:outputText id="floatingPhoneNumber"
-													class="form-control p-0 border-0"
+											<h:outputLabel class="col-md-12 p-0" for="phoneNumber" value="Phone Number" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="phoneNumber" class="form-control p-0 border-0"
 													value="#{residentBean.resident.phoneNumber}" />
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="email" value="Email" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
-												<h:outputText type="email" id="email"
-													class="form-control p-0 border-0" name="example-email"
+											<h:outputLabel class="col-md-12 p-0" for="email" value="Email" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText type="email" id="email" class="form-control p-0 border-0" name="example-email"
 													value="#{residentBean.resident.email}" />
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="userName" value="User Name" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
+											<h:outputLabel class="col-md-12 p-0" for="userName" value="User Name" />
+											<div class="col-md-12 border-bottom p-0">
 												<h:outputText type="text" id="userName"
 													class="form-control p-0 border-0"
 													value="#{residentBean.resident.userName}" />
 											</div>
 										</div>
 										<div class="form-group mb-4">
-											<h:outputLabel for="role" value="Role" />
-											<div
-												class="col-md-12 form-floating border-1 border-bottom p-0">
+											<h:outputLabel class="col-md-12 p-0" for="role" value="Role" />
+											<div class="col-md-12 border-bottom p-0">
 												<h:outputText id="role" class="form-control p-0 border-0"
 													value="#{residentBean.resident.role}" />
 											</div>
@@ -127,8 +115,8 @@
 															<span><h:outputText value="Delete User" /></span>
 															<f:ajax execute="@form" render="@form :users:residents" />
 														</h:commandLink>
-														<h:link id="Back" outcome="search?faces-redirect=true"
-															value="Cancel" class="btn btn-success">
+														<h:link id="userPage" outcome="search?faces-redirect=true"
+															value="Close this Page" class="btn btn-success">
 															<f:ajax execute="@form" render="@form :users:residents" />
 														</h:link>
 													</c:when>

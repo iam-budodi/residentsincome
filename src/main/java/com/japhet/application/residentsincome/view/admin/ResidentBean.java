@@ -111,7 +111,7 @@ public class ResidentBean implements Serializable {
 //							new FacesMessage(FacesMessage.SEVERITY_INFO,
 //										"Resident is updated!",
 //										"Updation is successful"));
-				return "view?faces-redirect=true&id=" + resident.getId();
+				return "view?faces-redirect=true&resident=" + resident.getId();
 			}
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
