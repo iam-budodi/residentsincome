@@ -1,0 +1,72 @@
+<ui:composition 
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<h:panelGroup layout="block" class="scroll-sidebar">
+		<!-- Sidebar navigation-->
+		<nav class="sidebar-nav">
+			<ul id="sidebarnav">
+				<!-- User Profile-->
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="dashboard.xhtml" aria-expanded="false"
+				        class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="far fa-clock" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Dashboard" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="profile/profile.xhtml" aria-expanded="false"
+						class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="fa fa-user" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Profile" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="profile/profile.xhtml" aria-expanded="false"
+						class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="fa fa-table" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Basic Table" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="profile/profile.xhtml" aria-expanded="false"
+						class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="fa fa-font" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Icon" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="profile/profile.xhtml" aria-expanded="false"
+						class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="fa fa-globe" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Google Map" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="sidebar-item pt-2">
+				    <h:link outcome="profile/profile.xhtml" aria-expanded="false"
+						class="sidebar-link waves-effect waves-dark sidebar-link">
+						<i class="fa fa-info-circle" aria-hidden="true"></i>
+						<h:panelGroup class="hide-menu">
+						    <h:outputText value="Error 404" />
+						</h:panelGroup>
+					</h:link>
+				</li>
+				<li class="text-center upgrade-btn">
+				    <h:link outcome="" target="_blank"
+						class="btn d-grid btn-danger text-white">
+						<h:outputText value="Back to Home" />
+					</h:link>
+				</li>
+			</ul>
+		</nav>
+	</h:panelGroup>
+</ui:composition>

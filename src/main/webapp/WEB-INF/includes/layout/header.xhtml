@@ -1,0 +1,59 @@
+<ui:composition xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<nav class="navbar top-navbar navbar-expand-md navbar-dark fixed-top">
+		<div class="navbar-header" data-logobg="skin6">
+			<!-- ============================================================== -->
+			<!-- Logo -->
+			<!-- ============================================================== -->
+			<h:link class="navbar-brand" outcome="dashboard.xhtml">
+				<b class="logo-icon"> <h:graphicImage alt="home page logo"
+						value='#{resource["plugins/images/logo-icon.png"]}' />
+				</b>
+				<h:panelGroup class="logo-text">
+					<h:graphicImage value='#{resource["plugins/images/logo-text.png"]}'
+						alt="home page logo" />
+				</h:panelGroup>
+			</h:link>
+			<!-- ============================================================== -->
+			<!-- toggle and nav items -->
+			<!-- ============================================================== -->
+			<a
+				class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+				href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+		</div>
+		<!-- ============================================================== -->
+		<!-- End Logo -->
+		<!-- ============================================================== -->
+		<div class="navbar-collapse collapse" id="navbarSupportedContent"
+			data-navbarbg="skin5">
+
+			<!-- ============================================================== -->
+			<!-- Right side toggle and nav items -->
+			<!-- ============================================================== -->
+			<ul class="navbar-nav ms-auto d-flex align-items-center">
+
+				<!-- ============================================================== -->
+				<!-- Search -->
+				<!-- ============================================================== -->
+				<li class="in visually-hidden"><h:form role="search"
+						class="app-search d-none d-md-block me-3">
+						<h:inputText type="text" placeholder="Search..."
+							class="form-control mt-0" />
+						<a href="" class="active"> <i class="fa fa-search"></i>
+						</a>
+					</h:form></li>
+				<!-- ============================================================== -->
+				<!-- User profile and search -->
+				<!-- MODIFY PROFILE TO TAKE DETAILS FROM DB-->
+				<!-- ============================================================== -->
+				<li><h:link class="profile-pic" output="profile/profile.xhtml">
+						<h:graphicImage alt="user-img" width="36" class="img-circle"
+							value='#{resource["plugins/images/users/varun.jpg"]}' />
+						<h:panelGroup class="text-white font-medium">
+							<h:outputText value="Japhet" />
+						</h:panelGroup>
+					</h:link></li>
+			</ul>
+		</div>
+	</nav>
+</ui:composition>
