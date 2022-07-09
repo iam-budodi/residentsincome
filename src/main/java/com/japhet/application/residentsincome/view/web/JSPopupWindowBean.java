@@ -1,4 +1,4 @@
-package com.japhet.application.residentsincome.view.popup;
+package com.japhet.application.residentsincome.view.web;
 
 import java.io.IOException;
 import java.io.Serializable;

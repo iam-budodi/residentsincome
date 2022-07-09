@@ -1,0 +1,218 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{residentBean.page}' />
+		<f:event type="preRenderView" listener='#{residentBean.paginate}' />
+	</f:metadata>
+
+    <ui:param name="pageTitle" value="- User Management" />
+	<!--     <ui:define name="top-div"> -->
+	<h:panelGroup layout="block" id="top" class="page-wrapper">
+		<h:panelGroup layout="block" class="page-breadcrumb bg-white">
+			<h:form id="popup">
+				<f:ajax render=":content">
+					<h:panelGroup layout="block" class="row align-items-center mb-3">
+						<h:panelGroup layout="block"
+							class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+							<h4 class="page-title">
+								<h:outputText value="User Management" />
+							</h4>
+						</h:panelGroup>
+						<h:panelGroup layout="block"
+							class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+							<h:panelGroup layout="block" class="d-md-flex">
+								<ul class="breadcrumb ms-auto">
+									<li><h:commandLink value="Return to Dashboard"
+											aria-expanded="false" class="fw-normal"
+											action="#{singlePageApp.set('dashboard')}">
+										</h:commandLink></li>
+								</ul>
+								<!-- <h:form id="popup"> -->
+								<h:commandLink id="popupLink"
+									class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
+									action="#{singlePageApp.set('create-user')}">
+									<i class="fas fa-user-plus"></i>
+									<span><h:outputText value="Add User" /></span>
+								</h:commandLink>
+								<!-- </h:form> -->
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</f:ajax>
+			</h:form>
+		</h:panelGroup>
+		<!--     </ui:define> -->
+		<!--     <ui:define name="main"> -->
+		<h:panelGroup layout="block" id="users-list" class="container-fluid">
+			<h:panelGroup layout="block" class="row">
+				<!-- <div class="row"> -->
+				<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
+					<h:panelGroup layout="block" class="white-box">
+						<h:form id="users" class="form-horizontal form-material">
+							<h:panelGroup layout="block" class="d-md-flex mb-3">
+								<h:panelGroup id="paging"
+									rendered="#{empty residentBean.pageItems }">
+									<h3 class="box-title mb-0">
+										<h:outputText value="No Registered Users" />
+									</h3>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{not empty residentBean.pageItems }">
+									<h3 class="box-title mb-0">
+										<h:outputText value="Registered Users" />
+									</h3>
+									<h:panelGroup layout="block"
+										class="col-md-3 col-sm-4 col-xs-6 ms-auto">
+										<h:form id="search"
+											class="form-horizontal form-material d-none d-md-block me-3">
+											<h:panelGroup layout="block" class="form-group">
+												<h:link outcome="#" class="btn btn-secondary">
+													<i class="fas fa-file-excel"></i>
+													<span><h:outputText value="Export to Excel" /></span>
+												</h:link>
+												<h:panelGroup layout="block"
+													class="position-relative mt-3 border-1 border-bottom p-0">
+													<h:inputText type="text" id="searchInput"
+														pt:placeholder="Search..." required="true"
+														class="form-control p-2 border-0" />
+													<a href="" class="active"> <i
+														class="position-absolute top-50 end-0 translate-middle-y pe-2 fas fa-search-plus"></i>
+													</a>
+													<!-- <h:outputLabel for="floatingInput" class="text-muted"
+                                                    value="Search User..." /> -->
+												</h:panelGroup>
+											</h:panelGroup>
+										</h:form>
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:panelGroup layout="block" id="table" class="table-responsive">
+								<f:ajax render=":content">
+									<h:dataTable var="_resident"
+										rendered="#{not empty residentBean.pageItems}"
+										value="#{residentBean.pageItems}" id="residents"
+										class="table no-wrap">
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="" />
+											</f:facet>
+											<h:outputText id="residentId" value="#{_resident.id}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="First Name" />
+											</f:facet>
+											<h:commandLink value="#{_resident.firstName}"
+												action="#{singlePageApp.set('view')}">
+												<!-- <f:param name="resident" value="#{_resident.id}" /> -->
+												<!-- <f:ajax execute="@form" render="@form :viewuser" /> -->
+												<!-- <h:outputText id="residentFirstName"
+												value="#{_resident.firstName}" /> -->
+											</h:commandLink>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Last Name" />
+											</f:facet>
+											<h:link outcome="view">
+												<f:param name="resident" value="#{_resident.id}" />
+												<h:outputText id="residentLastName"
+													value="#{_resident.lastName}" />
+											</h:link>
+											<!-- TRY TO IMPLEMENT POP UP VIEW -->
+											<!-- <h:form id="popup">
+                                    <h:commandLink id="popupView"
+                                    target="popUpWindow"
+                                    onclick="javascript: void window.open('', 'popUpWindow', 'directories=no,titlebar=no,status=no,toolbar=no,location=no,menubar=no,resizable=no,width=750,height=500,scrollbars=no,left=500,top=400');"
+                                    action="#{jSPopupWindowBean.redirect()}"
+                                    binding="#{jSPopupWindowBean.popupLink}">
+                                    <h:outputText id="residentLastName"
+                                                value="#{_resident.lastName}" />
+                                    </h:commandLink>
+                                    </h:form> -->
+
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Date Of Birth" />
+											</f:facet>
+											<h:outputText id="residentDOB"
+												value="#{_resident.dateOfBirth}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="User Name" />
+											</f:facet>
+											<h:outputText id="residentUserName"
+												value="#{_resident.userName}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Email" />
+											</f:facet>
+											<h:outputText id="residentEmail" value="#{_resident.email}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Phone Number" />
+											</f:facet>
+											<h:outputText id="residentPhoneNumber"
+												value="#{_resident.phoneNumber}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Role" />
+											</f:facet>
+											<h:outputText id="residentRole" value="#{_resident.role}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Created at" />
+											</f:facet>
+											<h:outputText id="residentCreatedOn"
+												value="#{_resident.createdOn}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Updated at" />
+											</f:facet>
+											<h:outputText id="residentUpdatedOn"
+												value="#{_resident.updatedOn}" />
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+												<h:outputText value="Action" />
+											</f:facet>
+											<h:link outcome="create?faces-redirect=true"
+												includeViewParams="true"
+												class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
+												title="Edit">
+												<f:param name="resident" value="#{_resident.id}" />
+												<f:ajax execute="@form" render="@form :add" />
+												<i class="fa fa-edit"></i>
+											</h:link>
+										</h:column>
+									</h:dataTable>
+								</f:ajax>
+								<div class="float-end">
+									<ui:include src="/WEB-INF/includes/layout/paginate.xhtml">
+										<ui:param name="paginatorBean" value='#{residentBean}' />
+									</ui:include>
+								</div>
+							</h:panelGroup>
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+				<!-- </div> -->
+			</h:panelGroup>
+		</h:panelGroup>
+		<footer class="footer text-center">
+			<ui:include src="/WEB-INF/includes/layout/footer.xhtml" />
+		</footer>
+	</h:panelGroup>
+	<!--     </ui:define> -->
+</ui:composition>

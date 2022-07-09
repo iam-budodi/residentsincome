@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/admin-template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="resident" value='#{residentBean.residentId}' />
+		<f:event type="preRenderView" listener='#{residentBean.retrieve}' />
+	</f:metadata>
+	<ui:define name="title">
+		<h:outputText value="User Details" />
+	</ui:define>
+
+	<ui:define name="top-div">
+		<div class="page-breadcrumb bg-white">
+			<div class="row align-items-center mb-3">
+				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					<h4 class="page-title">
+						<h:outputText value="Residents Details" />
+					</h4>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 col-lg-12 col-sm-12">
+					<div class="white-box">
+						<div class="d-md-flex mb-3">
+							<c:choose>
+								<c:when test='#{!empty residentBean.residentId}'>
+									<h3 class="box-title mb-0">
+										<h:outputText id="view"
+											value="#{residentBean.resident.firstName}'s Details" />
+									</h3>
+								</c:when>
+								<c:otherwise>
+									<h3 class="box-title mb-0">
+										<h:outputText id="create" value="User Dont Exist" />
+									</h3>
+								</c:otherwise>
+							</c:choose>
+						</div>
+						<div class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto">
+							<div class="card">
+								<div class="card-body">
+									<h:form id="viewuser" class="form-horizontal form-material" rendered='#{!empty residentBean.residentId}'>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="firstName" value="First Name" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="firstName" class="form-control p-0 border-0"
+													value="#{residentBean.resident.firstName}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="lastName" value="Last Name" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="lastName" class="form-control p-0 border-0"
+													value="#{residentBean.resident.lastName}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="birthdate" value="Date of Birth" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText type="date" id="birthdate" class="form-control p-0 border-0"
+													value="#{residentBean.resident.dateOfBirth}">
+													<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+												</h:outputText>
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="phoneNumber" value="Phone Number" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="phoneNumber" class="form-control p-0 border-0"
+													value="#{residentBean.resident.phoneNumber}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="email" value="Email" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText type="email" id="email" class="form-control p-0 border-0" name="example-email"
+													value="#{residentBean.resident.email}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="userName" value="User Name" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText type="text" id="userName"
+													class="form-control p-0 border-0"
+													value="#{residentBean.resident.userName}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<h:outputLabel class="col-md-12 p-0" for="role" value="Role" />
+											<div class="col-md-12 border-bottom p-0">
+												<h:outputText id="role" class="form-control p-0 border-0"
+													value="#{residentBean.resident.role}" />
+											</div>
+										</div>
+										<div class="form-group mb-4">
+											<div class="col-sm-12">
+												<c:choose>
+													<c:when test='#{!empty residentBean.residentId}'>
+														<h:commandLink id="delete" action="#{residentBean.delete}"
+															class="btn btn-danger me-4 text-white">
+															<i class="fa fa-trash-alt me-1"></i>
+															<span><h:outputText value="Delete User" /></span>
+															<f:ajax execute="@form" render="@form :users:residents" />
+														</h:commandLink>
+														<h:link id="userPage" outcome="search?faces-redirect=true"
+															value="Close this Page" class="btn btn-success">
+															<f:ajax execute="@form" render="@form :users:residents" />
+														</h:link>
+													</c:when>
+												</c:choose>
+											</div>
+										</div>
+									</h:form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
