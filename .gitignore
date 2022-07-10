@@ -22,3 +22,7 @@ Arquillian.xml
 
 .idea/
 residentsincome.iml
+
+css/
+
+src/main/webapp/resources/css/
