@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<h:panelGroup layout="block" id="top" class="page-wrapper">
+		<h:panelGroup layout="block" class="page-breadcrumb bg-white">
+			<h:panelGroup layout="block" class="row align-items-center mb-3">
+				<h:panelGroup layout="block"
+					class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+					<h4 class="page-title">
+						<h:outputText
+							value="Self Service EMI Calculator - Tanzania Mainland" />
+					</h4>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" id="user-income" class="container-fluid">
+			<h:panelGroup layout="block" class="row">
+				<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
+					<h:panelGroup layout="block" class="white-box mb-2">
+						<h:form id="math">
+							<f:ajax onevent="pageChangeListener" render=":content">
+								<h:panelGroup layout="block" class="d-md-flex mb-3">
+									<h3 class="box-title px-4 mb-0">
+										<h:outputText id="show"
+											value="Residents Individual Income Breakdown" />
+									</h3>
+								</h:panelGroup>
+								<!-- <h:panelGroup layout="block"
+                                class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto"> -->
+								<h:panelGroup layout="block"
+									class="col-lg-8 col-xlg-9 col-md-12">
+									<h:panelGroup layout="block" class="card">
+										<h:panelGroup layout="block" class="card-body">
+											<p class="lead mb-4">PAYE is a one-page template for
+												building simple and beautiful home pages. Download, edit the
+												text, and add your own full-screen background photo to make
+												it your own.</p>
+											<ol class="breadcrumb ms-auto">
+												<li><h:commandLink id="breakdown"
+														value="Breakdown your income"
+														class="btn btn-lg btn-primary px-5 py-3 my-3 waves-effect waves-dark"
+														action="#{singlePageApp.set('income')}" /></li>
+											</ol>
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:panelGroup>
+							</f:ajax>
+						</h:form>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+		<footer class="footer text-center">
+			<ui:include src="/WEB-INF/includes/layout/footer.xhtml" />
+		</footer>
+	</h:panelGroup>
+</ui:composition>

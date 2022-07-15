@@ -7,7 +7,7 @@
 	<h:panelGroup layout="block" id="top" class="page-wrapper">
 		<h:panelGroup layout="block" class="page-breadcrumb bg-white">
 			<h:form id="users-view">
-				<f:ajax render=":content">
+				<f:ajax onevent="pageChangeListener" render=":content">
 					<h:panelGroup layout="block"
 						class="row align-items-center sticky-top">
 						<h:panelGroup layout="block"
@@ -20,9 +20,9 @@
 							class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 							<h:panelGroup layout="block" class="d-md-flex">
 								<ol class="breadcrumb ms-auto">
-									<li><h:commandLink value="User Management"
+									<li><h:commandLink id="userlist" value="User Management"
 											aria-expanded="false" class="fw-normal"
-											action="#{singlePageApp.set('users')}" /></li>
+											action="#{singlePageApp.set('user')}" /></li>
 								</ol>
 								<h:link outcome="go/to/home/"
 									class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"

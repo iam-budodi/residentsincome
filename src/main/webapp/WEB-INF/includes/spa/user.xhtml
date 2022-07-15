@@ -5,17 +5,12 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui">
 
-	<f:metadata>
-		<f:viewParam name="page" value='#{residentBean.page}' />
-		<f:event type="preRenderView" listener='#{residentBean.paginate}' />
-	</f:metadata>
-
-    <ui:param name="pageTitle" value="- User Management" />
-	<!--     <ui:define name="top-div"> -->
+	<ui:param name="pageTitle" value="- User Management" />
+	
 	<h:panelGroup layout="block" id="top" class="page-wrapper">
 		<h:panelGroup layout="block" class="page-breadcrumb bg-white">
 			<h:form id="popup">
-				<f:ajax render=":content">
+				<f:ajax onevent="pageChangeListener" render=":content">
 					<h:panelGroup layout="block" class="row align-items-center mb-3">
 						<h:panelGroup layout="block"
 							class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -27,15 +22,16 @@
 							class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 							<h:panelGroup layout="block" class="d-md-flex">
 								<ul class="breadcrumb ms-auto">
-									<li><h:commandLink value="Return to Dashboard"
-											aria-expanded="false" class="fw-normal"
-											action="#{singlePageApp.set('dashboard')}">
-										</h:commandLink></li>
+									<li><h:commandLink id="dashboard"
+											value="Return to Dashboard" aria-expanded="false"
+											class="fw-normal" action="#{singlePageApp.set('dashboard')}">
+										</h:commandLink>
+									</li>
 								</ul>
 								<!-- <h:form id="popup"> -->
-								<h:commandLink id="popupLink"
+								<h:commandLink id="user"
 									class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
-									action="#{singlePageApp.set('create-user')}">
+									action="#{singlePageApp.set('create')}">
 									<i class="fas fa-user-plus"></i>
 									<span><h:outputText value="Add User" /></span>
 								</h:commandLink>
@@ -91,7 +87,7 @@
 								</h:panelGroup>
 							</h:panelGroup>
 							<h:panelGroup layout="block" id="table" class="table-responsive">
-								<f:ajax render=":content">
+								<f:ajax onevent="pageChangeListener" render=":content">
 									<h:dataTable var="_resident"
 										rendered="#{not empty residentBean.pageItems}"
 										value="#{residentBean.pageItems}" id="residents"
@@ -106,9 +102,9 @@
 											<f:facet name="header">
 												<h:outputText value="First Name" />
 											</f:facet>
-											<h:commandLink value="#{_resident.firstName}"
+											<h:commandLink id="view" value="#{_resident.firstName}"
 												action="#{singlePageApp.set('view')}">
-												<!-- <f:param name="resident" value="#{_resident.id}" /> -->
+												<f:param name="resident" value="#{_resident.id}" />
 												<!-- <f:ajax execute="@form" render="@form :viewuser" /> -->
 												<!-- <h:outputText id="residentFirstName"
 												value="#{_resident.firstName}" /> -->
@@ -187,14 +183,19 @@
 											<f:facet name="header">
 												<h:outputText value="Action" />
 											</f:facet>
-											<h:link outcome="create?faces-redirect=true"
+											<h:commandLink includeViewParams="true" id="update-user"
+												aria-expanded="false" title="Edit"
+												action="#{singlePageApp.set('create')}">
+												<f:param name="resident" value="#{_resident.id}" />
+												<i class="fa fa-edit"></i>
+											</h:commandLink>
+											<!-- <h:link outcome="create-user?faces-redirect=true"
 												includeViewParams="true"
 												class="btn btn-outline-secondary btn-sm border border-1 border-secondary rounded-circle"
 												title="Edit">
 												<f:param name="resident" value="#{_resident.id}" />
 												<f:ajax execute="@form" render="@form :add" />
-												<i class="fa fa-edit"></i>
-											</h:link>
+											</h:link> -->
 										</h:column>
 									</h:dataTable>
 								</f:ajax>

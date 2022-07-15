@@ -18,7 +18,7 @@ import com.japhet.application.residentsincome.repository.ResidentRepository;
 @Named
 @Transactional
 @SessionScoped
-public class AcccountBean implements Serializable {
+public class AccountBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

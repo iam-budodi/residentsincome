@@ -27,8 +27,6 @@ public class Paye implements Serializable {
 
 	@NotNull
 	private Double takeHome;
-	
-	private boolean displayTable;
 
 	@NotNull
 	private IncomeClass incomeClass;
@@ -94,15 +92,6 @@ public class Paye implements Serializable {
 
 	public void setSalary(Double salary) {
 		this.salary = salary;
-	}
-	
-
-	public boolean isDisplayTable() {
-		return displayTable;
-	}
-
-	public void setDisplayTable(boolean displayTable) {
-		this.displayTable = displayTable;
 	}
 
 	@Override

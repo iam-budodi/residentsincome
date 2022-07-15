@@ -1,23 +1,41 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	template="/resources/scaffold/template.xhtml">
+	template="/WEB-INF/templates/layout.xhtml">
 
-	<ui:define name="title">Self Service EMI Calculator</ui:define>
-	<ui:define name="pageTitle">Income Calculator</ui:define>
-	<ui:define name="hero">Residents Individual Income in Tanzania Mainland</ui:define>
-	<ui:define name="home">
-		<p class="lead">PAYE is a one-page template for building simple
-			and beautiful home pages. Download, edit the text, and add your own
-			full-screen background photo to make it your own.</p>
+	<ui:param name="title" value="Self Service EMI Calculator" />
+	<ui:define name="left-nav">
+		<h:outputScript target="head" name="js/change-page.js" />
+		<aside class="left-sidebar" data-sidebarbg="skin6">
+			<h:panelGroup layout="block" class="scroll-sidebar">
+				<nav class="sidebar-nav">
+					<h:form>
+						<f:ajax onevent="pageChangeListener" render=":content">
+							<ul id="sidebarnav" class="visually-hidden">
+								<li class="sidebar-item pt-2"><h:commandLink
+										aria-expanded="false"
+										class="sidebar-link waves-effect waves-dark sidebar-link"
+										action="#{singlePageApp.set('income')}">
+										<i class="far fa-clock" aria-hidden="true"></i>
+										<h:panelGroup class="hide-menu">
+											<h:outputText value="Income Breakdown" />
+										</h:panelGroup>
+									</h:commandLink></li>
+							</ul>
+						</f:ajax>
+					</h:form>
+				</nav>
+			</h:panelGroup>
+		</aside>
 	</ui:define>
-	<ui:define name="paye">
-		<p class="lead">
-			<h:link outcome="/paye/retrieve"
-				class="btn btn-lg btn-primary px-5 my-3 text-white-80"
-				value="Get your PAYE" />
-		</p>
+	<ui:define name="home">
+		<section jsf:id="content" data-page="#{singlePageApp.page}">
+			<ui:include src="/WEB-INF/includes/spa/#{singlePageApp.page}.xhtml">
+				<ui:param name="residentBean" value='#{residentBean}' />
+			</ui:include>
+		</section>
 	</ui:define>
 </ui:composition>
+

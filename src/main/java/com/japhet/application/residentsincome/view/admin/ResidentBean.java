@@ -103,7 +103,8 @@ public class ResidentBean implements Serializable {
 //										"Resident is registered!",
 //										"Registration is successful"));
 //				initUser();
-				return "search?faces-redirect=true";
+//				return "search?faces-redirect=true";
+				return "main?faces-redirect=true&page=create";
 			} else {
 				LOG.info("UPDATE RESIDENT : " + resident);
 				residentRegistration.modify(resident);
@@ -111,7 +112,7 @@ public class ResidentBean implements Serializable {
 //							new FacesMessage(FacesMessage.SEVERITY_INFO,
 //										"Resident is updated!",
 //										"Updation is successful"));
-				return "view?faces-redirect=true&resident=" + resident.getId();
+				return "view?faces-redirect=true&page=create&resident=" + resident.getId();
 			}
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);

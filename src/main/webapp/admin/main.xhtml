@@ -5,15 +5,23 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/WEB-INF/templates/layout.xhtml">
 
-	<ui:param name="title" value="Admin Panel #{pageTitle}" />
+	<f:metadata>
+		<f:viewParam name="page" value='#{residentBean.page}' />
+		<f:viewParam name="resident" value='#{residentBean.residentId}' />
+		<f:event type="preRenderView" listener='#{residentBean.paginate}' />
+		<f:event type="preRenderView" listener='#{residentBean.retrieve}' />
+	</f:metadata>
+
+	<ui:param name="title" value="Admin Panel" />
 
 	<ui:define name="left-nav">
+		<h:outputScript target="head" name="js/change-page.js" />
 		<aside class="left-sidebar" data-sidebarbg="skin6">
 			<h:panelGroup layout="block" class="scroll-sidebar">
 				<!-- Sidebar navigation-->
 				<nav class="sidebar-nav">
 					<h:form>
-						<f:ajax render=":content">
+						<f:ajax onevent="pageChangeListener" render=":content">
 							<ul id="sidebarnav">
 								<li class="sidebar-item pt-2"><h:commandLink
 										aria-expanded="false"
@@ -23,18 +31,25 @@
 										<h:panelGroup class="hide-menu">
 											<h:outputText value="Dashboard" />
 										</h:panelGroup>
-									</h:commandLink>
-								</li>
+									</h:commandLink></li>
 								<li class="sidebar-item pt-2"><h:commandLink
 										aria-expanded="false"
 										class="sidebar-link waves-effect waves-dark sidebar-link"
-										action="#{singlePageApp.set('users')}">
+										action="#{singlePageApp.set('user')}">
 										<i class="fa fa-user" aria-hidden="true"></i>
 										<h:panelGroup class="hide-menu">
 											<h:outputText value="Users" />
 										</h:panelGroup>
-									</h:commandLink>
-								</li>
+									</h:commandLink></li>
+								<li class="sidebar-item pt-2"><h:commandLink
+										aria-expanded="false"
+										class="sidebar-link waves-effect waves-dark sidebar-link"
+										action="#{singlePageApp.set('create')}">
+										<i class="fas fa-user-plus" aria-hidden="true"></i>
+										<h:panelGroup class="hide-menu">
+											<h:outputText value="Users" />
+										</h:panelGroup>
+									</h:commandLink></li>
 							</ul>
 						</f:ajax>
 					</h:form>
@@ -44,7 +59,9 @@
 	</ui:define>
 	<ui:define name="home">
 		<section jsf:id="content" data-page="#{singlePageApp.page}">
-			<ui:include src="/WEB-INF/includes/spa/#{singlePageApp.page}.xhtml" />
+			<ui:include src="/WEB-INF/includes/spa/#{singlePageApp.page}.xhtml">
+				<!-- <ui:param name="residentBean" value='#{residentBean}' /> -->
+			</ui:include>
 		</section>
 	</ui:define>
 </ui:composition>
