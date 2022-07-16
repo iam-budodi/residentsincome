@@ -35,9 +35,11 @@ public class PayeProducer {
 	@PostConstruct
 	public void deducePaye(Paye paye) {
 		if (paye == null) {
+			LOG.info("Assigned to PAYE : " + paye);
 			paye = new Paye();
 		}
-
+		LOG.info("Assigned to PAYE : " + paye);
 		this.paye = paye;
+		LOG.info("JSF PAYE : " + this.paye);
 	}
 }

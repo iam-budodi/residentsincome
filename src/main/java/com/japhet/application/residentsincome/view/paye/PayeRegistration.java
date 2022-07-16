@@ -62,7 +62,7 @@ public class PayeRegistration {
 		paye.setIncomeClass(income.getCategory());
 		paye.setSalary(salary);
 		
-		LOG.info("Constructed paye o be fired : " + paye);
+		LOG.info("Constructed paye to be fired : " + paye);
 		payeEventSrc.fire(paye);
 
 	}

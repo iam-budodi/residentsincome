@@ -26,15 +26,14 @@ public class PayeBean {
 	@Inject
 	private RootError rootError;
 
-	private double salary;
+	private Double salary;
 	private boolean heslb;
 
 	public void income() {
 		LOG.info("Entered salary : " + salary + " heslb status : " + heslb);
 		try {
 			payeRegistration.incomeBreakdown(salary, heslb);
-
-//			return "main?faces-redirect=true&page=income";
+			resetFormValues();
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
@@ -55,11 +54,16 @@ public class PayeBean {
 
 	@Produces
 	@Named
-	public double getSalary() {
+	public Double getSalary() {
 		return salary;
 	}
 
-	public void setSalary(double salary) {
+	public void setSalary(Double salary) {
 		this.salary = salary;
+	}
+	
+	public void resetFormValues() {
+		salary = null;
+		heslb = false;
 	}
 }
