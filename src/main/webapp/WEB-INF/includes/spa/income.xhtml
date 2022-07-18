@@ -25,6 +25,7 @@
 				<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
 					<h:panelGroup layout="block" class="white-box">
 						<h:form id="retrieve" class="form-horizontal form-material">
+							<!-- <f:ajax onevent="pageChangeListener" render=":content"> -->
 							<h:panelGroup layout="block" class="d-md-flex mb-1">
 								<h:panelGroup id="paging">
 									<h3 class="box-title mb-0">
@@ -43,30 +44,31 @@
 									<h:panelGroup layout="block" class="card-body">
 
 										<h:panelGroup layout="block" class="form-group mb-4">
-											<h:form id="gross-input"
-												class="form-horizontal form-material">
-												<h4 class="mb-4">Enter your gross salary</h4>
-												<!-- <div class="form-floating py-2 mb-3 mt-3"> -->
-												<h:panelGroup layout="block"
-													class="form-floating mb-4 border-0 border-bottom p-0">
-													<h:inputText class="form-control p-2 border-2"
-														id="floatingInput" pt:placeholder="Gross Salary"
-														value="#{payeBean.salary}" />
-												</h:panelGroup>
-												<div class="checkbox mb-3">
-													<h:selectBooleanCheckbox class="mx-2" id="checkbox"
-														value="#{payeBean.heslb}" />
-													<h:outputLabel for="checkbox"
-														value="Are you HESLB beneficiary?" />
+											<!-- <h:form id="gross-input" class="form-horizontal form-material">
+											<f:ajax onevent="pageChangeListener" render=":content"> -->
+											<h4 class="mb-4">Enter your gross salary</h4>
+											<!-- <div class="form-floating py-2 mb-3 mt-3"> -->
+											<h:panelGroup layout="block"
+												class="form-floating mb-4 border-0 border-bottom p-0">
+												<h:inputText class="form-control p-2 border-2"
+													id="floatingInput" pt:placeholder="Gross Salary"
+													value="#{payeBean.salary}" />
+											</h:panelGroup>
+											<div class="checkbox mb-3">
+												<h:selectBooleanCheckbox class="mx-2" id="checkbox"
+													value="#{payeBean.heslb}" />
+												<h:outputLabel for="checkbox"
+													value="Are you HESLB beneficiary?" />
 
-												</div>
-												<h:commandButton
-													class="w-100 btn btn-sm btn-primary py-2 rounded-pill"
-													value="Submit" action="#{payeBean.income}">
-													<f:ajax execute="@form" render=":breakdown" />
-												</h:commandButton>
-												<!-- </div> -->
-											</h:form>
+											</div>
+											<h:commandButton
+												class="w-100 btn btn-sm btn-primary py-2 rounded-pill"
+												value="Submit" action="#{payeBean.income}">
+												<f:ajax execute="@form" render="@form" />
+											</h:commandButton>
+											<!-- </div> -->
+											<!-- </f:ajax>
+										</h:form> -->
 										</h:panelGroup>
 
 
