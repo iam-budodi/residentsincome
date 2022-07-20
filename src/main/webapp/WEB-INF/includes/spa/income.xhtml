@@ -17,15 +17,11 @@
 				</h:panelGroup>
 			</h:panelGroup>
 		</h:panelGroup>
-		<!--     </ui:define> -->
-		<!--     <ui:define name="main"> -->
 		<h:panelGroup layout="block" id="users-list" class="container-fluid">
 			<h:panelGroup layout="block" class="row">
-				<!-- <div class="row"> -->
 				<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
 					<h:panelGroup layout="block" class="white-box">
 						<h:form id="retrieve" class="form-horizontal form-material">
-							<!-- <f:ajax onevent="pageChangeListener" render=":content"> -->
 							<h:panelGroup layout="block" class="d-md-flex mb-1">
 								<h:panelGroup id="paging">
 									<h3 class="box-title mb-0">
@@ -34,20 +30,13 @@
 									</h3>
 								</h:panelGroup>
 							</h:panelGroup>
-							<!-- <h:panelGroup layout="block" id="table" class="table-responsive"> -->
-							<!-- <f:ajax onevent="pageChangeListener" render=":content"> -->
-
 							<h:panelGroup layout="block"
 								class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto">
-								<!-- <h:form id="gross-input" class="form-horizontal form-material"> -->
 								<h:panelGroup layout="block" class="card">
 									<h:panelGroup layout="block" class="card-body">
 
 										<h:panelGroup layout="block" class="form-group mb-4">
-											<!-- <h:form id="gross-input" class="form-horizontal form-material">
-											<f:ajax onevent="pageChangeListener" render=":content"> -->
 											<h4 class="mb-4">Enter your gross salary</h4>
-											<!-- <div class="form-floating py-2 mb-3 mt-3"> -->
 											<h:panelGroup layout="block"
 												class="form-floating mb-4 border-0 border-bottom p-0">
 												<h:inputText class="form-control p-2 border-2"
@@ -66,86 +55,7 @@
 												value="Submit" action="#{payeBean.income}">
 												<f:ajax execute="@form" render="@form" />
 											</h:commandButton>
-											<!-- </div> -->
-											<!-- </f:ajax>
-										</h:form> -->
 										</h:panelGroup>
-
-
-										<!-- ready kufuta -->
-										<!-- <h:panelGroup layout="block" id="table"
-												class="table-responsive">
-												<h:dataTable var="_paye"
-													rendered="#{not empty paye}"
-													value="#{paye}" id="paye">
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="Income class" />
-														</f:facet>
-														<h:outputText id="income-class"
-															value="#{_paye.incomeClass}" />
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="Gross Salary" />
-														</f:facet>
-														<h:outputText id="salary" value="#{_paye.salary}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="Nssf/Psssf" />
-														</f:facet>
-														<h:outputText id="nssf"
-															value="#{_paye.socialSecurityFund}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="Amount Taxable" />
-														</f:facet>
-														<h:outputText id="taxable" value="#{_paye.taxableAmount}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="PAYE" />
-														</f:facet>
-														<h:outputText id="paye" value="#{_paye.paye}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="HESLB repayment" />
-														</f:facet>
-														<h:outputText id="heslb" value="#{_paye.heslbDeduction}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-													<h:column>
-														<f:facet name="header">
-															<h:outputText value="Take Home" />
-														</f:facet>
-														<h:outputText id="take-home" value="#{_paye.takeHome}">
-															<f:convertNumber type="currency" locale="sw_TZ"
-																minFractionDigits="2" maxFractionDigits="2" />
-														</h:outputText>
-													</h:column>
-												</h:dataTable>
-											</h:panelGroup> -->
-
-										<!-- ready kufuta -->
-
-										<!-- ready kufuta hii pia -->
 
 										<div jsf:id="breakdown" class="mt-3 text-center">
 
@@ -204,29 +114,16 @@
 												</ui:fragment>
 											</div>
 										</div>
-										<!-- ready kufuta hii pia -->
-
-
-
-										<!-- </h:panelGroup> -->
 									</h:panelGroup>
 								</h:panelGroup>
-								<!-- </h:form> -->
 							</h:panelGroup>
-							<!-- </f:ajax> -->
-							<!-- </h:panelGroup> -->
 						</h:form>
 					</h:panelGroup>
 				</h:panelGroup>
-				<!-- </div> -->
 			</h:panelGroup>
 		</h:panelGroup>
 		<footer class="footer text-center">
 			<ui:include src="/WEB-INF/includes/layout/footer.xhtml" />
 		</footer>
 	</h:panelGroup>
-
-
-
-
 </ui:composition>
