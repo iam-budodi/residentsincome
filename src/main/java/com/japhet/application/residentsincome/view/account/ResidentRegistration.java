@@ -29,7 +29,7 @@ public class ResidentRegistration {
 	public void register(Resident resident) throws Exception {
 		LOG.info("Registering " + resident.getFirstName());
 
-		// using Hibernate session(Native API) and JPA entitymanager
+		// using Hibernate session(Native API) and JPA entityManager
 		Session session = (Session) entityManager.getDelegate();
 		session.persist(resident);
 		LOG.info("Registered resident:  " + resident.toString());

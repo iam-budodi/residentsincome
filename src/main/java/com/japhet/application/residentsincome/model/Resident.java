@@ -28,8 +28,8 @@ import com.japhet.application.residentsincome.util.PasswordDigest;
 @NamedQueries({
 		@NamedQuery(name = Resident.FIND_BY_EMAIL, query = "SELECT user FROM Resident user WHERE user.email = :email"),
 		@NamedQuery(name = Resident.FIND_BY_UUID, query = "SELECT user FROM Resident user WHERE user.uuid = :uuid"),
-		@NamedQuery(name = Resident.FIND_BY_USERNAME, query = "SELECT user FROM Resident user WHERE user.userName = :userName"),
-		@NamedQuery(name = Resident.FIND_BY_USERNAME_PASSWORD, query = "SELECT user FROM Resident user WHERE user.userName= :userName AND user.password = :password")
+		@NamedQuery(name = Resident.FIND_BY_USERNAME, query = "SELECT user FROM Resident user WHERE user.userName = :username"),
+		@NamedQuery(name = Resident.FIND_BY_USERNAME_PASSWORD, query = "SELECT user FROM Resident user WHERE user.userName= :username AND user.password = :password")
 		 })
 public class Resident implements Serializable {
 

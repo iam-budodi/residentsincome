@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.japhet.application.residentsincome.model.Resident;
+import com.japhet.application.residentsincome.util.PasswordDigest;
 
 @ApplicationScoped
 public class ResidentRepository {
@@ -23,12 +24,38 @@ public class ResidentRepository {
 	public Resident findById(Long residentId) {
 		return entityManager.find(Resident.class, residentId);
 	}
+	
+	public Resident findByEmail(String email) {
+		TypedQuery<Resident> residentQuery = entityManager.createNamedQuery(Resident.FIND_BY_EMAIL, Resident.class);
+		residentQuery.setParameter("email", email);
+		return residentQuery.getSingleResult();
+	}
+	
+	public Resident findByUuid(String uuid) {
+		TypedQuery<Resident> residentQuery = entityManager.createNamedQuery(Resident.FIND_BY_UUID, Resident.class);
+		residentQuery.setParameter("uuid", uuid);
+		return residentQuery.getSingleResult();
+	}
+	
+	public void updateResident(Resident resident) {
+		entityManager.merge(resident);
+	}
 
 	public boolean isExists(Resident resident) {
 		return entityManager
-					.createNamedQuery(Resident.FIND_BY_USERNAME, Resident.class)
+					.createNamedQuery(Resident.FIND_BY_USERNAME,
+								Resident.class)
 					.setParameter("userName", resident.getUserName())
 					.getResultList().size() > 0;
+	}
+
+	public Resident residentMatch(Resident resident) {
+		TypedQuery<Resident> residentQuery = entityManager.createNamedQuery(
+					Resident.FIND_BY_USERNAME_PASSWORD, Resident.class);
+		residentQuery.setParameter("username", resident.getUserName());
+		residentQuery.setParameter("password",
+					PasswordDigest.digestPassword(resident.getPassword()));
+		return residentQuery.getSingleResult();
 	}
 
 	public List<Resident> findAllOrderedByName() {
@@ -56,12 +83,14 @@ public class ResidentRepository {
 
 	}
 
-	public List<Resident> usersPerPage(Resident resident, int page, int pageSize) {
+	public List<Resident> usersPerPage(Resident resident, int page,
+				int pageSize) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
 		// populate list of users per page
 
-		CriteriaQuery<Resident> userCriteria = builder.createQuery(Resident.class);
+		CriteriaQuery<Resident> userCriteria = builder
+					.createQuery(Resident.class);
 		Root<Resident> root = userCriteria.from(Resident.class);
 		TypedQuery<Resident> userQuery = entityManager.createQuery(userCriteria
 					.select(root).where(criteriaPedicates(root, resident)));
@@ -71,7 +100,8 @@ public class ResidentRepository {
 
 	}
 
-	private Predicate[] criteriaPedicates(Root<Resident> root, Resident resident) {
+	private Predicate[] criteriaPedicates(Root<Resident> root,
+				Resident resident) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		List<Predicate> predicates = new ArrayList<>();
 

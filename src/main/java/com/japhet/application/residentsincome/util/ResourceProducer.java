@@ -8,6 +8,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletResponse;
 
 //import org.hibernate.Session;
 
@@ -17,24 +18,30 @@ public class ResourceProducer {
 	@Produces
 	@PersistenceContext(unitName = "residentsIncomePU")
 	private EntityManager entityManager;
-	
+
 //	// using Hibernate session(Native API) and JPA entitymanager
 //	@Produces
 //	public Session produceSession() {
 //		return (Session) entityManager.getDelegate();
 //	}
 
-	
 	@Produces
 	public Logger produceLogger(InjectionPoint injectionPoint) {
 		return Logger.getLogger(
 					injectionPoint.getMember().getDeclaringClass().getName());
 	}
 
-    @Produces
-    @Faces
-    @RequestScoped
-    public FacesContext produceFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }
+	@Produces
+	@Faces
+	@RequestScoped
+	public FacesContext produceFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	@Produces
+	@RequestScoped
+	private HttpServletResponse produceHttpServletResponse() {
+		return (HttpServletResponse) FacesContext.getCurrentInstance()
+					.getExternalContext().getResponse();
+	}
 }

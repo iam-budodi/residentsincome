@@ -7,7 +7,7 @@ public class RootError {
 
 	public String getRootErrorMessage(Exception e) {
 		// Default to general error message that registration failed.
-		String errorMessage = "Failed! See server log for more information";
+		String errorMessage = "Operation Failed! See server log for more information";
 		if (e == null) {
 			// This shouldn't happen, but return the default messages
 			return errorMessage;
