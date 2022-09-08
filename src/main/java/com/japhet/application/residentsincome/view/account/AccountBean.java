@@ -2,6 +2,7 @@ package com.japhet.application.residentsincome.view.account;
 
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -52,14 +53,17 @@ public class AccountBean implements Serializable {
 
 	@Inject
 	private RootError rootError;
+	
+	@Inject
+	private Logger LOG;
 
-	private Resident user;
+	private Resident user = new Resident();
 	private boolean loggedIn;
 	private boolean admin;
 	private String password;
 	private String confirmPassword;
 	private boolean rememberMe;
-
+	
 	// Constants
 	private static final String COOKIE_NAME = "residentsIncomeApplication";
 	private static final int COOKIE_AGE = 60;
@@ -76,7 +80,7 @@ public class AccountBean implements Serializable {
 				admin = true;
 			loggedIn = true;
 		} catch (NoResultException nre) {
-			// The user maybe has an old coockie, let's get rid of it
+			// The user maybe has an old cookie, let's get rid of it
 			removeCookie();
 		}
 	}
@@ -116,8 +120,11 @@ public class AccountBean implements Serializable {
 	}
 
 	public String signIn() {
+		LOG.info("Logging " + user.getUserName());
 		try {
+			LOG.info("Logging Query " + user.getUserName());
 			user = residentRepository.residentMatch(user);
+			LOG.info("Logging user " + user.toString());
 			if (user.getRole().equals(UserRole.ADMIN)) {
 				admin = true;
 			}
@@ -240,9 +247,20 @@ public class AccountBean implements Serializable {
 
 	}
 
-	@PostConstruct
-	public void initUser() {
-		user = new Resident();
+	public Resident getUser() {
+		return user;
+	}
+
+	public void setUser(Resident user) {
+		this.user = user;
+	}
+
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
 	}
 
 	public boolean isLoggedIn() {

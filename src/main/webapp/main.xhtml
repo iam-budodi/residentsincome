@@ -5,6 +5,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/WEB-INF/templates/layout.xhtml">
 
+    <f:metadata>
+        <f:viewParam name="resident" value='#{residentBean.residentId}' />
+        <f:event type="preRenderView" listener='#{residentBean.retrieve}' />
+    </f:metadata>
+    
 	<ui:param name="title" value="Self Service EMI Calculator" />
 	<ui:define name="left-nav">
 		<h:outputScript target="head" name="js/change-page.js" />

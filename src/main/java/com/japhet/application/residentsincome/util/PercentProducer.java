@@ -15,4 +15,9 @@ public class PercentProducer {
 	@Produces
 	@Hundredth
 	private Double hundredth = 0.01D;
+	
+	
+	@Produces
+	@LongValue
+	private Long residentId;
 }

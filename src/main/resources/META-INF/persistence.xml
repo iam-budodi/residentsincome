@@ -8,7 +8,7 @@
 
 	<persistence-unit name="residentsIncomePU"
 		transaction-type="JTA">
-		<jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
+		<jta-data-source>java:jboss/datasource/PostgresDS</jta-data-source>
 		<properties>
 			<property
 				name="javax.persistence.schema-generation.database.action"

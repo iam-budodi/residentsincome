@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
@@ -47,9 +46,6 @@ public class ResidentBean implements Serializable {
 	@Inject
 	private ResidentRepository residentRepository;
 
-//	@Inject
-//	private UserInputValidator passwordValidator;
-
 	@Inject
 	private RootError rootError;
 
@@ -57,7 +53,7 @@ public class ResidentBean implements Serializable {
 	private SessionContext sessionContext;
 
 	private Resident resident;
-	private Resident newResident;
+	private Resident newResident = new Resident();;
 	private Long residentId;
 	private Long count;
 	private int page;
@@ -80,8 +76,11 @@ public class ResidentBean implements Serializable {
 		}
 
 		if (residentId == null) {
+			LOG.info("NULL RESIDENT ID : " + residentId);
 			resident = newResident;
+			LOG.info("RESIDENT : " + resident);
 		} else {
+			LOG.info("RESIDENT ID : " + residentId);
 			resident = residentRepository.findById(getResidentId());
 		}
 	}
@@ -92,33 +91,18 @@ public class ResidentBean implements Serializable {
 		try {
 			if (residentId == null) {
 				LOG.info("CREATE NEW RESIDENT : " + resident);
-				// TODO: Check for password strength
-//				if (!passwordValidator.isValid(resident.getPassword())) {
-//					throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//				                "  Weak Password", null));
-//				}
 				residentRegistration.register(resident);
-//				facesContext.addMessage(null,
-//							new FacesMessage(FacesMessage.SEVERITY_INFO,
-//										"Resident is registered!",
-//										"Registration is successful"));
-//				initUser();
 //				return "search?faces-redirect=true";
 				return "main?faces-redirect=true&page=create";
 			} else {
 				LOG.info("UPDATE RESIDENT : " + resident);
 				residentRegistration.modify(resident);
-//				facesContext.addMessage(null,
-//							new FacesMessage(FacesMessage.SEVERITY_INFO,
-//										"Resident is updated!",
-//										"Updation is successful"));
 				return "view?faces-redirect=true&page=create&resident=" + resident.getId();
 			}
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									errorMessage, "Unsuccessful operations"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Unsuccessful operations"));
 			return null;
 		}
 	}
@@ -140,9 +124,7 @@ public class ResidentBean implements Serializable {
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									errorMessage,
-									"Failed to delete resident"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Failed to delete resident"));
 			return null;
 		}
 	}
@@ -152,26 +134,21 @@ public class ResidentBean implements Serializable {
 //		pageItems = residentRepository.usersPerPage(getResident(),
 //					getPage(), getPageSize());
 		count = residentRepository.userCount(getNewResident());
-		pageItems = residentRepository.usersPerPage(getNewResident(),
-					getPage(), getPageSize());
+		pageItems = residentRepository.usersPerPage(getNewResident(), getPage(), getPageSize());
 	}
 
 	public Converter<Resident> getConverter() {
-		final ResidentBean ejbProxy = sessionContext
-					.getBusinessObject(ResidentBean.class);
+		final ResidentBean ejbProxy = sessionContext.getBusinessObject(ResidentBean.class);
 
 		return new Converter<Resident>() {
 
 			@Override
-			public Resident getAsObject(FacesContext context,
-						UIComponent component, String value) {
-				return ejbProxy.residentRepository
-							.findById(Long.valueOf(value));
+			public Resident getAsObject(FacesContext context, UIComponent component, String value) {
+				return ejbProxy.residentRepository.findById(Long.valueOf(value));
 			}
 
 			@Override
-			public String getAsString(FacesContext context,
-						UIComponent component, Resident value) {
+			public String getAsString(FacesContext context, UIComponent component, Resident value) {
 				if (value == null) {
 					return "";
 				}
@@ -209,14 +186,16 @@ public class ResidentBean implements Serializable {
 		this.residentId = residentId;
 	}
 
-	@Named
-	@Produces
 	public Resident getResident() {
 		return resident;
 	}
 
 	public Resident getNewResident() {
 		return newResident;
+	}
+	
+	public void setNewResident(Resident newResident) {
+		this.newResident = newResident;
 	}
 
 	public void setResident(Resident resident) {
@@ -229,11 +208,6 @@ public class ResidentBean implements Serializable {
 
 	public void setCount(Long count) {
 		this.count = count;
-	}
-
-	@PostConstruct
-	public void initResident() {
-		newResident = new Resident();
 	}
 
 }

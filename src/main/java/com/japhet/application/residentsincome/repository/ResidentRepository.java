@@ -2,6 +2,7 @@ package com.japhet.application.residentsincome.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,6 +21,9 @@ public class ResidentRepository {
 
 	@Inject
 	private EntityManager entityManager;
+	
+	@Inject
+	private Logger LOG;
 
 	public Resident findById(Long residentId) {
 		return entityManager.find(Resident.class, residentId);
@@ -50,11 +54,13 @@ public class ResidentRepository {
 	}
 
 	public Resident residentMatch(Resident resident) {
+		LOG.info("Logging matching Query " + resident.getUserName() + " and password " + PasswordDigest.digestPassword(resident.getPassword()));
 		TypedQuery<Resident> residentQuery = entityManager.createNamedQuery(
 					Resident.FIND_BY_USERNAME_PASSWORD, Resident.class);
 		residentQuery.setParameter("username", resident.getUserName());
 		residentQuery.setParameter("password",
 					PasswordDigest.digestPassword(resident.getPassword()));
+		LOG.info("matching resident  " + residentQuery.getSingleResult());
 		return residentQuery.getSingleResult();
 	}
 

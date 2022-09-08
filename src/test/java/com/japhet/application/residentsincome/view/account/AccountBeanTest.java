@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.japhet.application.residentsincome.error.RootError;
 import com.japhet.application.residentsincome.model.Resident;
 import com.japhet.application.residentsincome.model.UserRole;
 import com.japhet.application.residentsincome.repository.ResidentRepository;
@@ -32,6 +33,7 @@ public class AccountBeanTest {
                 .addClass(UserRole.class)
                 .addClass(ResidentRepository.class)
                 .addClass(ResidentRegistration.class)
+                .addClass(RootError.class)
                 .addClass(ResourceProducer.class)
                 .addAsManifestResource("META-INF/test-persistence.xml", "persistence.xml")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -42,7 +44,7 @@ public class AccountBeanTest {
     // ======================================
 
     @Test
-    public void should_be_deployed() {
+    public void shouldBeDeployed() {
         Assert.assertNotNull(accountBean);
     }
 }
