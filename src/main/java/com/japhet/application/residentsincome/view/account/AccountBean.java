@@ -120,18 +120,22 @@ public class AccountBean implements Serializable {
 	}
 
 	public String signIn() {
-		LOG.info("Logging " + user.getUserName());
+		LOG.info("Logging user " + user.getUserName());
 		try {
-			LOG.info("Logging Query " + user.getUserName());
+			LOG.info("Logging user in try block: " + user.getUserName());
 			user = residentRepository.residentMatch(user);
-			LOG.info("Logging user " + user.toString());
+			LOG.info("Logging matched user " + user.toString());
 			if (user.getRole().equals(UserRole.ADMIN)) {
 				admin = true;
 			}
 
+			LOG.info("is user admin? " + admin);
+			LOG.info("is user clicked remember me? " + rememberMe);
 			if (rememberMe) {
 				String uuid = UUID.randomUUID().toString();
 				user.setUuid(uuid);
+				LOG.info("Cookie set: " + uuid);
+				LOG.info("Cookie set: " + user.toString());
 				addCookie(uuid);
 			} else {
 				user.setUuid(null);
@@ -139,14 +143,17 @@ public class AccountBean implements Serializable {
 			}
 
 			loggedIn = true;
+			LOG.info("is user logged in? " + loggedIn);
 
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 									"Welcome back " + user.getFirstName(),
 									" Keep browsing"));
 			return "/main";
-		} catch (NoResultException e) {
-			String errorMessage = rootError.getRootErrorMessage(e);
+		} catch (NoResultException ex) {
+			LOG.info("Thrown exception: " + ex.getLocalizedMessage());
+			String errorMessage = rootError.loginErrorMessage(ex);
+			LOG.info("Root exception Message : " + errorMessage);
 			facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 									errorMessage,
