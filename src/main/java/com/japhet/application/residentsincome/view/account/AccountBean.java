@@ -1,6 +1,9 @@
 package com.japhet.application.residentsincome.view.account;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -53,7 +56,7 @@ public class AccountBean implements Serializable {
 
 	@Inject
 	private RootError rootError;
-	
+
 	@Inject
 	private Logger LOG;
 
@@ -63,7 +66,7 @@ public class AccountBean implements Serializable {
 	private String password;
 	private String confirmPassword;
 	private boolean rememberMe;
-	
+
 	// Constants
 	private static final String COOKIE_NAME = "residentsIncomeApplication";
 	private static final int COOKIE_AGE = 60;
@@ -87,34 +90,39 @@ public class AccountBean implements Serializable {
 
 	public String signUp() {
 		if (residentRepository.isExists(user)) {
-			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-									user.getUserName() + " is already taken!",
-									"Choose a different username"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+					user.getUserName() + " is already taken!", "Choose a different username"));
 			return null;
 		}
 
 		try {
+			if (!password.equals(confirmPassword)) {
+				LOG.info("1st password " + password + " 2nd password " + confirmPassword);
+				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " Password mismatch",
+						"Your passwords should match"));
+				return null;
+			}
+			
 			user.setPassword(password);
+			UserRole role = user.getRole();
+			user.setCreatedOn(LocalDateTime.now());
 			residentRegistration.register(user);
 			resetPassword();
-			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Hi " + user.getFirstName(),
-									" Your registration is successful"));
+			
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Hi " + user.getFirstName(),
+					" Your registration is successful"));
 			loggedIn = true;
 
 			if (user.getRole().equals(UserRole.ADMIN)) {
 				admin = true;
 			}
 
+			this.user = null;
 			return "/main";
 		} catch (Exception e) {
 			String errorMessage = rootError.getRootErrorMessage(e);
 			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									errorMessage,
-									"An Error occur while registering"));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "An Error occur while registering"));
 			return null;
 		}
 	}
@@ -145,28 +153,23 @@ public class AccountBean implements Serializable {
 			loggedIn = true;
 			LOG.info("is user logged in? " + loggedIn);
 
-			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Welcome back " + user.getFirstName(),
-									" Keep browsing"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Welcome back " + user.getFirstName(), " Keep browsing"));
 			return "/main";
 		} catch (NoResultException ex) {
 			LOG.info("Thrown exception: " + ex.getLocalizedMessage());
 			String errorMessage = rootError.loginErrorMessage(ex);
 			LOG.info("Root exception Message : " + errorMessage);
 			facesContext.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-									errorMessage,
-									"Check your credentials and try again"));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, errorMessage, "Check your credentials and try again"));
 			return null;
 		}
 	}
 
 	public String logout() {
-		AlterableContext context = (AlterableContext) beanManager
-					.getContext(SessionScoped.class);
-		Bean<?> accoutnBean = beanManager.getBeans(AccountBean.class)
-					.iterator().next();
+		LOG.info("LOGOUT CALLED");
+		AlterableContext context = (AlterableContext) beanManager.getContext(SessionScoped.class);
+		Bean<?> accoutnBean = beanManager.getBeans(AccountBean.class).iterator().next();
 		context.destroy(accoutnBean);
 		return "/main";
 	}
@@ -175,12 +178,10 @@ public class AccountBean implements Serializable {
 		removeCookie();
 		user.setUuid(null);
 		residentRepository.updateResident(user);
-		AlterableContext context = (AlterableContext) beanManager
-					.getContext(SessionScoped.class);
-		Bean<?> accoutnBean = beanManager.getBeans(AccountBean.class)
-					.iterator().next();
+		AlterableContext context = (AlterableContext) beanManager.getContext(SessionScoped.class);
+		Bean<?> accoutnBean = beanManager.getBeans(AccountBean.class).iterator().next();
 		context.destroy(accoutnBean);
-		return "/main";
+		return "/main?faces-redirect=true";
 
 	}
 
@@ -188,22 +189,23 @@ public class AccountBean implements Serializable {
 		try {
 			user = residentRepository.findByEmail(user.getEmail());
 			String temporaryPassword = LoremIpsum.getInstance().getWords(1);
+			LOG.info("Temporary password : " + temporaryPassword);
 			user.setPassword(PasswordDigest.digestPassword(temporaryPassword));
+			LOG.info("Forgot password user : " + user);
 			residentRepository.updateResident(user);
 
 			// research sending email implementations in java
 
-			facesContext.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_INFO, "Email sent!",
-						"An email with temporary password has been sent to "
-									+ user.getEmail()));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Email sent!",
+					"An email with temporary password has been sent to " + user.getEmail()));
+//			user.setEmail(null);
 			return logout();
 
 		} catch (NoResultException nre) {
+			LOG.info("Exception SMS : " + nre.getLocalizedMessage());
 			String errorMessage = rootError.getRootErrorMessage(nre);
-			facesContext.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_WARN, errorMessage,
-						"Supplied email address is not known to our system"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, errorMessage,
+					"Supplied email address is not known to our system"));
 			return null;
 		}
 
@@ -215,10 +217,8 @@ public class AccountBean implements Serializable {
 
 		residentRepository.updateResident(user);
 		resetPassword();
-		facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-								user.getFirstName() + "'s profile is updated",
-								"Profile has been updated"));
+		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+				user.getFirstName() + "'s profile is updated", "Profile has been updated"));
 		return null;
 
 	}

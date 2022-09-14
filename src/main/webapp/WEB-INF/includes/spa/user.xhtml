@@ -4,7 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<h:panelGroup layout="block" id="top" class="page-wrapper">
 		<h:panelGroup layout="block" class="page-breadcrumb bg-white">
 			<h:form id="popup">
@@ -23,8 +23,7 @@
 									<li><h:commandLink id="dashboard"
 											value="Return to Dashboard" aria-expanded="false"
 											class="fw-normal" action="#{singlePageApp.set('dashboard')}">
-										</h:commandLink>
-									</li>
+										</h:commandLink></li>
 								</ul>
 								<!-- <h:form id="popup"> -->
 								<h:commandLink id="user"
@@ -164,14 +163,22 @@
 												<h:outputText value="Created at" />
 											</f:facet>
 											<h:outputText id="residentCreatedOn"
-												value="#{_resident.createdOn}" />
+												value="#{_resident.createdOn}">
+												<f:convertDateTime type="localDateTime"
+													pattern="yyyy-MM-dd HH:mm:ss">
+												</f:convertDateTime>
+											</h:outputText>
 										</h:column>
 										<h:column>
 											<f:facet name="header">
 												<h:outputText value="Updated at" />
 											</f:facet>
 											<h:outputText id="residentUpdatedOn"
-												value="#{_resident.updatedOn}" />
+												value="#{_resident.updatedOn}">
+												<f:convertDateTime type="localDateTime"
+													pattern="yyyy-MM-dd HH:mm:ss">
+												</f:convertDateTime>
+											</h:outputText>
 										</h:column>
 										<h:column>
 											<f:facet name="header">

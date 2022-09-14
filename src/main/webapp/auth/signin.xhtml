@@ -18,11 +18,11 @@
 					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup layout="block" id="users-list" class="container-fluid">
+			<h:panelGroup layout="block" id="signin" class="container-fluid">
 				<h:panelGroup layout="block" class="row">
 					<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
 						<h:panelGroup layout="block" class="white-box border border-5">
-							<h:form id="retrieve" class="form-horizontal form-material">
+							<h:form id="login" class="form-horizontal form-material">
 								<h:panelGroup layout="block"
 									class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto border border-3 border-primary rounded-3">
 									<h:panelGroup layout="block" class="card">
@@ -32,38 +32,42 @@
 												class="form-group mb-4 col-lg-6 col-md-3 col-sm-4 col-xs-6 mx-auto">
 												<h3>Login to continue</h3>
 												<h:panelGroup layout="block"
-													class="mb-4 mt-5 border-0 border-bottom">
+													class="form-group mb-4 mt-5 border-0 border-bottom">
 													<h:inputText class="form-control border-2 p-4 rounded-3"
-														id="username" pt:placeholder="username"
+														id="username" required="true" pt:placeholder="Username"
 														value="#{accountBean.user.userName}" />
 												</h:panelGroup>
 
 												<h:panelGroup layout="block"
-													class="mb-3 border-0 border-bottom">
+													class="form-group mb-3 border-0 border-bottom">
 													<h:inputSecret
 														class="form-control p-2 border-2 p-4 rounded-3"
 														id="password" pt:placeholder="Password"
-														value="#{accountBean.user.password}" />
+														value="#{accountBean.user.password}" required="true" />
 												</h:panelGroup>
 												<h:panelGroup layout="block"
 													class="row align-items-center mb-2">
-													<h:panelGroup class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+													<h:panelGroup
+														class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
 														<h:selectBooleanCheckbox class="mx-2" id="checkRememberMe"
 															value="#{accountBean.rememberMe}" />
 														<h:outputLabel for="checkRememberMe" value="Remember me" />
 													</h:panelGroup>
 													<h:panelGroup
-														class="d-md-flex col-lg-6 col-sm-6 col-md-6 col-xs-12">
+														class="form-group d-md-flex col-lg-6 col-sm-6 col-md-6 col-xs-12">
 														<h:link outcome="forgot"
 															class="d-md-block pull-right ms-auto"
 															value="Forgot password?" />
 													</h:panelGroup>
 												</h:panelGroup>
-												<h:commandButton
-													class="w-100 btn btn-primary hover py-3 rounded-3"
-													value="LOGIN" action="#{accountBean.signIn}">
-													<!-- <f:ajax execute="@form" render="@form" /> -->
-												</h:commandButton>
+												<h:panelGroup id="signUser" class="form-group"
+													layout="block">
+													<h:commandButton
+														class="w-100 btn btn-primary hover py-3 rounded-3"
+														value="LOGIN" action="#{accountBean.signIn}">
+														<!-- <f:ajax execute="@form" render="@form" /> -->
+													</h:commandButton>
+												</h:panelGroup>
 											</h:panelGroup>
 
 											<h:panelGroup layout="block"

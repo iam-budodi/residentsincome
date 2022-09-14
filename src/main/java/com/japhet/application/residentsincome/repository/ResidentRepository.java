@@ -49,7 +49,7 @@ public class ResidentRepository {
 		return entityManager
 					.createNamedQuery(Resident.FIND_BY_USERNAME,
 								Resident.class)
-					.setParameter("userName", resident.getUserName())
+					.setParameter("username", resident.getUserName())
 					.getResultList().size() > 0;
 	}
 

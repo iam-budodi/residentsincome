@@ -1,21 +1,65 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	template="/WEB-INF/templates/common.xhtml">
 
-	<!-- 
-		Replace path to template, title, header and body
-		with actual data.
-	 -->
-	<ui:composition template="/templates/common.xhtml">
-			<ui:define name="pageTitle">Title</ui:define>
-			<ui:define name="pageHeader">Header</ui:define>
-			<ui:define name="body">
-				<form jsfc="h:form" id="Form">
-				
-				</form>
-			</ui:define>
-	</ui:composition>
+	<ui:param name="title" value="Forgot Password" />
 
-</html>
+	<ui:define name="home">
+		<h:panelGroup layout="block" id="top" class="page-wrapper">
+			<h:panelGroup layout="block" class="page-breadcrumb bg-white">
+				<h:panelGroup layout="block" class="row align-items-center mb-3">
+					<h:panelGroup layout="block"
+						class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+						<h4 class="page-title">
+							<h:outputText value="Self Service EMI Calculator" />
+						</h4>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" id="forgot" class="container-fluid">
+				<h:panelGroup layout="block" class="row">
+					<h:panelGroup layout="block" class="col-md-12 col-lg-12 col-sm-12">
+						<h:panelGroup layout="block" class="white-box border border-5">
+							<h:form id="forgot-password"
+								class="form-horizontal form-material">
+								<h:panelGroup layout="block"
+									class="col-lg-8 col-xlg-9 col-md-12 p-3 mx-auto border border-3 border-primary rounded-3">
+									<h:panelGroup layout="block" class="card">
+										<h:panelGroup layout="block" class="card-body">
+
+											<h:panelGroup layout="block"
+												class="form-group mb-2 mt-5 pt-5 col-lg-7 col-md-3 col-sm-4 col-xs-6 mx-auto">
+												<h5>An email will be sent with your new password</h5>
+												<h:panelGroup layout="block"
+													class="form-group mb-4 mt-3 border-0 border-bottom">
+													<h:inputText class="form-control border-2 p-4 rounded-3"
+														type="email" id="email" autofocus="true" required="true"
+														pt:placeholder="Enter your registered email address"
+														value="#{accountBean.user.email}" />
+												</h:panelGroup>
+												<h:panelGroup id="forgotPassword" class="form-group"
+													layout="block">
+													<h:commandButton
+														class="w-100 btn btn-primary hover py-3 rounded-3"
+														value="SUBMIT" action="#{accountBean.forgotPassword}">
+														<!-- <f:ajax execute="@form" render="@form" /> -->
+													</h:commandButton>
+												</h:panelGroup>
+											</h:panelGroup>
+
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:form>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<footer class="footer text-center">
+				<ui:include src="/WEB-INF/includes/layout/footer.xhtml" />
+			</footer>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

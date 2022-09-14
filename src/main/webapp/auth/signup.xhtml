@@ -1,21 +1,182 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/common.xhtml">
 
-	<!-- 
-		Replace path to template, title, header and body
-		with actual data.
-	 -->
-	<ui:composition template="/templates/common.xhtml">
-			<ui:define name="pageTitle">Title</ui:define>
-			<ui:define name="pageHeader">Header</ui:define>
-			<ui:define name="body">
-				<form jsfc="h:form" id="Form">
-				
-				</form>
-			</ui:define>
-	</ui:composition>
+	<ui:param name="title" value="Create Account" />
 
-</html>
+	<ui:define name="home">
+		<h:panelGroup layout="block" id="top" class="page-wrapper">
+			<h:panelGroup layout="block" class="page-breadcrumb bg-white">
+				<h:panelGroup layout="block" class="row align-items-center mb-2">
+					<h:panelGroup layout="block"
+						class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+						<h4 class="page-title">
+							<h:outputText value="User Account Registration" />
+						</h4>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" id="signin" class="container-fluid">
+				<h:panelGroup layout="block" class="row mx-auto">
+					<!-- Column -->
+					<h:panelGroup id="header" layout="block"
+						class="col-lg-3 col-xlg-3 col-md-12 rounded-pill">
+						<h:panelGroup layout="block" class="white-box">
+							<h:panelGroup layout="block" class="user-bg">
+								<h:graphicImage width="100%" alt="user"
+									name="plugins/images/large/img1.jpg" />
+								<h:panelGroup layout="block" class="overlay-box">
+									<!-- <div class="overlay-box"> -->
+									<h:panelGroup layout="block" class="user-content">
+										<h:graphicImage
+											value='#{resource["plugins/images/users/genu.jpg"]}'
+											class="thumb-lg img-circle" alt="user image" />
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+
+
+					<!-- Column -->
+					<!-- Column -->
+					<h:panelGroup layout="block" class="col-lg-6 col-xlg-9 col-md-12">
+						<h:panelGroup layout="block" class="card">
+							<h:panelGroup layout="block" class="card-body">
+								<h:form id="signup"
+									class="form-horizontal form-material pt-3 pb-2 px-5">
+									<h:panelGroup id="firstnameField" class="form-group"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="firstName"
+																		value="First Name" /> -->
+										<h:panelGroup id="firstnameBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText id="firstName" pt:placeholder="First Name"
+												required="true" class="form-control p-0 border-0"
+												value="#{accountBean.user.firstName}" />
+										</h:panelGroup>
+										<h:message for="firstName" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="lastnameField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="lastName"
+																		value="Last Name" /> -->
+										<h:panelGroup id="lastnameBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText id="lastName" pt:placeholder="Last Name"
+												required="true" class="form-control p-0 border-0"
+												value="#{accountBean.user.lastName}" />
+										</h:panelGroup>
+										<h:message for="lastName" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="phoneNumberField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="phoneNumber"
+																		value="Phone Number" /> -->
+										<h:panelGroup id="phoneNumberBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText id="phoneNumber" pt:placeholder="Phone Number"
+												required="true" class="form-control p-0 border-0"
+												value="#{accountBean.user.phoneNumber}" />
+										</h:panelGroup>
+										<h:message for="phoneNumber" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="emailField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="email"
+																		value="Email" /> -->
+										<h:panelGroup id="emailBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText type="email" id="email"
+												pt:placeholder="admin@admin.com" required="true"
+												class="form-control p-0 border-0" name="example-email"
+												value="#{accountBean.user.email}" />
+										</h:panelGroup>
+										<h:message for="email" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="usernameField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="userName"
+																		value="User Name" /> -->
+										<h:panelGroup id="usernameBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText id="userName" pt:placeholder="User Name"
+												required="true" class="form-control p-0 border-0"
+												value="#{accountBean.user.userName}" />
+										</h:panelGroup>
+										<h:message for="userName" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="passwordField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="password"
+																		value="Password" /> -->
+										<h:panelGroup id="passwordBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputSecret type="password" id="password"
+												pt:placeholder="Password" required="true"
+												class="form-control p-0 border-0"
+												value="#{accountBean.password}" />
+										</h:panelGroup>
+										<h:message for="password" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="confirmField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="password"
+																		value="Password" /> -->
+										<h:panelGroup id="confirmPassword"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputSecret type="password" id="confirm"
+												pt:placeholder="Confirm password" required="true"
+												class="form-control p-0 border-0"
+												value="#{accountBean.confirmPassword}" />
+										</h:panelGroup>
+										<h:message for="confirm" errorClass="invalid" />
+									</h:panelGroup>
+
+									<h:panelGroup id="birthdateField" class="form-group mb-4"
+										layout="block">
+										<!-- <h:outputLabel class="col-md-12 p-0" for="birthdate"
+																		value="Date of Birth" /> -->
+										<h:panelGroup id="birthdateBlock"
+											class="col-md-12 border-bottom p-0" layout="block">
+											<h:inputText id="birthdate" type="date"
+												pt:placeholder="Date of Birth eg. 1970-12-31"
+												required="true" class="form-control p-0 border-0"
+												value="#{accountBean.user.dateOfBirth}" showOn="button">
+
+												<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+											</h:inputText>
+										</h:panelGroup>
+										<h:message for="birthdate" errorClass="invalid" />
+									</h:panelGroup>
+									<h:panelGroup id="buttons" class="form-group" layout="block">
+										<h:panelGroup id="buttonSuccess" class="col-sm-12"
+											layout="block">
+
+											<h:commandButton id="create" action="#{accountBean.signUp}"
+												value="Create User" class="btn btn-success p-2 me-4">
+											</h:commandButton>
+											<h:link id="cancel" outcome="search?faces-redirect=true"
+												value="Cancel" class="btn btn-danger text-white">
+												<f:ajax execute="@form" render="@form :users:residents" />
+											</h:link>
+
+										</h:panelGroup>
+									</h:panelGroup>
+								</h:form>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<footer class="footer text-center">
+				<ui:include src="/WEB-INF/includes/layout/footer.xhtml" />
+			</footer>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

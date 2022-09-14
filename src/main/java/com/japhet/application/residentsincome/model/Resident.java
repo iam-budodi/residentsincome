@@ -87,7 +87,7 @@ public class Resident implements Serializable {
 
 	@Enumerated
 	@Column(name = "user_role")
-	private UserRole role;
+	private UserRole role = UserRole.USER;
 
 	@Column(name = "updated_on")
 	private LocalDateTime updatedOn;
